@@ -1,18 +1,14 @@
 ---
 title: "2026 Formula 1 Rear Wing Development"
-subtitle: "CFD Simulation and Development Study"
+subtitle: "CFD Simulation Study"
 author: "Michele Andreozzi"
 date: "2026-03-25"
-format:
-  html:
-    theme: flatly
-    toc: true
-    number-sections: true
 ---
 
-> **ABSTRACT** > This report presents the aerodynamic development of a 2026 Formula 1 rear wing using computational fluid dynamics (CFD) simulations. Seventeen high-downforce configurations were investigated using OpenFOAM, evaluating lift coefficient ($C_L$), drag coefficient ($C_D$), lift-to-drag ratio ($L/D$), and pitching moment ($C_M$). The study identifies optimal configurations balancing downforce generation with aerodynamic efficiency.
-
----
+::: {.callout-note icon=false appearance="simple"}
+## Abstract
+This report presents the aerodynamic development of a 2026 Formula 1 rear wing using computational fluid dynamics (CFD) simulations. Seventeen high-downforce configurations were investigated using OpenFOAM, evaluating lift coefficient ($C_L$), drag coefficient ($C_D$), lift-to-drag ratio ($L/D$), and pitching moment ($C_M$). The study identifies optimal configurations balancing downforce generation with aerodynamic efficiency.
+:::
 
 ## 1. Introduction
 

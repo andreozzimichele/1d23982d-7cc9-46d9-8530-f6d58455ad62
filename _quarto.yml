@@ -14,7 +14,9 @@ website:
         
 format:
   html:
-    theme: flatly # A clean, professional, modern theme
+    theme:
+      light: lux
+      dark: slate
     toc: true
     number-sections: true
     html-math-method: mathjax
