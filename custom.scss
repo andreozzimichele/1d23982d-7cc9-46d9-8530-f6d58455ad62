@@ -1,0 +1,22 @@
+/*-- scss:defaults --*/
+
+/* 1. Import sleek modern fonts from Google */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&family=Fira+Code&display=swap');
+
+/* 2. Bring back your LaTeX F1 Colors! */
+$primary: #002060;     /* Your Deep Racing Blue */
+$secondary: #C8102E;   /* Your Racing Red */
+$link-color: #0066CC;  /* Your Link Blue */
+
+/* 3. Apply the Fonts */
+$font-family-sans-serif: 'Montserrat', sans-serif;
+$font-family-monospace: 'Fira Code', monospace; 
+
+
+/*-- scss:rules --*/
+
+/* 4. Add a subtle shadow to your CFD images to make them pop */
+img {
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
