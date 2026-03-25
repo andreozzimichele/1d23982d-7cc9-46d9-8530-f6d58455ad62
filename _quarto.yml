@@ -4,7 +4,7 @@ project:
 
 website:
   title: "Michele Andreozzi | CFD Portfolio"
-  # Replace the line below with your actual obscure URL
+  favicon: assets/logo.svg
   site-url: "https://github.com/andreozzimichele/1d23982d-7cc9-46d9-8530-f6d58455ad62"
   navbar:
     background: primary
