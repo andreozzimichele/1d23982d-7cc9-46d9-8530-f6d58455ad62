@@ -7,7 +7,7 @@ date: "2026-03-25"
 
 ::: {.callout-note icon=false appearance="simple"}
 ## Abstract
-This report presents the aerodynamic development of a 2026 Formula 1 rear wing using computational fluid dynamics (CFD) simulations. Seventeen high-downforce configurations were investigated using OpenFOAM, evaluating lift coefficient ($C_L$), drag coefficient ($C_D$), lift-to-drag ratio ($L/D$), and pitching moment ($C_M$). The study identifies optimal configurations balancing downforce generation with aerodynamic efficiency.
+This report presents the aerodynamic development of a 2026 Formula 1 rear wing using computational fluid dynamics (CFD) simulations in OpenFOAM. Seventeen high-downforce configurations were investigated using OpenFOAM, evaluating lift coefficient ($C_L$), drag coefficient ($C_D$), lift-to-drag ratio ($L/D$), and pitching moment ($C_M$). The study identifies optimal configurations balancing downforce generation with aerodynamic efficiency.
 :::
 
 {{< video https://www.youtube.com/watch?v=4EbKNbiKyQI >}}
