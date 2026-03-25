@@ -20,3 +20,12 @@ img {
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
+
+/* 5. Custom wrapper to make long lists horizontally scrollable on mobile */
+.scrollable-list {
+  overflow-x: auto;
+  white-space: nowrap; /* Forces the text to stay on one line */
+  -webkit-overflow-scrolling: touch; /* Makes scrolling buttery smooth on iPhones */
+  padding-bottom: 15px; /* Leaves a little room for the scrollbar */
+  margin-bottom: 1rem;
+}
