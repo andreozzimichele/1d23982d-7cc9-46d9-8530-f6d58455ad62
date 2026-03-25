@@ -16,7 +16,7 @@ format:
   html:
     theme:
       light: lux
-      dark: slate
+      dark: morph
     toc: true
     number-sections: true
     html-math-method: mathjax
