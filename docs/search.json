@@ -11,7 +11,7 @@
     "href": "index.html#introduction",
     "title": "2026 Formula 1 Rear Wing Development",
     "section": "1 1. Introduction",
-    "text": "1 1. Introduction\nThe 2026 Formula 1 regulations introduce significant changes to rear wing design, emphasizing ground effect and active aerodynamics. This study focuses on CFD-based aerodynamic development of a rear wing configuration, systematically exploring design variations to maximize downforce while maintaining efficient drag characteristics.\nThe primary objectives of this study are: * Evaluate aerodynamic performance across multiple wing configurations * Identify optimal \\(C_L\\)/\\(C_D\\) ratio for maximum race pace performance * Analyze the contribution of pressure and viscous forces to total drag * Assess simulation convergence and numerical accuracy"
+    "text": "1 1. Introduction\nThe 2026 Formula 1 regulations introduce significant changes to rear wing design, emphasizing ground effect and active aerodynamics. This study focuses on CFD-based aerodynamic development of a rear wing configuration, systematically exploring design variations to maximize downforce while maintaining efficient drag characteristics.\nThe primary objectives of this study are:\n\nEvaluate aerodynamic performance across multiple wing configurations\nIdentify optimal \\(C_L\\)/\\(C_D\\) ratio for maximum race pace performance\nAnalyze the contribution of pressure and viscous forces to total drag\nAssess simulation convergence and numerical accuracy"
   },
   {
     "objectID": "index.html#methodology",

@@ -1,0 +1,24 @@
+#!/bin/bash
+
+echo "🏎️  Step 1: Rendering Quarto website..."
+quarto render
+
+echo "📦 Step 2: Staging files for Git..."
+git add .
+
+# Prompt the user for a commit message
+read -p "💬 Enter your commit message: " commit_msg
+
+# Safety check: If the user just hits Enter, use a default message
+if [ -z "$commit_msg" ]; then
+  commit_msg="Routine portfolio update"
+  echo "⚠️  No message entered. Using default: '$commit_msg'"
+fi
+
+echo "💾 Step 3: Committing changes..."
+git commit -m "$commit_msg"
+
+echo "🚀 Step 4: Pushing to GitHub..."
+git push
+
+echo "✅ Done! Your F1 portfolio is live."

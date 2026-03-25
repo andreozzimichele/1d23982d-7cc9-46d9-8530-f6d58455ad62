@@ -17,6 +17,7 @@ This report presents the aerodynamic development of a 2026 Formula 1 rear wing u
 The 2026 Formula 1 regulations introduce significant changes to rear wing design, emphasizing ground effect and active aerodynamics. This study focuses on CFD-based aerodynamic development of a rear wing configuration, systematically exploring design variations to maximize downforce while maintaining efficient drag characteristics.
 
 The primary objectives of this study are:
+
 * Evaluate aerodynamic performance across multiple wing configurations
 * Identify optimal $C_L$/$C_D$ ratio for maximum race pace performance
 * Analyze the contribution of pressure and viscous forces to total drag
