@@ -243,6 +243,7 @@ window.Quarto = {
 <h3 data-number="2.3" class="anchored" data-anchor-id="meshing-and-grid-convergence-study"><span class="header-section-number">2.3</span> 2.3 Meshing and Grid Convergence Study</h3>
 <p>A mesh convergence study was performed using cfMesh to establish grid-independent solutions. Three mesh densities were evaluated: coarse (ID_04), medium (ID_02), and fine (ID_03).</p>
 <p><strong>Table 1: Mesh configuration summary for convergence study</strong></p>
+<div class="table-responsive">
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -297,7 +298,9 @@ window.Quarto = {
 </tr>
 </tbody>
 </table>
+</div>
 <p><strong>Table 2: Aerodynamic coefficients for mesh convergence study</strong></p>
+<div class="table-responsive">
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -328,11 +331,13 @@ window.Quarto = {
 </tr>
 </tbody>
 </table>
+</div>
 <p>The Grid Convergence Index (GCI) was computed using the formula:</p>
 <p><span class="math display">\[GCI = F_s \cdot \frac{|f_2 - f_1|}{f_3 - f_1} \cdot \frac{1}{r^3 - 1}\]</span></p>
 <p>where <span class="math inline">\(F_s = 1.25\)</span> is the safety factor, <span class="math inline">\(f_1\)</span>, <span class="math inline">\(f_2\)</span>, and <span class="math inline">\(f_3\)</span> are the solutions on coarse, medium, and fine meshes respectively, and <span class="math inline">\(r\)</span> is the refinement ratio between consecutive meshes.</p>
 <p>The refinement ratios are: * <span class="math inline">\(r_{21} = (N_2/N_1)^{1/3} = (4,953,036/1,490,057)^{1/3} = 1.493\)</span> * <span class="math inline">\(r_{32} = (N_3/N_2)^{1/3} = (7,709,701/4,953,036)^{1/3} = 1.157\)</span></p>
 <p><strong>Table 3: Grid Convergence Index (GCI) analysis</strong></p>
+<div class="table-responsive">
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -354,6 +359,7 @@ window.Quarto = {
 </tr>
 </tbody>
 </table>
+</div>
 <p>The GCI analysis reveals: * <strong>Drag coefficient</strong>: GCI decreases from 0.254 to 0.089, indicating approaching grid independence. * <strong>Lift coefficient</strong>: GCI shows similar trend from 0.352 to 0.131. * <strong>Mesh independence</strong>: The fine mesh (ID_03) provides sufficient resolution with GCI &lt; 0.15 for both <span class="math inline">\(C_D\)</span> and <span class="math inline">\(C_L\)</span>.</p>
 </section>
 <section id="simulation" class="level3" data-number="2.4">
@@ -368,7 +374,39 @@ window.Quarto = {
 <li><strong>Inlet conditions</strong>: Fixed velocity inlet</li>
 <li><strong>Outlet conditions</strong>: Pressure outlet (fixed pressure = 0)</li>
 </ul>
-<p><strong>Linear Solvers</strong> | Variable | Solver | Smoother | Tolerance | Rel. Tol | Sweeps | | :— | :— | :— | :— | :— | :— | | <span class="math inline">\(p\)</span> | GAMG | GaussSeidel | 1e-7 | 0.01 | - | | <span class="math inline">\(U\)</span>, <span class="math inline">\(k\)</span>, <span class="math inline">\(\omega\)</span> | smoothSolver | GaussSeidel | 1e-8 | 0.1 | 1 |</p>
+<p><strong>Linear Solvers</strong></p>
+<div class="table-responsive">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Variable</th>
+<th style="text-align: left;">Solver</th>
+<th style="text-align: left;">Smoother</th>
+<th style="text-align: left;">Tolerance</th>
+<th style="text-align: left;">Rel. Tol</th>
+<th style="text-align: left;">Sweeps</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(p\)</span></td>
+<td style="text-align: left;">GAMG</td>
+<td style="text-align: left;">GaussSeidel</td>
+<td style="text-align: left;">1e-7</td>
+<td style="text-align: left;">0.01</td>
+<td style="text-align: left;">-</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(U\)</span>, <span class="math inline">\(k\)</span>, <span class="math inline">\(\omega\)</span></td>
+<td style="text-align: left;">smoothSolver</td>
+<td style="text-align: left;">GaussSeidel</td>
+<td style="text-align: left;">1e-8</td>
+<td style="text-align: left;">0.1</td>
+<td style="text-align: left;">1</td>
+</tr>
+</tbody>
+</table>
+</div>
 <p><strong>Relaxation Factors</strong> * <span class="math inline">\(U\)</span>: 0.9 * <span class="math inline">\(k\)</span>, <span class="math inline">\(\omega\)</span>: 0.7</p>
 </section>
 <section id="boundary-conditions" class="level4" data-number="2.4.2">
@@ -394,6 +432,7 @@ window.Quarto = {
 <section id="aerodynamic-coefficients-evolution" class="level3" data-number="3.1">
 <h3 data-number="3.1" class="anchored" data-anchor-id="aerodynamic-coefficients-evolution"><span class="header-section-number">3.1</span> 3.1 Aerodynamic Coefficients Evolution</h3>
 <p><strong>Table 4: Aerodynamic coefficients for ID_01 to ID_17</strong></p>
+<div class="table-responsive">
 <table class="caption-top table">
 <colgroup>
 <col style="width: 12%">
@@ -470,6 +509,7 @@ window.Quarto = {
 </tr>
 </tbody>
 </table>
+</div>
 <p><em>(Note: Truncated for web readability. Add remaining rows as needed.)</em></p>
 </section>
 <section id="drag-composition-analysis" class="level3" data-number="3.2">
@@ -484,6 +524,7 @@ window.Quarto = {
 <section id="straight-line-mode-slm-configurations" class="level3" data-number="3.4">
 <h3 data-number="3.4" class="anchored" data-anchor-id="straight-line-mode-slm-configurations"><span class="header-section-number">3.4</span> 3.4 Straight Line Mode (SLM) Configurations</h3>
 <p><strong>Table 5: Aerodynamic coefficients for SLM configurations</strong></p>
+<div class="table-responsive">
 <table class="caption-top table">
 <colgroup>
 <col style="width: 14%">
@@ -544,6 +585,7 @@ window.Quarto = {
 </tr>
 </tbody>
 </table>
+</div>
 <p>Key observations from the SLM configurations: 1. <strong>Drag reduction</strong>: The SLM configurations achieve significantly lower drag coefficients (<span class="math inline">\(C_D\)</span> = 0.09-0.12) compared to the high-downforce race mode, representing a 75-80% reduction. 2. <strong>Best straight-line efficiency</strong>: ID_20 achieves the lowest drag coefficient (<span class="math inline">\(C_D\)</span> = 0.089). 3. <strong>ID_19 - Best SLM balance</strong>: ID_19 exhibits the best L/D ratio in SLM mode at -7.47.</p>
 <hr>
 </section>
@@ -560,6 +602,10 @@ window.Quarto = {
 <section id="conclusions" class="level2" data-number="5">
 <h2 data-number="5" class="anchored" data-anchor-id="conclusions"><span class="header-section-number">5</span> 5. Conclusions</h2>
 <p>The CFD optimization campaign for the 2026 F1 rear wing has successfully identified configurations that balance high downforce with efficient drag characteristics. Future work should focus on validating selected configurations with wind tunnel testing and investigating transient effects.</p>
+<div style="display: flex; justify-content: center; gap: 15px; margin-top: 40px; margin-bottom: 40px; flex-wrap: wrap;">
+<p><a href="assets/Modern_F1_2026_Rear_Wing_Report.pdf" class="btn btn-primary btn-lg" download=""> <i class="bi bi-file-earmark-pdf"></i> Download Full PDF Report </a></p>
+<p><a href="mailto:michele.andreozzi@protonmail.com?subject=Inquiry%20regarding%20F1%20CFD%20Portfolio" class="btn btn-outline-primary btn-lg"> <i class="bi bi-envelope"></i> Contact Me </a></p>
+</div>
 <p><strong>Acknowledgements:</strong> Simulations were performed using OpenFOAM on AWS EC2 infrastructure.</p>
 
 
