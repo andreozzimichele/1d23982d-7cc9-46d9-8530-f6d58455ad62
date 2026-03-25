@@ -1,0 +1,21 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "Michele Andreozzi | CFD Portfolio"
+  # Replace the line below with your actual obscure URL
+  site-url: "https://github.com/andreozzimichele/1d23982d-7cc9-46d9-8530-f6d58455ad62"
+  navbar:
+    background: primary
+    left:
+      - href: index.qmd
+        text: 2026 Rear Wing Study
+        
+format:
+  html:
+    theme: flatly # A clean, professional, modern theme
+    toc: true
+    number-sections: true
+    html-math-method: mathjax
+    include-in-header: hide-from-google.html
