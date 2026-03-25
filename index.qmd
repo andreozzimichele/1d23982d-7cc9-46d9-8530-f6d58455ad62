@@ -1,6 +1,6 @@
 ---
 title: "2026 Formula 1 Rear Wing Development"
-subtitle: "CFD Simulation Study"
+subtitle: "CFD Simulation and Development Study"
 author: "Michele Andreozzi"
 date: "2026-03-25"
 ---

@@ -1,24 +1,34 @@
 #!/bin/bash
 
-echo "🏎️  Step 1: Rendering Quarto website..."
-quarto render
+# Define colors for a beautiful terminal output
+BLUE='\033[1;34m'
+GREEN='\033[1;32m'
+YELLOW='\033[1;33m'
+NC='\033[0m' # No Color (resets the text to normal)
 
-echo "📦 Step 2: Staging files for Git..."
+echo -e "\n${BLUE}🏎️  Step 1: Rendering Quarto website...${NC}"
+# --quiet hides the pandoc spam, but will still show you if an error occurs!
+quarto render --quiet
+
+echo -e "${BLUE}📦 Step 2: Staging files for Git...${NC}"
 git add .
 
-# Prompt the user for a commit message
+# Add a blank line for readability, then ask for the message
+echo ""
 read -p "💬 Enter your commit message: " commit_msg
 
-# Safety check: If the user just hits Enter, use a default message
+# Safety check
 if [ -z "$commit_msg" ]; then
   commit_msg="Routine portfolio update"
-  echo "⚠️  No message entered. Using default: '$commit_msg'"
+  echo -e "${YELLOW}⚠️  No message entered. Using default: '$commit_msg'${NC}"
 fi
 
-echo "💾 Step 3: Committing changes..."
-git commit -m "$commit_msg"
+echo -e "\n${BLUE}💾 Step 3: Committing changes...${NC}"
+# -q hides the file insertion/deletion stats
+git commit -q -m "$commit_msg"
 
-echo "🚀 Step 4: Pushing to GitHub..."
-git push
+echo -e "${BLUE}🚀 Step 4: Pushing to GitHub...${NC}"
+# -q hides the block compression and transfer stats
+git push -q
 
-echo "✅ Done! Your F1 portfolio is live."
+echo -e "\n${GREEN}✅ Done! Your F1 portfolio is live.${NC}\n"
