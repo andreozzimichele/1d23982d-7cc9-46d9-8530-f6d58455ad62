@@ -1,17 +1,20 @@
 /*-- scss:defaults --*/
 
-/* 1. Import sleek modern fonts from Google */
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&family=Fira+Code&display=swap');
+/* 1. Import the Computer Modern Web Fonts */
+@import url('https://cdn.jsdelivr.net/gh/dreampulse/computer-modern-web-font@master/fonts.css');
 
-/* 2. Bring back your LaTeX F1 Colors! */
-$primary: #002060;     /* Your Deep Racing Blue */
-$secondary: #C8102E;   /* Your Racing Red */
-$link-color: #0066CC;  /* Your Link Blue */
+/* 2. Your Exact F1 Colors */
+$primary: #002060;     
+$secondary: #C8102E;   
+$link-color: #0066CC;  
 
-/* 3. Apply the Fonts */
-$font-family-sans-serif: 'Montserrat', sans-serif;
-$font-family-monospace: 'Fira Code', monospace; 
+/* 3. Apply the LaTeX Fonts */
+/* This matches your \sfdefault command! */
+$font-family-base: 'Computer Modern Sans', sans-serif;
+$headings-font-family: 'Computer Modern Sans', sans-serif;
 
+/* Keeps your code snippets looking like standard LaTeX \texttt{} */
+$font-family-monospace: 'Computer Modern Typewriter', monospace;
 
 /*-- scss:rules --*/
 
