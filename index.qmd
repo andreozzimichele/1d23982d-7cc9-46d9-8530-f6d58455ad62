@@ -15,6 +15,7 @@ This report presents the aerodynamic development of a 2026 Formula 1 rear wing u
 The 2026 Formula 1 regulations introduce significant changes to rear wing design: traditional endplates are bought back, but a very tight RV-RW-PROFILES reference volume is introduced, and the evolution from DRS to SLM for straight line drag reduction force aerodynamic engineers to explore new development paths.
 
 This study is developed in 3 major stages:
+
 * A mesh convergence analysis, using the Grid Convergence Index as the main metric to evaluate different meshes.
 * A series of geometry evolutions aimed at achieving high downforce and reducing undesirable effects such as separations.
 * An investigation into different Straight Line Mode options for hinge positioning and movement of the flaps.
@@ -35,6 +36,7 @@ The conclusion in simple: the results in this report are clearly not meant to un
 ### 2.1 Hardware
 
 All simulations were conducted using precompiled OpenFOAM ESI (version v2506) on personal hardware, which provided limited specs:
+
 * 4 physical Intel Core i7-8565U, with possibility of dual threading for a total 8 vCPU (not suggested for CFD usage)
 * a 16 GB DDR4 random access memory stick
 * 512 GB of SSD storage, providing faster I/O during simulations
@@ -55,6 +57,7 @@ Later the regulations also define sectional characteristics for the various elem
 ![An example of a rear wing model completely contained within the reference volumes](assets/RV+RW.png)
 
 The initial geometry, consisting of an assembly of:
+
 * endplate
 * pylon
 * profiles
@@ -81,6 +84,7 @@ An example of the `Allrun` script is shown in the [Appendix](#appendix-code-auto
 After many failed attempts at meshing using the native OpenFOAM snappyHexMesh software, particularly with regards to the prism layer generation (often generating far less layers than the required amount in the `snappyHexMeshDict`) a different route was attempted: the cfMesh software provides similar cartesian mesh quality to snappyHexMesh, with less configuration options and a much faster turnaround time[^2]. This allowed a much quicker and more efficient development of a `meshDict` file that constructed a good quality mesh, with user specified refinement edges, surfaces, regions and more than sufficient prism layer extrusion.
 
 Taking some suggestions from the excellent [LinkedIn post by David Penner](https://www.linkedin.com/pulse/simulating-williams-fw43bar-part-1-all-simulations-wrong-david-penner/) a base cell size on the surface of the rear wing was established at about 5 mm. Having to juggle resources with a limited hardware refinement regions had to be carefully analyzed. The solution utilized in the following report consist of the following mesh refinement strategy:
+
 * edge refinement at the profiles leading edge and trailing edge. This was obtained through two OpenFOAM commands used in conjuction. Firstly by running `surfaceFeatureEdges -angle 2` all the angles in the rear wing geometry are computed and angles below two degrees (a threshold selected through trial and error in order to select all leading and trailing edge features) generate a splitting of the geometry into separate `.fms` files. Later the command `FMSToSurface -exportFeatureEdges` exports the *pointy* edges into a `.vtk` file that can be then used by cfMesh through the `edgeMeshRefinement` dictionary
 * surface refinement on the rear wing `.stl` surface
 * a first refinement box, closer to the wing, with the aim of modelling the wake of the wing
@@ -198,15 +202,17 @@ The computational domain consisting of 7 boundary patches applies the following 
 
 Boundary conditions applied in the turbulence model equations are detailed in the following list, only highlighting the choices that were actively considered with respect to a default tutorial.
 
-* **Inlet**: Fixed values: $k = 0.01$ m$^2$/s$^2$, $\omega = 700$ rad/s; coming from Spalart & Rumsey [@spalart2007], as suggested by [Penner](https://www.linkedin.com/pulse/simulating-williams-fw43bar-part-1-all-simulations-wrong-david-penner/), and calculated $\nu_t$
+* **Inlet**: Fixed values: $k = 0.01$ m$^2$/s$^2$, $\omega = 700$ rad/s; coming from Spalart & Rumsey, as suggested by [Penner](https://www.linkedin.com/pulse/simulating-williams-fw43bar-part-1-all-simulations-wrong-david-penner/), and calculated $\nu_t$
 * **Walls (rearWing, lowerWall)**: Wall functions using `nutUSpaldingWallFunction` for $\nu_t$, `kqRWallFunction` for $k$ and `omegaWallFunction` for $\omega$
 * **Outlet**: Inlet-outlet conditions for $k$ and $\omega$, with calculated $\nu_t$
 
 In order to get a better convergence of steady steady iterations the initial conditions were given by:
+
 * Velocity: uniform $U = (50, 0, 0)$ m/s
 * Gauge pressure: uniform $p = 0$ Pa
 
 The linear model solver `potentialFoam` was used from this starting condition to obtain a velocity field that could comply with the compatibility conditions (i.e. guaranteeing coherence between BC and IC). Once `potentialFoam` convergence was reached the resulting field was used as an initial condition for the RANS model solved with `simpleFoam`, adding the initial conditions:
+
 * Turbulent kinetic energy: $k = 0.01$ m$^2$/s$^2$
 * Specific dissipation rate: $\omega = 700$ rad/s
 
@@ -262,7 +268,7 @@ The next table presents the aerodynamic coefficients extracted through windowing
 
 :::
 
-The grid convergence analysis was performed using the Grid Convergence Index, in the derivation presented by Celik *et al.* [@celik2008], which will be now briefly summarized.
+The grid convergence analysis was performed using the Grid Convergence Index, in the derivation presented by Celik *et al.*, which will be now briefly summarized.
 
 First a mesh representative grid spacing is computed for the three grids as:
 $$h_j = \left(\frac{1}{N_{cells}}\sum_{i=1}^{N_{cells}}\Delta V_i\right)^{1/3}$$
@@ -278,12 +284,14 @@ By calling $\phi_i$ the evaluated quantity for the $i$-th grid (in this case the
 $$CR = \frac{\phi_2 - \phi_1}{\phi_3 - \phi_2}$$
 
 Notice that:
+
 * $CR<1$ indicates oscillatory divergence
 * $-1\leq CR\leq0$ indicates oscillatory convergence
 * $0\leq CR\leq1$ indicates monotonic convergence
 * $CR\geq1$ indicates monotonic divergence
 
 At this point a loop procedure is entered:
+
 1. a value for the order of convergence $p$ is guessed, usually 1 or 2
 2. define $s = \text{sign}(\frac{\phi_3 - \phi_2}{\phi_2 - \phi_1})$
 3. update $p = \frac{1}{\log{r_{21}}}|\log(|\frac{\phi_3 - \phi_2}{\phi_2 - \phi_1}|)+\log(\frac{r_{21}^p - s}{r_{32}^p-s})|$
@@ -306,6 +314,7 @@ $$AR = \frac{GCI_{32}}{r_{21}^p-1}$$
 Which offers a good measure of much further should the mesh be refined, and gets closer and closer to 1 as the grid becomes refined *enough*.
 
 Using the GCI toolbox, the refinement ratios found are:
+
 * $r_{21} = 1.16$
 * $r_{32} = 1.49$
 
@@ -324,16 +333,19 @@ As previously mentioned the post-processing workflow is fully automated through 
 #### 2.7.1 Force Coefficients Computation
 
 Force coefficients were computed using the OpenFOAM `forceCoeffs` function object configured inside `system/forceCoeffs`:
+
 * **Reference area**: $A_{ref} = 0.2$ m$^2$
 * **Direction vectors**: Lift = $(0,0,1)$, Drag = $(1,0,0)$, Pitch axis = $(0,1,0)$
 * **Freestream velocity**: $U_{\infty} = 50$ m/s
 
 The function object outputs:
+
 * $C_L$: Lift coefficient (negative for downforce)
 * $C_D$: Drag coefficient
 * $C_M$: Pitching moment coefficient
 
 Each coefficient is given as the sum of pressure and viscous contributions:
+
 * $C_{L,p}$, $C_{D,p}$, $C_{M,p}$: Pressure forces
 * $C_{L,visc}$, $C_{D,visc}$, $C_{M,visc}$: Viscous forces
 
@@ -342,6 +354,7 @@ Notice that aerobalance data, i.e. loads as they are divided between the front a
 The results are written at each time step to `postProcessing/forceCoeffs/`, enabling convergence monitoring directly from the terminal during runtime.
 
 While force coefficients are computed at runtime, both to verify convergence and to allow windowing and averaging for more accurate results, other flow quantities of interest are extracted later by running `simpleFoam -postProcess`, which looks for a `system/postProcessDict` file. This is done in order to reduce the computational overhead at runtime, as post-processing tools were found to increase the memory requirement, sometimes leading to OOM fatal errors. The `postProcessDict` is used to extract:
+
 * wall shear stress field on the wing surface, $\tau_w$
 * wall bounded streamlines, to mimic flow-vis paint visualizations
 * turbulence normalized wall distance, $y^+$
@@ -391,7 +404,7 @@ While 3D images are for getting a broad understanding of the overall flow develo
 
 All 2D renderings are also combined into MP4 video animations, showing the evolution of structures in the three directions:
 
-{{< video [https://youtu.be/Z_8Aim5R0g8](https://youtu.be/Z_8Aim5R0g8) >}}
+{{< video https://youtube.com/watch?v=Z_8Aim5R0g8 >}}
 
 Finally a custom Python script (`caseSummary.py`) performs automated data extraction from the pseudo-time history of the simulation and computes mean values over the last 250 iterations to ensure stable averages. This script also updates the master `casesSummary.csv` file, available for overall numerical results comparison, with all extracted data.
 
@@ -442,6 +455,7 @@ The results demonstrate a clear optimization trajectory:
 
 ![Drag Breakdown Chart](assets/drag_breakdown.png)
 *Figure 1: Drag breakdown: Pressure vs. Viscous components.* Key findings:
+
 * **Pressure drag dominates**: $C_{D,p}$ accounts for 93-94% of total drag
 * **Viscous contribution is minimal**: $C_{D,visc}$ ranges from 0.025 to 0.035 ($\sim$6-7% of total)
 * **Linear relationship**: Both components increase with downforce level
@@ -484,6 +498,7 @@ The L/D ratio shows a clear optimization trend, improving from -5.19 (ID_01) to 
 :::
 
 All cases achieved excellent convergence with:
+
 * Velocity residuals reduced by 99.9%
 * Pressure residuals reduced by 99.99%
 * Best overall convergence: ID_04 (final $p = 1.3 \times 10^{-7}$)

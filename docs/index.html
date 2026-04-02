@@ -81,8 +81,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-e3b669efb3ef36c2dd059066fb764b00.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
-<script src="site_libs/quarto-contrib/videojs/video.min.js"></script>
-<link href="site_libs/quarto-contrib/videojs/video-js.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -265,7 +263,12 @@ window.Quarto = {
 <section id="introduction" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">1</span> 1. Introduction</h2>
 <p>The 2026 Formula 1 regulations introduce significant changes to rear wing design: traditional endplates are bought back, but a very tight RV-RW-PROFILES reference volume is introduced, and the evolution from DRS to SLM for straight line drag reduction force aerodynamic engineers to explore new development paths.</p>
-<p>This study is developed in 3 major stages: * A mesh convergence analysis, using the Grid Convergence Index as the main metric to evaluate different meshes. * A series of geometry evolutions aimed at achieving high downforce and reducing undesirable effects such as separations. * An investigation into different Straight Line Mode options for hinge positioning and movement of the flaps.</p>
+<p>This study is developed in 3 major stages:</p>
+<ul>
+<li>A mesh convergence analysis, using the Grid Convergence Index as the main metric to evaluate different meshes.</li>
+<li>A series of geometry evolutions aimed at achieving high downforce and reducing undesirable effects such as separations.</li>
+<li>An investigation into different Straight Line Mode options for hinge positioning and movement of the flaps.</li>
+</ul>
 <section id="a-much-needed-disclaimer" class="level3" data-number="1.1">
 <h3 data-number="1.1" class="anchored" data-anchor-id="a-much-needed-disclaimer"><span class="header-section-number">1.1</span> 1.1 A Much Needed Disclaimer</h3>
 <p>While hopefully not needed, in the sense that everybody reading this should know it already, I’d rather be safe than sorry and clearly state the not so obvious: aerodynamics is governed by the Navier-Stokes equations, which are known for their mathematical complexity. The equations are nonlinear, and in their incompressible version they describe a situation that shows many similarities with a purely <a href="https://cfd.university/learn/10-key-concepts-everyone-must-understand-in-cfd/what-are-hyperbolic-parabolic-and-elliptic-equations-in-cfd">elliptic</a> problem, i.e.&nbsp;one where all points in the domain influence each other, both upstream and downstream. Moreover F1 cars are extremely complex pieces of technology, where the amount of detail is extraordinary with respect to all aspects of engineering. These two statements should make it clear that:</p>
@@ -281,7 +284,13 @@ window.Quarto = {
 <h2 data-number="2" class="anchored" data-anchor-id="methodology"><span class="header-section-number">2</span> 2. Methodology</h2>
 <section id="hardware" class="level3" data-number="2.1">
 <h3 data-number="2.1" class="anchored" data-anchor-id="hardware"><span class="header-section-number">2.1</span> 2.1 Hardware</h3>
-<p>All simulations were conducted using precompiled OpenFOAM ESI (version v2506) on personal hardware, which provided limited specs: * 4 physical Intel Core i7-8565U, with possibility of dual threading for a total 8 vCPU (not suggested for CFD usage) * a 16 GB DDR4 random access memory stick * 512 GB of SSD storage, providing faster I/O during simulations * 1 TB of HDD storage, for long term storage of simulation results</p>
+<p>All simulations were conducted using precompiled OpenFOAM ESI (version v2506) on personal hardware, which provided limited specs:</p>
+<ul>
+<li>4 physical Intel Core i7-8565U, with possibility of dual threading for a total 8 vCPU (not suggested for CFD usage)</li>
+<li>a 16 GB DDR4 random access memory stick</li>
+<li>512 GB of SSD storage, providing faster I/O during simulations</li>
+<li>1 TB of HDD storage, for long term storage of simulation results</li>
+</ul>
 <p>On a machine running Debian 13 as the OS, to strip down the system of all unnecessary software and provide good responsiveness. This hardware configuration si nonetheless very limited for CFD, where ideally one would have about 250,000 cells per core, and no more than 1 million cells per GB of memory. The PC can be thus estimated to hit a mesh size limit at about 8 million cells (considering OS and all processes taking place alongside the pure computation) before being trapped in OOM errors, but would provide results for such grid in a painfully slow turnaround time. Not having access to more capable hardware forced the choice to a compromise in terms of accuracy, which will soon be discussed. Limits of the machine will be dealt with again in a later section.</p>
 <p>For all of the above reasons it was decided that the simulations would be run as an incompressible steady state symmetric cases about the <span class="math inline">\(y=0\)</span> plane (as mentioned above the hardware limitations where really stringent, so the known limitations of a symmetric simulation were significantly outnumbered by the gained accuracy through a mesh twice as fine).</p>
 </section>
@@ -301,7 +310,12 @@ window.Quarto = {
 <figcaption>An example of a rear wing model completely contained within the reference volumes</figcaption>
 </figure>
 </div>
-<p>The initial geometry, consisting of an assembly of: * endplate * pylon * profiles</p>
+<p>The initial geometry, consisting of an assembly of:</p>
+<ul>
+<li>endplate</li>
+<li>pylon</li>
+<li>profiles</li>
+</ul>
 <p>Is shown in the following figure:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -326,7 +340,14 @@ window.Quarto = {
 <section id="meshing" class="level3" data-number="2.4">
 <h3 data-number="2.4" class="anchored" data-anchor-id="meshing"><span class="header-section-number">2.4</span> 2.4 Meshing</h3>
 <p>After many failed attempts at meshing using the native OpenFOAM snappyHexMesh software, particularly with regards to the prism layer generation (often generating far less layers than the required amount in the <code>snappyHexMeshDict</code>) a different route was attempted: the cfMesh software provides similar cartesian mesh quality to snappyHexMesh, with less configuration options and a much faster turnaround time<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. This allowed a much quicker and more efficient development of a <code>meshDict</code> file that constructed a good quality mesh, with user specified refinement edges, surfaces, regions and more than sufficient prism layer extrusion.</p>
-<p>Taking some suggestions from the excellent <a href="https://www.linkedin.com/pulse/simulating-williams-fw43bar-part-1-all-simulations-wrong-david-penner/">LinkedIn post by David Penner</a> a base cell size on the surface of the rear wing was established at about 5 mm. Having to juggle resources with a limited hardware refinement regions had to be carefully analyzed. The solution utilized in the following report consist of the following mesh refinement strategy: * edge refinement at the profiles leading edge and trailing edge. This was obtained through two OpenFOAM commands used in conjuction. Firstly by running <code>surfaceFeatureEdges -angle 2</code> all the angles in the rear wing geometry are computed and angles below two degrees (a threshold selected through trial and error in order to select all leading and trailing edge features) generate a splitting of the geometry into separate <code>.fms</code> files. Later the command <code>FMSToSurface -exportFeatureEdges</code> exports the <em>pointy</em> edges into a <code>.vtk</code> file that can be then used by cfMesh through the <code>edgeMeshRefinement</code> dictionary * surface refinement on the rear wing <code>.stl</code> surface * a first refinement box, closer to the wing, with the aim of modelling the wake of the wing * a second refinement box, to allow a smooth transition from the coarse freestream mesh to the finer cells in the first refinement box * generation of prism layers, with controls on the first cell height, expansion ratio and number of extruded layers</p>
+<p>Taking some suggestions from the excellent <a href="https://www.linkedin.com/pulse/simulating-williams-fw43bar-part-1-all-simulations-wrong-david-penner/">LinkedIn post by David Penner</a> a base cell size on the surface of the rear wing was established at about 5 mm. Having to juggle resources with a limited hardware refinement regions had to be carefully analyzed. The solution utilized in the following report consist of the following mesh refinement strategy:</p>
+<ul>
+<li>edge refinement at the profiles leading edge and trailing edge. This was obtained through two OpenFOAM commands used in conjuction. Firstly by running <code>surfaceFeatureEdges -angle 2</code> all the angles in the rear wing geometry are computed and angles below two degrees (a threshold selected through trial and error in order to select all leading and trailing edge features) generate a splitting of the geometry into separate <code>.fms</code> files. Later the command <code>FMSToSurface -exportFeatureEdges</code> exports the <em>pointy</em> edges into a <code>.vtk</code> file that can be then used by cfMesh through the <code>edgeMeshRefinement</code> dictionary</li>
+<li>surface refinement on the rear wing <code>.stl</code> surface</li>
+<li>a first refinement box, closer to the wing, with the aim of modelling the wake of the wing</li>
+<li>a second refinement box, to allow a smooth transition from the coarse freestream mesh to the finer cells in the first refinement box</li>
+<li>generation of prism layers, with controls on the first cell height, expansion ratio and number of extruded layers</li>
+</ul>
 <p>A few quick comments can be made by comparatively looking at mesh slices from snappyHexMesh and cfMesh:</p>
 <div class="columns">
 <div class="column" style="width:48%;">
@@ -502,12 +523,20 @@ window.Quarto = {
 </ul>
 <p>Boundary conditions applied in the turbulence model equations are detailed in the following list, only highlighting the choices that were actively considered with respect to a default tutorial.</p>
 <ul>
-<li><strong>Inlet</strong>: Fixed values: <span class="math inline">\(k = 0.01\)</span> m<span class="math inline">\(^2\)</span>/s<span class="math inline">\(^2\)</span>, <span class="math inline">\(\omega = 700\)</span> rad/s; coming from Spalart &amp; Rumsey <span class="citation" data-cites="spalart2007">[@spalart2007]</span>, as suggested by <a href="https://www.linkedin.com/pulse/simulating-williams-fw43bar-part-1-all-simulations-wrong-david-penner/">Penner</a>, and calculated <span class="math inline">\(\nu_t\)</span></li>
+<li><strong>Inlet</strong>: Fixed values: <span class="math inline">\(k = 0.01\)</span> m<span class="math inline">\(^2\)</span>/s<span class="math inline">\(^2\)</span>, <span class="math inline">\(\omega = 700\)</span> rad/s; coming from Spalart &amp; Rumsey, as suggested by <a href="https://www.linkedin.com/pulse/simulating-williams-fw43bar-part-1-all-simulations-wrong-david-penner/">Penner</a>, and calculated <span class="math inline">\(\nu_t\)</span></li>
 <li><strong>Walls (rearWing, lowerWall)</strong>: Wall functions using <code>nutUSpaldingWallFunction</code> for <span class="math inline">\(\nu_t\)</span>, <code>kqRWallFunction</code> for <span class="math inline">\(k\)</span> and <code>omegaWallFunction</code> for <span class="math inline">\(\omega\)</span></li>
 <li><strong>Outlet</strong>: Inlet-outlet conditions for <span class="math inline">\(k\)</span> and <span class="math inline">\(\omega\)</span>, with calculated <span class="math inline">\(\nu_t\)</span></li>
 </ul>
-<p>In order to get a better convergence of steady steady iterations the initial conditions were given by: * Velocity: uniform <span class="math inline">\(U = (50, 0, 0)\)</span> m/s * Gauge pressure: uniform <span class="math inline">\(p = 0\)</span> Pa</p>
-<p>The linear model solver <code>potentialFoam</code> was used from this starting condition to obtain a velocity field that could comply with the compatibility conditions (i.e.&nbsp;guaranteeing coherence between BC and IC). Once <code>potentialFoam</code> convergence was reached the resulting field was used as an initial condition for the RANS model solved with <code>simpleFoam</code>, adding the initial conditions: * Turbulent kinetic energy: <span class="math inline">\(k = 0.01\)</span> m<span class="math inline">\(^2\)</span>/s<span class="math inline">\(^2\)</span> * Specific dissipation rate: <span class="math inline">\(\omega = 700\)</span> rad/s</p>
+<p>In order to get a better convergence of steady steady iterations the initial conditions were given by:</p>
+<ul>
+<li>Velocity: uniform <span class="math inline">\(U = (50, 0, 0)\)</span> m/s</li>
+<li>Gauge pressure: uniform <span class="math inline">\(p = 0\)</span> Pa</li>
+</ul>
+<p>The linear model solver <code>potentialFoam</code> was used from this starting condition to obtain a velocity field that could comply with the compatibility conditions (i.e.&nbsp;guaranteeing coherence between BC and IC). Once <code>potentialFoam</code> convergence was reached the resulting field was used as an initial condition for the RANS model solved with <code>simpleFoam</code>, adding the initial conditions:</p>
+<ul>
+<li>Turbulent kinetic energy: <span class="math inline">\(k = 0.01\)</span> m<span class="math inline">\(^2\)</span>/s<span class="math inline">\(^2\)</span></li>
+<li>Specific dissipation rate: <span class="math inline">\(\omega = 700\)</span> rad/s</li>
+</ul>
 <p>The flow was initialized with uniform freestream conditions and solved for a number of iterations sufficient to reach convergence. To estimate convergence first, as suggested by the brilliant page <a href="https://cfd.university/blog//how-to-determine-the-best-stopping-criterion-for-cfd-simulations">cfd.university</a> the evolution of equation residuals was used to evaluate whether the first simulation was approaching convergence, divergence or an oscillatory plateau. Inspection of the following image shows a tendency towards convergence with small size oscillations that will predictably continue as long as the simulation is carried out.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -629,21 +658,37 @@ window.Quarto = {
 </tbody>
 </table>
 </div>
-<p>The grid convergence analysis was performed using the Grid Convergence Index, in the derivation presented by Celik <em>et al.</em> <span class="citation" data-cites="celik2008">[@celik2008]</span>, which will be now briefly summarized.</p>
+<p>The grid convergence analysis was performed using the Grid Convergence Index, in the derivation presented by Celik <em>et al.</em>, which will be now briefly summarized.</p>
 <p>First a mesh representative grid spacing is computed for the three grids as: <span class="math display">\[h_j = \left(\frac{1}{N_{cells}}\sum_{i=1}^{N_{cells}}\Delta V_i\right)^{1/3}\]</span></p>
 <p>For <span class="math inline">\(j\in[1,2,3]\)</span>, representing the three refinement levels ordered as 1=fine, 2=medium and 3=coarse.</p>
 <p>Then the refinement ratio between successive grids is defined as: <span class="math display">\[r_{ij} = \frac{h_i}{h_j}\]</span></p>
 <p>And for meaningful convergence results one should aim for <span class="math inline">\(r_{ij}\geq1.3\)</span>, in order to evaluate meshes that vary in a significant enough manner.</p>
 <p>By calling <span class="math inline">\(\phi_i\)</span> the evaluated quantity for the <span class="math inline">\(i\)</span>-th grid (in this case the two integral coefficients <span class="math inline">\(C_D\)</span> and <span class="math inline">\(C_L\)</span>) a useful indicator can at this point be defined as the <em>convergence ratio</em>: <span class="math display">\[CR = \frac{\phi_2 - \phi_1}{\phi_3 - \phi_2}\]</span></p>
-<p>Notice that: * <span class="math inline">\(CR&lt;1\)</span> indicates oscillatory divergence * <span class="math inline">\(-1\leq CR\leq0\)</span> indicates oscillatory convergence * <span class="math inline">\(0\leq CR\leq1\)</span> indicates monotonic convergence * <span class="math inline">\(CR\geq1\)</span> indicates monotonic divergence</p>
-<p>At this point a loop procedure is entered: 1. a value for the order of convergence <span class="math inline">\(p\)</span> is guessed, usually 1 or 2 2. define <span class="math inline">\(s = \text{sign}(\frac{\phi_3 - \phi_2}{\phi_2 - \phi_1})\)</span> 3. update <span class="math inline">\(p = \frac{1}{\log{r_{21}}}|\log(|\frac{\phi_3 - \phi_2}{\phi_2 - \phi_1}|)+\log(\frac{r_{21}^p - s}{r_{32}^p-s})|\)</span> 4. exit the loop when <span class="math inline">\(p\)</span> converges</p>
+<p>Notice that:</p>
+<ul>
+<li><span class="math inline">\(CR&lt;1\)</span> indicates oscillatory divergence</li>
+<li><span class="math inline">\(-1\leq CR\leq0\)</span> indicates oscillatory convergence</li>
+<li><span class="math inline">\(0\leq CR\leq1\)</span> indicates monotonic convergence</li>
+<li><span class="math inline">\(CR\geq1\)</span> indicates monotonic divergence</li>
+</ul>
+<p>At this point a loop procedure is entered:</p>
+<ol type="1">
+<li>a value for the order of convergence <span class="math inline">\(p\)</span> is guessed, usually 1 or 2</li>
+<li>define <span class="math inline">\(s = \text{sign}(\frac{\phi_3 - \phi_2}{\phi_2 - \phi_1})\)</span></li>
+<li>update <span class="math inline">\(p = \frac{1}{\log{r_{21}}}|\log(|\frac{\phi_3 - \phi_2}{\phi_2 - \phi_1}|)+\log(\frac{r_{21}^p - s}{r_{32}^p-s})|\)</span></li>
+<li>exit the loop when <span class="math inline">\(p\)</span> converges</li>
+</ol>
 <p>With the order of convergence we can compute the Richardson extrapolated value as: <span class="math display">\[\phi_{expected} = \phi_1 + \frac{\phi_1 - \phi_2}{r_{21}^p - 1}\]</span></p>
 <p>Also, we define: <span class="math display">\[\varepsilon_{ij}=\left|\frac{\phi_j - \phi_i}{\phi_j}\right|\]</span></p>
 <p>So that we can compute the GCI as: <span class="math display">\[GCI_{ij} = \frac{1.25\cdot\varepsilon_{ij}}{r_{ij}^p-1}\]</span></p>
 <p>Which can be expressed as a percentage when multiplied by 100. The target value should be to have <span class="math inline">\(GCI\leq5\%\)</span> when doing parametric studies, and <span class="math inline">\(GCI\leq1\%\)</span> when extracted values are of paramount importance.</p>
 <p>We finally define the <em>asymptotic range</em> as: <span class="math display">\[AR = \frac{GCI_{32}}{r_{21}^p-1}\]</span></p>
 <p>Which offers a good measure of much further should the mesh be refined, and gets closer and closer to 1 as the grid becomes refined <em>enough</em>.</p>
-<p>Using the GCI toolbox, the refinement ratios found are: * <span class="math inline">\(r_{21} = 1.16\)</span> * <span class="math inline">\(r_{32} = 1.49\)</span></p>
+<p>Using the GCI toolbox, the refinement ratios found are:</p>
+<ul>
+<li><span class="math inline">\(r_{21} = 1.16\)</span></li>
+<li><span class="math inline">\(r_{32} = 1.49\)</span></li>
+</ul>
 <p>Which emphasizes that the variation between the medium and the fine cell is not large enough. This nonetheless contrasted with the hardware limitations, and was accepted for the subsequent analysis.</p>
 <p>The convergence ratio computed for the drag coefficient in this case is <span class="math inline">\(CR=1.07\)</span>, indicating monotonic divergence, while the same indicator for the lift coefficient comes out to be <span class="math inline">\(CR=-2.49\)</span>, indicating oscillatory divergence.</p>
 <p>This is, at a very practical level, a terrible result: the finest mesh is not fine enough to establish a mathematically converging behaviour with respect to the medium and coarse one, and thus for both drag and lift the order of convergence numerically computed is a <span class="math inline">\(p=\text{NaN}\)</span> value, not allowing a GCI estimate.</p>
@@ -654,12 +699,32 @@ window.Quarto = {
 <p>As previously mentioned the post-processing workflow is fully automated through the <code>Allrun</code> script, which orchestrates all visualization and data extraction tasks using ParaView and custom Python scripts. The complete workflow consists of the following stages:</p>
 <section id="force-coefficients-computation" class="level4" data-number="2.7.1">
 <h4 data-number="2.7.1" class="anchored" data-anchor-id="force-coefficients-computation"><span class="header-section-number">2.7.1</span> 2.7.1 Force Coefficients Computation</h4>
-<p>Force coefficients were computed using the OpenFOAM <code>forceCoeffs</code> function object configured inside <code>system/forceCoeffs</code>: * <strong>Reference area</strong>: <span class="math inline">\(A_{ref} = 0.2\)</span> m<span class="math inline">\(^2\)</span> * <strong>Direction vectors</strong>: Lift = <span class="math inline">\((0,0,1)\)</span>, Drag = <span class="math inline">\((1,0,0)\)</span>, Pitch axis = <span class="math inline">\((0,1,0)\)</span> * <strong>Freestream velocity</strong>: <span class="math inline">\(U_{\infty} = 50\)</span> m/s</p>
-<p>The function object outputs: * <span class="math inline">\(C_L\)</span>: Lift coefficient (negative for downforce) * <span class="math inline">\(C_D\)</span>: Drag coefficient * <span class="math inline">\(C_M\)</span>: Pitching moment coefficient</p>
-<p>Each coefficient is given as the sum of pressure and viscous contributions: * <span class="math inline">\(C_{L,p}\)</span>, <span class="math inline">\(C_{D,p}\)</span>, <span class="math inline">\(C_{M,p}\)</span>: Pressure forces * <span class="math inline">\(C_{L,visc}\)</span>, <span class="math inline">\(C_{D,visc}\)</span>, <span class="math inline">\(C_{M,visc}\)</span>: Viscous forces</p>
+<p>Force coefficients were computed using the OpenFOAM <code>forceCoeffs</code> function object configured inside <code>system/forceCoeffs</code>:</p>
+<ul>
+<li><strong>Reference area</strong>: <span class="math inline">\(A_{ref} = 0.2\)</span> m<span class="math inline">\(^2\)</span></li>
+<li><strong>Direction vectors</strong>: Lift = <span class="math inline">\((0,0,1)\)</span>, Drag = <span class="math inline">\((1,0,0)\)</span>, Pitch axis = <span class="math inline">\((0,1,0)\)</span></li>
+<li><strong>Freestream velocity</strong>: <span class="math inline">\(U_{\infty} = 50\)</span> m/s</li>
+</ul>
+<p>The function object outputs:</p>
+<ul>
+<li><span class="math inline">\(C_L\)</span>: Lift coefficient (negative for downforce)</li>
+<li><span class="math inline">\(C_D\)</span>: Drag coefficient</li>
+<li><span class="math inline">\(C_M\)</span>: Pitching moment coefficient</li>
+</ul>
+<p>Each coefficient is given as the sum of pressure and viscous contributions:</p>
+<ul>
+<li><span class="math inline">\(C_{L,p}\)</span>, <span class="math inline">\(C_{D,p}\)</span>, <span class="math inline">\(C_{M,p}\)</span>: Pressure forces</li>
+<li><span class="math inline">\(C_{L,visc}\)</span>, <span class="math inline">\(C_{D,visc}\)</span>, <span class="math inline">\(C_{M,visc}\)</span>: Viscous forces</li>
+</ul>
 <p>Notice that aerobalance data, i.e.&nbsp;loads as they are divided between the front and rear wheels, are extremely useful and common in modern racing aerodynamics, as they offer a chance to investigate stability and drivability. Nonetheless having a simulation only looking at the rear wing this balance data does not really make any sense, and will thus not be detailed in this report.</p>
 <p>The results are written at each time step to <code>postProcessing/forceCoeffs/</code>, enabling convergence monitoring directly from the terminal during runtime.</p>
-<p>While force coefficients are computed at runtime, both to verify convergence and to allow windowing and averaging for more accurate results, other flow quantities of interest are extracted later by running <code>simpleFoam -postProcess</code>, which looks for a <code>system/postProcessDict</code> file. This is done in order to reduce the computational overhead at runtime, as post-processing tools were found to increase the memory requirement, sometimes leading to OOM fatal errors. The <code>postProcessDict</code> is used to extract: * wall shear stress field on the wing surface, <span class="math inline">\(\tau_w\)</span> * wall bounded streamlines, to mimic flow-vis paint visualizations * turbulence normalized wall distance, <span class="math inline">\(y^+\)</span> * the <span class="math inline">\(\lambda_2\)</span> vortex criterion</p>
+<p>While force coefficients are computed at runtime, both to verify convergence and to allow windowing and averaging for more accurate results, other flow quantities of interest are extracted later by running <code>simpleFoam -postProcess</code>, which looks for a <code>system/postProcessDict</code> file. This is done in order to reduce the computational overhead at runtime, as post-processing tools were found to increase the memory requirement, sometimes leading to OOM fatal errors. The <code>postProcessDict</code> is used to extract:</p>
+<ul>
+<li>wall shear stress field on the wing surface, <span class="math inline">\(\tau_w\)</span></li>
+<li>wall bounded streamlines, to mimic flow-vis paint visualizations</li>
+<li>turbulence normalized wall distance, <span class="math inline">\(y^+\)</span></li>
+<li>the <span class="math inline">\(\lambda_2\)</span> vortex criterion</li>
+</ul>
 <p>ParaView was then used through the <code>results3DPostProcessing.py</code> script to generate 3D visualizations including pressure coefficient fields, wall shear stress magnitude (an indicator of surface friction, and low wall shear stress areas indicate weak flow and potential separation), <span class="math inline">\(\lambda_2\)</span> criterion, and velocity field representations. Wall-bounded streamlines were extracted to visualize flow attachment and separation patterns. This same script is used to compute field variables as <span class="math inline">\(C_p\)</span> and <span class="math inline">\(C_p^{tot}\)</span> (where <span class="math inline">\(C_p^{tot}\)</span> is a measure of the energy in the air), and it also extracts <span class="math inline">\(C_p\)</span> and <span class="math inline">\(y^+\)</span> data along spanwise slices. Examples of the extracted images are shown in the following pictures:</p>
 <div class="columns">
 <div class="column" style="width:48%;">
@@ -725,7 +790,7 @@ window.Quarto = {
 </figure>
 </div>
 <p>All 2D renderings are also combined into MP4 video animations, showing the evolution of structures in the three directions:</p>
-<div class="quarto-video"><video id="video_shortcode_videojs_video1" class="video-js vjs-default-skin vjs-big-play-centered vjs-fluid" controls="" preload="auto" data-setup="{}" title=""><source src="[https://youtu.be/Z_8Aim5R0g8](https://youtu.be/Z_8Aim5R0g8)"></video></div>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/Z_8Aim5R0g8" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
 <p>Finally a custom Python script (<code>caseSummary.py</code>) performs automated data extraction from the pseudo-time history of the simulation and computes mean values over the last 250 iterations to ensure stable averages. This script also updates the master <code>casesSummary.csv</code> file, available for overall numerical results comparison, with all extracted data.</p>
 <p>A final PDF report highlighting some details regarding convergence history, simulation setup and results is automatically generated using Marp from a Markdown template.</p>
 <hr>
@@ -948,7 +1013,12 @@ window.Quarto = {
 </section>
 <section id="drag-composition-analysis" class="level3" data-number="3.3">
 <h3 data-number="3.3" class="anchored" data-anchor-id="drag-composition-analysis"><span class="header-section-number">3.3</span> 3.3 Drag Composition Analysis</h3>
-<p><img src="assets/drag_breakdown.png" class="img-fluid" alt="Drag Breakdown Chart"> <em>Figure 1: Drag breakdown: Pressure vs.&nbsp;Viscous components.</em> Key findings: * <strong>Pressure drag dominates</strong>: <span class="math inline">\(C_{D,p}\)</span> accounts for 93-94% of total drag * <strong>Viscous contribution is minimal</strong>: <span class="math inline">\(C_{D,visc}\)</span> ranges from 0.025 to 0.035 ($$6-7% of total) * <strong>Linear relationship</strong>: Both components increase with downforce level</p>
+<p><img src="assets/drag_breakdown.png" class="img-fluid" alt="Drag Breakdown Chart"> <em>Figure 1: Drag breakdown: Pressure vs.&nbsp;Viscous components.</em> Key findings:</p>
+<ul>
+<li><strong>Pressure drag dominates</strong>: <span class="math inline">\(C_{D,p}\)</span> accounts for 93-94% of total drag</li>
+<li><strong>Viscous contribution is minimal</strong>: <span class="math inline">\(C_{D,visc}\)</span> ranges from 0.025 to 0.035 ($$6-7% of total)</li>
+<li><strong>Linear relationship</strong>: Both components increase with downforce level</li>
+</ul>
 <p>This indicates that wake separation control is the primary driver for drag reduction, rather than boundary layer management.</p>
 </section>
 <section id="lift-to-drag-ratio-evolution" class="level3" data-number="3.4">
@@ -1176,7 +1246,12 @@ window.Quarto = {
 </tbody>
 </table>
 </div>
-<p>All cases achieved excellent convergence with: * Velocity residuals reduced by 99.9% * Pressure residuals reduced by 99.99% * Best overall convergence: ID_04 (final <span class="math inline">\(p = 1.3 \times 10^{-7}\)</span>)</p>
+<p>All cases achieved excellent convergence with:</p>
+<ul>
+<li>Velocity residuals reduced by 99.9%</li>
+<li>Pressure residuals reduced by 99.99%</li>
+<li>Best overall convergence: ID_04 (final <span class="math inline">\(p = 1.3 \times 10^{-7}\)</span>)</li>
+</ul>
 <p>ID_01 shows relatively higher residuals, suggesting potential for further refinement in future iterations.</p>
 </section>
 <section id="straight-line-mode-slm-configurations" class="level3" data-number="3.6">
@@ -1835,7 +1910,6 @@ window.Quarto = {
   });
   </script>
 </div> <!-- /content -->
-<script>videojs(video_shortcode_videojs_video1);</script>
 
 
 
