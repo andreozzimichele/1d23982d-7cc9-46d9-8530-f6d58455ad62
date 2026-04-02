@@ -404,7 +404,7 @@ While 3D images are for getting a broad understanding of the overall flow develo
 
 All 2D renderings are also combined into MP4 video animations, showing the evolution of structures in the three directions:
 
-{{< video https://youtube.com/watch?v=Z_8Aim5R0g8 >}}
+{{< video https://www.youtube.com/watch?v=Z_8Aim5R0g8 >}}
 
 Finally a custom Python script (`caseSummary.py`) performs automated data extraction from the pseudo-time history of the simulation and computes mean values over the last 250 iterations to ensure stable averages. This script also updates the master `casesSummary.csv` file, available for overall numerical results comparison, with all extracted data.
 
