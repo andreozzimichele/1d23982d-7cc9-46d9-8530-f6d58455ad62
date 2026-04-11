@@ -1,0 +1,11 @@
+---
+title: "Entropy Arising in Statistical Mechanics"
+---
+
+::: {.callout-tip icon=false}
+## Full Project Report
+If the PDF does not display correctly below, you can [download it directly here](assets/entropy.pdf).
+:::
+
+<iframe src="assets/entropy.pdf" width="100%" height="800px">
+</iframe>

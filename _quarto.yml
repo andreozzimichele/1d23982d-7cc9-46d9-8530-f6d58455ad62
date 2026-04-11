@@ -10,7 +10,13 @@ website:
     background: primary
     left:
       - href: index.qmd
+        text: Home
+      - href: rear_wing.qmd
         text: 2026 Rear Wing Study
+      - href: thesis.qmd
+        text: MSc Thesis
+      - href: entropy.qmd
+        text: Entropy & Statistical Mechanics
         
 format:
   html:
