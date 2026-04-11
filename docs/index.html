@@ -195,15 +195,13 @@ window.Quarto = {
   </ul></li>
   <li><a href="#results-and-discussion" id="toc-results-and-discussion" class="nav-link" data-scroll-target="#results-and-discussion"><span class="header-section-number">3</span> 3. Results and Discussion</a>
   <ul class="collapse">
-  <li><a href="#aerodynamic-coefficients-evolution" id="toc-aerodynamic-coefficients-evolution" class="nav-link" data-scroll-target="#aerodynamic-coefficients-evolution"><span class="header-section-number">3.1</span> 3.1 Aerodynamic Coefficients Evolution</a></li>
-  <li><a href="#performance-analysis" id="toc-performance-analysis" class="nav-link" data-scroll-target="#performance-analysis"><span class="header-section-number">3.2</span> 3.2 Performance Analysis</a></li>
-  <li><a href="#drag-composition-analysis" id="toc-drag-composition-analysis" class="nav-link" data-scroll-target="#drag-composition-analysis"><span class="header-section-number">3.3</span> 3.3 Drag Composition Analysis</a></li>
-  <li><a href="#lift-to-drag-ratio-evolution" id="toc-lift-to-drag-ratio-evolution" class="nav-link" data-scroll-target="#lift-to-drag-ratio-evolution"><span class="header-section-number">3.4</span> 3.4 Lift-to-Drag Ratio Evolution</a></li>
-  <li><a href="#convergence-analysis" id="toc-convergence-analysis" class="nav-link" data-scroll-target="#convergence-analysis"><span class="header-section-number">3.5</span> 3.5 Convergence Analysis</a></li>
-  <li><a href="#straight-line-mode-slm-configurations" id="toc-straight-line-mode-slm-configurations" class="nav-link" data-scroll-target="#straight-line-mode-slm-configurations"><span class="header-section-number">3.6</span> 3.6 Straight Line Mode (SLM) Configurations</a></li>
+  <li><a href="#initial-results" id="toc-initial-results" class="nav-link" data-scroll-target="#initial-results"><span class="header-section-number">3.1</span> 3.1 Initial results</a></li>
+  <li><a href="#design-evolution" id="toc-design-evolution" class="nav-link" data-scroll-target="#design-evolution"><span class="header-section-number">3.2</span> 3.2 Design Evolution</a></li>
+  <li><a href="#straight-line-mode-slm-configurations" id="toc-straight-line-mode-slm-configurations" class="nav-link" data-scroll-target="#straight-line-mode-slm-configurations"><span class="header-section-number">3.3</span> 3.3 Straight Line Mode (SLM) Configurations</a></li>
+  <li><a href="#a-final-discussion-on-grid-convergence" id="toc-a-final-discussion-on-grid-convergence" class="nav-link" data-scroll-target="#a-final-discussion-on-grid-convergence"><span class="header-section-number">3.4</span> 3.4 A Final Discussion on Grid Convergence</a></li>
   </ul></li>
-  <li><a href="#key-findings" id="toc-key-findings" class="nav-link" data-scroll-target="#key-findings"><span class="header-section-number">4</span> 4. Key Findings</a></li>
-  <li><a href="#conclusions" id="toc-conclusions" class="nav-link" data-scroll-target="#conclusions"><span class="header-section-number">5</span> 5. Conclusions</a></li>
+  <li><a href="#conclusions" id="toc-conclusions" class="nav-link" data-scroll-target="#conclusions"><span class="header-section-number">4</span> 4. Conclusions</a></li>
+  <li><a href="#acknowledgements" id="toc-acknowledgements" class="nav-link" data-scroll-target="#acknowledgements"><span class="header-section-number">5</span> Acknowledgements</a></li>
   <li><a href="#appendix-code-automation-example" id="toc-appendix-code-automation-example" class="nav-link" data-scroll-target="#appendix-code-automation-example"><span class="header-section-number">6</span> Appendix: Code Automation Example</a></li>
   </ul>
 </nav>
@@ -262,7 +260,7 @@ window.Quarto = {
 </div>
 <section id="introduction" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">1</span> 1. Introduction</h2>
-<p>The 2026 Formula 1 regulations introduce significant changes to rear wing design: traditional endplates are bought back, but a very tight RV-RW-PROFILES reference volume is introduced, and the evolution from DRS to SLM for straight line drag reduction force aerodynamic engineers to explore new development paths.</p>
+<p>The 2026 Formula 1 regulations introduce significant changes to rear wing design: traditional endplates are brought back, but a very tight RV-RW-PROFILES reference volume is introduced, and the evolution from DRS to SLM for straight line drag reduction forces aerodynamic engineers to explore new development paths.</p>
 <p>This study is developed in 3 major stages:</p>
 <ul>
 <li>A mesh convergence analysis, using the Grid Convergence Index as the main metric to evaluate different meshes.</li>
@@ -273,10 +271,10 @@ window.Quarto = {
 <h3 data-number="1.1" class="anchored" data-anchor-id="a-much-needed-disclaimer"><span class="header-section-number">1.1</span> 1.1 A Much Needed Disclaimer</h3>
 <p>While hopefully not needed, in the sense that everybody reading this should know it already, I’d rather be safe than sorry and clearly state the not so obvious: aerodynamics is governed by the Navier-Stokes equations, which are known for their mathematical complexity. The equations are nonlinear, and in their incompressible version they describe a situation that shows many similarities with a purely <a href="https://cfd.university/learn/10-key-concepts-everyone-must-understand-in-cfd/what-are-hyperbolic-parabolic-and-elliptic-equations-in-cfd">elliptic</a> problem, i.e.&nbsp;one where all points in the domain influence each other, both upstream and downstream. Moreover F1 cars are extremely complex pieces of technology, where the amount of detail is extraordinary with respect to all aspects of engineering. These two statements should make it clear that:</p>
 <ul>
-<li>Correctly modelling an F1 car through CFD is no trivial task. Every assumption should be double (or even triple) checked, as each introduces small deviations from reality that might catastrophically lead to a result that significantly diverges from the one found on track. While indubitably colorful CFD should always be treaded with immense care and some well informed suspicion.</li>
-<li>Even if the perfect CFD recipe for F1 existed (more than highly unlikely), applying it only to the simulation of the rear wing is not going to give the full picture. The rear wing is placed downstream of a number of aerodynamic components, each working air in a specific way: as such the incoming flow is surely not aligned with the <span class="math inline">\(x\)</span> axis and vorticity shed by the front wing, turning vanes and all series of detailing that modern F1 cars are full of is going to produce a number of vortices that guide engineers in the design of the rear end. Moreover the rear wing interacts heavily with the diffuser and the rear suspension, helping extract maximum downforce from the floor.</li>
+<li>Correctly modelling an F1 car through CFD is no trivial task. Every assumption should be double (or even triple) checked, as each introduces small deviations from reality that might catastrophically lead to a result that significantly diverges from the one found on track. While indubitably colorful, CFD should always be treated with immense care and some well informed suspicion</li>
+<li>Even if the perfect CFD recipe for F1 existed (more than highly unlikely), applying it only to the simulation of the rear wing is not going to give the full picture. The rear wing is placed downstream of a number of aerodynamic components, each working air in a specific way: as such the incoming flow is surely not aligned with the <span class="math inline">\(x\)</span> axis and vorticity shed by the front wing, turning vanes and all series of detailing that modern F1 cars are full of is going to produce a number of vortices that guide engineers in the design of the rear end. Moreover the rear wing interacts heavily with the diffuser and the rear suspension, helping extract maximum downforce from the floor</li>
 </ul>
-<p>The conclusion in simple: the results in this report are clearly not meant to uncover the real numbers that F1 teams see in their CFD sims or in the wind tunnel. It is a learning project, aimed more at understanding why some design choices are made and how engineers might find performance in a component as crucial as the rear wing. The reader should, possibly at the end of each paragraph, should ask himself: what are the possible inaccuracies stemming from what was just explained? Why would an aerodynamicist take a specific development path in this case? Is the picture clear from a methodology perspective? Reading CFD numbers (and aero numbers in general) without a critical eye is the best way to get trapped in misleading explanations and consequently ineffective solutions.</p>
+<p>The conclusion in simple: the results in this report are clearly not meant to uncover the real numbers that F1 teams see in their CFD sims or in the wind tunnel. It is a learning project, aimed more at understanding why some design choices are made and how engineers might find performance in a component as crucial as the rear wing. The reader, possibly at the end of each paragraph, should ask himself: what are the possible inaccuracies stemming from what was just explained? Why would an aerodynamicist take a specific development path in this case? Is the picture clear from a methodology perspective? Reading CFD numbers (and aero numbers in general) without a critical eye is the best way to get trapped in misleading explanations and consequently ineffective solutions.</p>
 <hr>
 </section>
 </section>
@@ -291,7 +289,7 @@ window.Quarto = {
 <li>512 GB of SSD storage, providing faster I/O during simulations</li>
 <li>1 TB of HDD storage, for long term storage of simulation results</li>
 </ul>
-<p>On a machine running Debian 13 as the OS, to strip down the system of all unnecessary software and provide good responsiveness. This hardware configuration si nonetheless very limited for CFD, where ideally one would have about 250,000 cells per core, and no more than 1 million cells per GB of memory. The PC can be thus estimated to hit a mesh size limit at about 8 million cells (considering OS and all processes taking place alongside the pure computation) before being trapped in OOM errors, but would provide results for such grid in a painfully slow turnaround time. Not having access to more capable hardware forced the choice to a compromise in terms of accuracy, which will soon be discussed. Limits of the machine will be dealt with again in a later section.</p>
+<p>On a machine running Debian 13 as the OS, to strip down the system of all unnecessary software and provide good responsiveness. This hardware configuration is nonetheless very limited for CFD, where ideally one would have about 250,000 cells per core, and no more than 1 million cells per GB of memory. The PC can be thus estimated to hit a mesh size limit at about 8 million cells (considering OS and all processes taking place alongside the pure computation) before being trapped in OOM errors, but would provide results for such grid in a painfully slow turnaround time. Not having access to more capable hardware forced the choice to a compromise in terms of accuracy, which will soon be discussed. Limits of the machine will be dealt with again in a later section.</p>
 <p>For all of the above reasons it was decided that the simulations would be run as an incompressible steady state symmetric cases about the <span class="math inline">\(y=0\)</span> plane (as mentioned above the hardware limitations where really stringent, so the known limitations of a symmetric simulation were significantly outnumbered by the gained accuracy through a mesh twice as fine).</p>
 </section>
 <section id="geometry" class="level3" data-number="2.2">
@@ -348,18 +346,14 @@ window.Quarto = {
 <li>a second refinement box, to allow a smooth transition from the coarse freestream mesh to the finer cells in the first refinement box</li>
 <li>generation of prism layers, with controls on the first cell height, expansion ratio and number of extruded layers</li>
 </ul>
-<p>A few quick comments can be made by comparatively looking at mesh slices from snappyHexMesh and cfMesh:</p>
-<div class="columns">
-<div class="column" style="width:48%;">
+<p>A few quick comments can be made by comparatively looking at mesh slices coming from snappyHexMesh and cfMesh:</p>
+<div class="{.layout-ncol=&quot;2&quot;}">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="assets/yNormalGap_y00sHM.png" class="img-fluid figure-img"></p>
 <figcaption>A centerline slice of the mesh created with snappyHexMesh</figcaption>
 </figure>
 </div>
-</div><div class="column" style="width:4%;">
-
-</div><div class="column" style="width:48%;">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="assets/yNormalGap_y00cfM.png" class="img-fluid figure-img"></p>
@@ -367,19 +361,14 @@ window.Quarto = {
 </figure>
 </div>
 </div>
-</div>
 <p>While snappyHexMesh builds very consistent layers cfMesh adapts the thickness to the surrounding cells (to maintain good mesh quality), a strategy that becomes problematic in refinement regions, as the prism layer becomes much thinner (possibly getting out of the desired <span class="math inline">\(y^+\)</span> range). On the other hand the next two pictures tell a totally different side of the story:</p>
-<div class="columns">
-<div class="column" style="width:48%;">
+<div class="{.layout-ncol=&quot;2&quot;}">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="assets/yNormalGap_y04sHM.png" class="img-fluid figure-img"></p>
 <figcaption>A slice close to the endplate of the mesh created with snappyHexMesh</figcaption>
 </figure>
 </div>
-</div><div class="column" style="width:4%;">
-
-</div><div class="column" style="width:48%;">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="assets/yNormalGap_y04cfM.png" class="img-fluid figure-img"></p>
@@ -387,10 +376,9 @@ window.Quarto = {
 </figure>
 </div>
 </div>
-</div>
 <p>In this second case the layer extrusion procedure on the pressure side and leading edge of the second element<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> failed and no prismatic layer was created.</p>
 <p>Another interesting observation can be made regarding the refinement algorithm for the two software options: transitioning from a single cell to two refined cells (the so-called split-quad, a pentagon obtained by refinement) snappyHexMesh tries to maintain perfectly orthogonal angles. Conversely cfMesh deforms the cell edges so that each cell is a convex pentagon. While apparently unmotivatedly complicated, the strategy applied by cfMesh is actually helpful at limiting both skewness and non-orthogonality, as the face connecting the owner and neighbour cell is angled in such a way that the vector connecting the two cell centers is a lot more similar to the face perpendicular bisector (in 2D) a.k.a. the face centered normal vector (in 3D). An excellent reading regarding mesh introduced errors can be found in the <a href="https://cfmesh.com/is-it-always-the-mesh-part-1-discretisation-basics-and-mesh-quality-metrics/">Is it Always the Mesh?</a> series, found in the cfMesh blog.</p>
-<p>Finally, a discussion regarding the boundary layer description: the <em>low-Re</em> approach is generally considered to be superior in the description of high gradients and separation regions, and it might thus seem logical to aim for a <span class="math inline">\(y^+\)</span> of approximately 1 (well within the viscous sublayer) on the rear wing surface. This is certainly the topic for an interesting comparison, with and without wall functions, but is certainly out of reach for the hardware available, leading to the necessary usage of wall functions (the so called <em>high-Re</em> approach). This is done through the <code>nutUSpaldingWallFunction</code> present in OpenFOAM, which is capable of handling a more broad spectrum of <span class="math inline">\(y^+\)</span> values thanks to a continous blending function. A thorough analysis of this implementation choice might also be of interest, compared to standard wall functions that are intended to work only in the log-law region.</p>
+<p>Finally, a discussion regarding the boundary layer description: the <em>low-Re</em> approach is generally considered to be superior in the description of high gradients and separation regions, and it might thus seem logical to aim for a <span class="math inline">\(y^+\)</span> of approximately 1 (well within the viscous sublayer) on the rear wing surface. This is certainly the topic for an interesting comparison, with and without wall functions, but is undoubtedly out of reach for the hardware available, leading to the necessary usage of wall functions (the so called <em>high-Re</em> approach). This is done through the <code>nutUSpaldingWallFunction</code> present in OpenFOAM, which is capable of handling a more broad spectrum of <span class="math inline">\(y^+\)</span> values thanks to a continous blending function. A thorough analysis of this implementation choice might also be of interest, compared to standard wall functions that are intended to work only in the log-law region.</p>
 <p>Even though the choice of wall function implementation should provide some help if the first cell center is too close to the surface, a target value of <span class="math inline">\(30&gt;y^+&gt;200\)</span> was selected, and the automated bash script provided data extraction to verify the condition on the wing surface, as shown in the following figures<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -408,7 +396,7 @@ window.Quarto = {
 </section>
 <section id="physics-numerics" class="level3" data-number="2.5">
 <h3 data-number="2.5" class="anchored" data-anchor-id="physics-numerics"><span class="header-section-number">2.5</span> 2.5 Physics &amp; Numerics</h3>
-<p>The simulations were performed using OpenFOAM’s <code>simpleFoam</code> solver, a steady-state incompressible solver, alongside RANS modelling for turbulence. The complete solver configuration is detailed below.</p>
+<p>The simulations were performed using OpenFOAM’s simpleFoam solver, a steady-state incompressible solver, alongside RANS modelling for turbulence. The complete solver configuration is detailed below.</p>
 <section id="solver-settings" class="level4" data-number="2.5.1">
 <h4 data-number="2.5.1" class="anchored" data-anchor-id="solver-settings"><span class="header-section-number">2.5.1</span> 2.5.1 Solver Settings</h4>
 <p>The following table summarizes the key numerical settings used in the simulation:</p>
@@ -416,9 +404,9 @@ window.Quarto = {
 <li><strong>Application</strong>: <code>simpleFoam</code> (steady-state incompressible)</li>
 <li><strong>Turbulence Model</strong>: k-<span class="math inline">\(\omega\)</span> SST (Shear Stress Transport)</li>
 <li><strong>Time steps</strong>: 500 iterations (pseudo-time iterations, being steady-state)</li>
-<li><strong>Freestream velocity</strong>: <span class="math inline">\(U_{\infty} = 50\)</span> m/s</li>
+<li><strong>Freestream velocity</strong>: <span class="math inline">\(U_{\infty} = 50\)</span>,m/s</li>
 </ul>
-<p>The governing equations are solved using the SIMPLE algorithm (Semi-Implicit Method for Pressure Linked Equations), as the simpleFoam application name suggests, with 3 non-orthogonal correctors, due to the geometrical complexity of the wing and its prismatic layers. It was later noticed in the output of the checkMesh command that the maximum non-orthogonality was below <span class="math inline">\(65^\circ\)</span>, with an average of <span class="math inline">\(\approx5^\circ\)</span>. These low values serve to show the quality of the cfMesh algorithm, and suggest that the resulting mesh should likely provide good results with a single non-orthogonal corrector, possibly even none. The maximum skewness was found to be <span class="math inline">\(\approx2.6\)</span>, on less than 50 cells out of the 8 millions used in the base mesh, once more proving the good quality of the mesh constructed by cfMesh.</p>
+<p>The governing equations are solved using the SIMPLE algorithm(Semi-Implicit Method for Pressure Linked Equations), as the simpleFoam application name suggests, with 3 non-orthogonal correctors, due to the geometrical complexity of the wing and its prismatic layers. It was later noticed in the output of the checkMesh command that the maximum non-orthogonality was below <span class="math inline">\(65^\circ\)</span>, with an average of <span class="math inline">\(\approx5^\circ\)</span>. These low values serve to show the quality of the cfMesh algorithm, and suggest that the resulting mesh should likely provide good results with a single non-orthogonal corrector, possibly even none. The maximum skewness was found to be <span class="math inline">\(\approx2.6\)</span>, on less than 50 cells out of the 8 millions used in the base mesh, once more proving the good quality of the mesh constructed by cfMesh.</p>
 <p>The linear solver settings used for the simulation, found in the <code>fvSolution</code> file, are reported in the table below:</p>
 <p><strong>Table 1: Linear solver settings</strong></p>
 <div class="table-responsive">
@@ -513,29 +501,29 @@ window.Quarto = {
 <h4 data-number="2.5.2" class="anchored" data-anchor-id="boundary-conditions"><span class="header-section-number">2.5.2</span> 2.5.2 Boundary Conditions</h4>
 <p>The computational domain consisting of 7 boundary patches applies the following BC:</p>
 <ul>
-<li><strong>inlet</strong>: Velocity inlet with fixed velocity, <span class="math inline">\(\vec{U} = (50, 0, 0)\)</span> m/s</li>
-<li><strong>outlet</strong>: Pressure outlet with fixed gauge pressure, <span class="math inline">\(p = 0\)</span> Pa</li>
+<li><strong>inlet</strong>: Velocity inlet with fixed velocity, <span class="math inline">\(\vec{U} = (50, 0, 0)\)</span>,m/s</li>
+<li><strong>outlet</strong>: Pressure outlet with fixed gauge pressure, <span class="math inline">\(p = 0\)</span>,Pa</li>
 <li><strong>rearWing</strong>: No-slip condition, <span class="math inline">\(\vec{U}_{wall} = 0\)</span></li>
-<li><strong>lowerWall</strong>: Fixed velocity moving ground, <span class="math inline">\(\vec{U} = (50, 0, 0)\)</span> m/s</li>
+<li><strong>lowerWall</strong>: Fixed velocity moving ground, <span class="math inline">\(\vec{U} = (50, 0, 0)\)</span>,m/s</li>
 <li><strong>symmetry</strong>: Symmetry plane at <span class="math inline">\(y = 0\)</span></li>
 <li><strong>outside</strong>: Far-field slip boundary</li>
 <li><strong>upperWall</strong>: Far-field slip boundary</li>
 </ul>
 <p>Boundary conditions applied in the turbulence model equations are detailed in the following list, only highlighting the choices that were actively considered with respect to a default tutorial.</p>
 <ul>
-<li><strong>Inlet</strong>: Fixed values: <span class="math inline">\(k = 0.01\)</span> m<span class="math inline">\(^2\)</span>/s<span class="math inline">\(^2\)</span>, <span class="math inline">\(\omega = 700\)</span> rad/s; coming from Spalart &amp; Rumsey, as suggested by <a href="https://www.linkedin.com/pulse/simulating-williams-fw43bar-part-1-all-simulations-wrong-david-penner/">Penner</a>, and calculated <span class="math inline">\(\nu_t\)</span></li>
+<li><strong>Inlet</strong>: Fixed values: <span class="math inline">\(k = 0.01\)</span>,m<span class="math inline">\(^2\)</span>/s<span class="math inline">\(^2\)</span>, <span class="math inline">\(\omega = 700\)</span>,rad/s; coming from Spalart &amp; Rumsey <span class="citation" data-cites="spalart2007">[@spalart2007]</span>, as suggested by <a href="https://www.linkedin.com/pulse/simulating-williams-fw43bar-part-1-all-simulations-wrong-david-penner/">Penner</a>, and calculated <span class="math inline">\(\nu_t\)</span></li>
 <li><strong>Walls (rearWing, lowerWall)</strong>: Wall functions using <code>nutUSpaldingWallFunction</code> for <span class="math inline">\(\nu_t\)</span>, <code>kqRWallFunction</code> for <span class="math inline">\(k\)</span> and <code>omegaWallFunction</code> for <span class="math inline">\(\omega\)</span></li>
 <li><strong>Outlet</strong>: Inlet-outlet conditions for <span class="math inline">\(k\)</span> and <span class="math inline">\(\omega\)</span>, with calculated <span class="math inline">\(\nu_t\)</span></li>
 </ul>
 <p>In order to get a better convergence of steady steady iterations the initial conditions were given by:</p>
 <ul>
-<li>Velocity: uniform <span class="math inline">\(U = (50, 0, 0)\)</span> m/s</li>
-<li>Gauge pressure: uniform <span class="math inline">\(p = 0\)</span> Pa</li>
+<li>Velocity: uniform <span class="math inline">\(U = (50, 0, 0)\)</span>,m/s</li>
+<li>Gauge pressure: uniform <span class="math inline">\(p = 0\)</span>,Pa</li>
 </ul>
-<p>The linear model solver <code>potentialFoam</code> was used from this starting condition to obtain a velocity field that could comply with the compatibility conditions (i.e.&nbsp;guaranteeing coherence between BC and IC). Once <code>potentialFoam</code> convergence was reached the resulting field was used as an initial condition for the RANS model solved with <code>simpleFoam</code>, adding the initial conditions:</p>
+<p>The linear model solver potentialFoam was used from this starting condition to obtain a velocity field that could comply with the compatibility conditions (i.e.&nbsp;guaranteeing coherence between BC and IC). Once potentialFoam convergence was reached the resulting field was used as an initial condition for the RANS model solved with simpleFoam, adding the initial conditions:</p>
 <ul>
-<li>Turbulent kinetic energy: <span class="math inline">\(k = 0.01\)</span> m<span class="math inline">\(^2\)</span>/s<span class="math inline">\(^2\)</span></li>
-<li>Specific dissipation rate: <span class="math inline">\(\omega = 700\)</span> rad/s</li>
+<li>Turbulent kinetic energy: <span class="math inline">\(k = 0.01\)</span>,m<span class="math inline">\(^2\)</span>/s<span class="math inline">\(^2\)</span></li>
+<li>Specific dissipation rate: <span class="math inline">\(\omega = 700\)</span>,rad/s</li>
 </ul>
 <p>The flow was initialized with uniform freestream conditions and solved for a number of iterations sufficient to reach convergence. To estimate convergence first, as suggested by the brilliant page <a href="https://cfd.university/blog//how-to-determine-the-best-stopping-criterion-for-cfd-simulations">cfd.university</a> the evolution of equation residuals was used to evaluate whether the first simulation was approaching convergence, divergence or an oscillatory plateau. Inspection of the following image shows a tendency towards convergence with small size oscillations that will predictably continue as long as the simulation is carried out.</p>
 <div class="quarto-figure quarto-figure-center">
@@ -547,13 +535,13 @@ window.Quarto = {
 <p>Given the satisfactory converged appearance of the residuals, the next step suggested is to look at many different integral quantities, to evaluate the approach to a converged state of different flow quantities (as mentioned in the webpage lift coefficient is mainly driven by pressure, while the drag coefficient is more influenced by velocity gradients, thus using both to understand convergence gives a better look at the evolution of different aspects of the flow solution). In this case it as decided that lift, drag and moment coefficients should be analyzed, and thus a python script extracting the time evolution of these three integral quantities was developed and added to the bash script automation, so that convergence of each simulation could be quickly evaluated at a glance. The results for the basis simulation are shown in the next set of images:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="assets/CL_evolution.png" class="img-fluid figure-img"></p>
+<p><img src="assets/CD_evolution.png" class="img-fluid figure-img"></p>
 <figcaption>The CL evolution for the first simulation</figcaption>
 </figure>
 </div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="assets/CD_evolution.png" class="img-fluid figure-img"></p>
+<p><img src="assets/CL_evolution.png" class="img-fluid figure-img"></p>
 <figcaption>The CD evolution for the first simulation</figcaption>
 </figure>
 </div>
@@ -563,7 +551,7 @@ window.Quarto = {
 <figcaption>The CM evolution for the first simulation</figcaption>
 </figure>
 </div>
-<p>As expected convergence of the three coefficients does not seem to happen exactly at the same pseudo-time iteration, nonetheless at the end of the 500 iterations a clear steady state converged value is approached by all three. Once these steps are completed the same <a href="https://cfd.university/blog//how-to-determine-the-best-stopping-criterion-for-cfd-simulations">webpage</a> suggests that an Asymptotic Convergence Threshold (ACT) should be established through a script that dynamically evaluates the state of the simulation. This would certainly help at minimizing the number of iterations utilized (thus wasting minimal computing resources), however the criterion of 500 iterations was considered sufficient for this simple case, and the implementation of the ACT framework was left as a work for a later project.</p>
+<p>As expected convergence of the three coefficients does not seem to happen exactly at the same pseudo-time iteration, nonetheless at the end of the 500 iterations a clear steady state converged value is approached by all three. Once these steps are completed the same <a href="https://cfd.university/blog//how-to-determine-the-best-stopping-criterion-for-cfd-simulations">webpage</a> suggests that an Asymptotic Convergence Threshold (ACT) should be established through a script that dynamically evaluates the state of the simulation. This would certainly help at minimizing the number of iterations utilized (thus wasting minimal computing resources), however the criterion of 500 iterations was considered sufficient for this simple case<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>, and the implementation of the ACT framework was left as a work for a later project.</p>
 <p>Finally, as a result of this first study on convergence a window size of 200 iterations was chosen to compute average values the converged steady state integral coefficients to be evaluated when comparing different rear wing geometries.</p>
 </section>
 </section>
@@ -635,8 +623,8 @@ window.Quarto = {
 <thead>
 <tr class="header">
 <th style="text-align: left;">Mesh Level</th>
-<th style="text-align: left;"><span class="math inline">\(C_{D,mean}\)</span></th>
-<th style="text-align: left;"><span class="math inline">\(C_{L,mean}\)</span></th>
+<th style="text-align: left;"><strong><span class="math inline">\(C_{D,mean}\)</span></strong></th>
+<th style="text-align: left;"><strong><span class="math inline">\(C_{L,mean}\)</span></strong></th>
 </tr>
 </thead>
 <tbody>
@@ -658,7 +646,7 @@ window.Quarto = {
 </tbody>
 </table>
 </div>
-<p>The grid convergence analysis was performed using the Grid Convergence Index, in the derivation presented by Celik <em>et al.</em>, which will be now briefly summarized.</p>
+<p>The grid convergence analysis was performed using the Grid Convergence Index, in the derivation presented by Celik <em>et al.</em> <span class="citation" data-cites="celik2008">[@celik2008]</span>, which will be now briefly summarized.</p>
 <p>First a mesh representative grid spacing is computed for the three grids as: <span class="math display">\[h_j = \left(\frac{1}{N_{cells}}\sum_{i=1}^{N_{cells}}\Delta V_i\right)^{1/3}\]</span></p>
 <p>For <span class="math inline">\(j\in[1,2,3]\)</span>, representing the three refinement levels ordered as 1=fine, 2=medium and 3=coarse.</p>
 <p>Then the refinement ratio between successive grids is defined as: <span class="math display">\[r_{ij} = \frac{h_i}{h_j}\]</span></p>
@@ -692,7 +680,8 @@ window.Quarto = {
 <p>Which emphasizes that the variation between the medium and the fine cell is not large enough. This nonetheless contrasted with the hardware limitations, and was accepted for the subsequent analysis.</p>
 <p>The convergence ratio computed for the drag coefficient in this case is <span class="math inline">\(CR=1.07\)</span>, indicating monotonic divergence, while the same indicator for the lift coefficient comes out to be <span class="math inline">\(CR=-2.49\)</span>, indicating oscillatory divergence.</p>
 <p>This is, at a very practical level, a terrible result: the finest mesh is not fine enough to establish a mathematically converging behaviour with respect to the medium and coarse one, and thus for both drag and lift the order of convergence numerically computed is a <span class="math inline">\(p=\text{NaN}\)</span> value, not allowing a GCI estimate.</p>
-<p>Having met the hardware limit for the finest mesh possible it was not possible to go further with the refinement, and thus it was decided to accept a risk: the fine mesh would be used at this stage for the aerodynamic development of the wing, and only later a refined mesh would be attempted, with a solution explained in a later section, to establish some GCI.</p>
+<p>Having met the hardware limit for the finest mesh possible it was not possible to go further with the refinement, and thus it was decided to accept a risk: the fine mesh would be used at this stage for the aerodynamic development of the wing, and the described limitation will be addressed and fully resolved in a later section by offloading the final geometry to an AWS cloud computing instance for a proper grid convergence verification, to establish a proper GCI<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>.</p>
+<p>This limitation will be addressed and fully resolved in a later section by offloading the final geometry to an AWS cloud computing instance for a proper grid convergence verification.</p>
 </section>
 <section id="post-processing" class="level3" data-number="2.7">
 <h3 data-number="2.7" class="anchored" data-anchor-id="post-processing"><span class="header-section-number">2.7</span> 2.7 Post-Processing</h3>
@@ -701,9 +690,9 @@ window.Quarto = {
 <h4 data-number="2.7.1" class="anchored" data-anchor-id="force-coefficients-computation"><span class="header-section-number">2.7.1</span> 2.7.1 Force Coefficients Computation</h4>
 <p>Force coefficients were computed using the OpenFOAM <code>forceCoeffs</code> function object configured inside <code>system/forceCoeffs</code>:</p>
 <ul>
-<li><strong>Reference area</strong>: <span class="math inline">\(A_{ref} = 0.2\)</span> m<span class="math inline">\(^2\)</span></li>
+<li><strong>Reference area</strong>: <span class="math inline">\(A_{ref} = 0.2\)</span>,m<span class="math inline">\(^2\)</span></li>
 <li><strong>Direction vectors</strong>: Lift = <span class="math inline">\((0,0,1)\)</span>, Drag = <span class="math inline">\((1,0,0)\)</span>, Pitch axis = <span class="math inline">\((0,1,0)\)</span></li>
-<li><strong>Freestream velocity</strong>: <span class="math inline">\(U_{\infty} = 50\)</span> m/s</li>
+<li><strong>Freestream velocity</strong>: <span class="math inline">\(U_{\infty} = 50\)</span>,m/s</li>
 </ul>
 <p>The function object outputs:</p>
 <ul>
@@ -717,7 +706,7 @@ window.Quarto = {
 <li><span class="math inline">\(C_{L,visc}\)</span>, <span class="math inline">\(C_{D,visc}\)</span>, <span class="math inline">\(C_{M,visc}\)</span>: Viscous forces</li>
 </ul>
 <p>Notice that aerobalance data, i.e.&nbsp;loads as they are divided between the front and rear wheels, are extremely useful and common in modern racing aerodynamics, as they offer a chance to investigate stability and drivability. Nonetheless having a simulation only looking at the rear wing this balance data does not really make any sense, and will thus not be detailed in this report.</p>
-<p>The results are written at each time step to <code>postProcessing/forceCoeffs/</code>, enabling convergence monitoring directly from the terminal during runtime.</p>
+<p>The results are written at each time step to <code>postProcessing/forceCoeffs/</code>, enabling convergence monitoring directly from the terminal during runtime<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>.</p>
 <p>While force coefficients are computed at runtime, both to verify convergence and to allow windowing and averaging for more accurate results, other flow quantities of interest are extracted later by running <code>simpleFoam -postProcess</code>, which looks for a <code>system/postProcessDict</code> file. This is done in order to reduce the computational overhead at runtime, as post-processing tools were found to increase the memory requirement, sometimes leading to OOM fatal errors. The <code>postProcessDict</code> is used to extract:</p>
 <ul>
 <li>wall shear stress field on the wing surface, <span class="math inline">\(\tau_w\)</span></li>
@@ -725,18 +714,14 @@ window.Quarto = {
 <li>turbulence normalized wall distance, <span class="math inline">\(y^+\)</span></li>
 <li>the <span class="math inline">\(\lambda_2\)</span> vortex criterion</li>
 </ul>
-<p>ParaView was then used through the <code>results3DPostProcessing.py</code> script to generate 3D visualizations including pressure coefficient fields, wall shear stress magnitude (an indicator of surface friction, and low wall shear stress areas indicate weak flow and potential separation), <span class="math inline">\(\lambda_2\)</span> criterion, and velocity field representations. Wall-bounded streamlines were extracted to visualize flow attachment and separation patterns. This same script is used to compute field variables as <span class="math inline">\(C_p\)</span> and <span class="math inline">\(C_p^{tot}\)</span> (where <span class="math inline">\(C_p^{tot}\)</span> is a measure of the energy in the air), and it also extracts <span class="math inline">\(C_p\)</span> and <span class="math inline">\(y^+\)</span> data along spanwise slices. Examples of the extracted images are shown in the following pictures:</p>
-<div class="columns">
-<div class="column" style="width:48%;">
+<p>ParaView was then used through the <code>results3DPostProcessing.py</code> script to generate 3D visualizations including pressure coefficient fields, wall shear stress magnitude<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a>, <span class="math inline">\(\lambda_2\)</span> criterion, and velocity field representations. Wall-bounded streamlines were extracted to visualize flow attachment and separation patterns. This same script is used to compute field variables as <span class="math inline">\(C_p\)</span> and <span class="math inline">\(C_p^{tot}\)</span><a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a>, and it also extracts <span class="math inline">\(C_p\)</span> and <span class="math inline">\(y^+\)</span> data along spanwise slices. Examples of the extracted images are shown in the following pictures:</p>
+<div class="{.layout-ncol=&quot;2&quot;}">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="assets/cpPlot_y_00.01.png" class="img-fluid figure-img"></p>
 <figcaption>A visualization of the extracted Cp data, shown for a spanwise station</figcaption>
 </figure>
 </div>
-</div><div class="column" style="width:4%;">
-
-</div><div class="column" style="width:48%;">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="assets/cpPlot_y_00.30.png" class="img-fluid figure-img"></p>
@@ -744,24 +729,18 @@ window.Quarto = {
 </figure>
 </div>
 </div>
-</div>
-<div class="columns">
-<div class="column" style="width:48%;">
+<div class="{.layout-ncol=&quot;2&quot;}">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="assets/WSS_Streamlines_BotRight.png" class="img-fluid figure-img"></p>
-<figcaption>Wall shear stress limiting streamlines (Bottom Right)</figcaption>
+<figcaption>A visualization of the wall shear stress, showing superimposed limiting streamlines on half of the geometric model</figcaption>
 </figure>
 </div>
-</div><div class="column" style="width:4%;">
-
-</div><div class="column" style="width:48%;">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="assets/WSS_Streamlines_TopLeft.png" class="img-fluid figure-img"></p>
-<figcaption>Wall shear stress limiting streamlines (Top Left)</figcaption>
+<figcaption>A visualization of the wall shear stress, showing superimposed limiting streamlines on half of the geometric model</figcaption>
 </figure>
-</div>
 </div>
 </div>
 <div class="quarto-figure quarto-figure-center">
@@ -770,7 +749,7 @@ window.Quarto = {
 <figcaption>A visualization of the most important vortical structures through the Lambda2 criterion, coloured by the total pressure coefficient</figcaption>
 </figure>
 </div>
-<p>While 3D images are for getting a broad understanding of the overall flow development, and a good conceptual understanding of the most important flow features, they do not allow precise tracking of structures, and are thus less suited to geometry design and optimization. With this in mind a <code>results3DPostProcessing.py</code> script was developed, which generates high resolution images of a series of slices taken by moving cutting planes in the <span class="math inline">\(x\)</span>, <span class="math inline">\(y\)</span> and <span class="math inline">\(z\)</span> directions. Such pictures were generated to show <span class="math inline">\(C_p\)</span> and <span class="math inline">\(C_p^{tot}\)</span> distributions on the wing surface and in the wake, including the same representation with Line Integral Convolution (LIC) superimposed. A few examples of the resulting 2D visualizations are shown in the following:</p>
+<p>While 3D images are useful for getting a broad picture of the overall flow development, and a good conceptual understanding of the most important flow features, they do not allow precise tracking of structures, and are thus less suited to geometry design and optimization. With this in mind a <code>results3DPostProcessing.py</code> script was developed, which generates high resolution images of a series of slices taken by moving cutting planes in the <span class="math inline">\(x\)</span>, <span class="math inline">\(y\)</span> and <span class="math inline">\(z\)</span> directions. Such pictures were generated to show <span class="math inline">\(C_p\)</span> and <span class="math inline">\(C_p^{tot}\)</span> distributions on the wing surface and in the wake, including the same representation with Line Integral Convolution (LIC) superimposed<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a>. A few examples of the resulting 2D visualizations are shown in the following:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="assets/xNormalCpTotLIC_77_xp00.57.png" class="img-fluid figure-img"></p>
@@ -789,7 +768,7 @@ window.Quarto = {
 <figcaption>A Cp_tot visualization of a z-normal slice of the rear wing</figcaption>
 </figure>
 </div>
-<p>All 2D renderings are also combined into MP4 video animations, showing the evolution of structures in the three directions:</p>
+<p>All 2D renderings are also combined into mp4 video animations, showing the evolution of structures in the three directions:</p>
 <div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/Z_8Aim5R0g8" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
 <p>Finally a custom Python script (<code>caseSummary.py</code>) performs automated data extraction from the pseudo-time history of the simulation and computes mean values over the last 250 iterations to ensure stable averages. This script also updates the master <code>casesSummary.csv</code> file, available for overall numerical results comparison, with all extracted data.</p>
 <p>A final PDF report highlighting some details regarding convergence history, simulation setup and results is automatically generated using Marp from a Markdown template.</p>
@@ -799,465 +778,652 @@ window.Quarto = {
 </section>
 <section id="results-and-discussion" class="level2" data-number="3">
 <h2 data-number="3" class="anchored" data-anchor-id="results-and-discussion"><span class="header-section-number">3</span> 3. Results and Discussion</h2>
-<section id="aerodynamic-coefficients-evolution" class="level3" data-number="3.1">
-<h3 data-number="3.1" class="anchored" data-anchor-id="aerodynamic-coefficients-evolution"><span class="header-section-number">3.1</span> 3.1 Aerodynamic Coefficients Evolution</h3>
-<p><strong>Table 5: Aerodynamic coefficients for ID_01 to ID_17</strong></p>
+<p>The development of an evolution to the starting geometry required going through 14 different iteration. Not all of these will be discussed in detail, as many subsequent geometry changes were aimed at solving similar aerodynamic issues.</p>
+<p>First of all the starting geometry results, coming from the fine (7.7 million cells) mesh, are to be discussed, in order to introduce the main area of improvement<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a>.</p>
+<section id="initial-results" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="initial-results"><span class="header-section-number">3.1</span> 3.1 Initial results</h3>
+<p>The initial geometry with non optimized 2D profiles, bluff endplates and bluff pylons returned a drag coefficient of <span class="math inline">\(C_D=0.431\)</span> and a lift coefficient of <span class="math inline">\(C_L=-2.370\)</span>, both averaged over the final 250 iterations.</p>
+<p>Looking at the wall shear stress distribution superimposed with limiting streamlines it is possible to highlight a few key observations:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/ID_03/WSS_Streamlines_BotRight.png" class="img-fluid figure-img"></p>
+<figcaption>A wall shear stress visualization with limiting streamlines from the bottom right view</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/ID_03/WSS_Streamlines_BotRear.png" class="img-fluid figure-img"></p>
+<figcaption>A wall shear stress visualization with limiting streamlines from the bottom view</figcaption>
+</figure>
+</div>
+<p>The flow appears to remain attached for the entirety of the first profile. The second and third element exhibit some weak flow in the trailing edge area, with the limiting streamlines of the third element showing detached flow and recirculation. The flow near at the profiles-endplate junction is attached and <em>healthy</em>, but a very large region of separation is visible in the lower portion, where at least a saddle point and a node point are clearly identifiable according to the topological interpretation of separated flows by Tobak and Peake <span class="citation" data-cites="tobak1982">[@tobak1982]</span>. The bottom views highlights the presence of some flow structure downstream of the blunt pylons, which can be better seen through the <span class="math inline">\(\lambda_2\)</span> criterion visualization:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/ID_03/Lambda2_CpTot_BotRear.png" class="img-fluid figure-img"></p>
+<figcaption>A Lambda2 visualization from the bottom view</figcaption>
+</figure>
+</div>
+<p>A couple of V-shaped vortical separated structures extend downstream from each pylon, thus reducing efficiency with no apparent benefit. The <span class="math inline">\(\lambda_2\)</span> criterion also makes it possible to see three strong vortices forming at each endplate:</p>
+<ul>
+<li>at the top, the strongest one is caused by the pressure side flow spilling over, similarly to the classic tip vortex of any wing (albeit with a much more efficient result)</li>
+<li>at the bottom the opposite effect is visible, where the low pressure between the endplates and the profiles draws in air from the outside</li>
+<li>a vortex is released close to the bottom, where the endplate aggresively changes both the <em>dihedral</em> angle and the chord</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/ID_03/Lambda2_CpTot_BotRight.png" class="img-fluid figure-img"></p>
+<figcaption>A Lambda2 visualization from the bottom right view</figcaption>
+</figure>
+</div>
+<p>The bottom view of the wall shear stress surface contour plot also shows an interesting aspect: while the leading edge of the second and third element are coloured red, showing high energy flow, the leading edge of the first element hints at weak flow development, with possible separation. The first element was initially designed with the leading edge aligned with the <span class="math inline">\(x\)</span>-axis, and this is the possible cause of this low energy region. To further investigate this flow behaviour <span class="math inline">\(y\)</span>-normal 2D slices were analyzed:</p>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/e_ih8pUGe0o" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/ID_03/yNormalCpTotLIC_12_yp00.12.png" class="img-fluid figure-img"></p>
+<figcaption>A y-normal 2D slice Cp_tot visualization, at the y=0.12 m station</figcaption>
+</figure>
+</div>
+<p>From the image the situation appears very clear: the low pressure of the suction side (and similarly the high pressure of the pressure side) bend the flow downward, causing an effective negative of attack of the first element leading edge. This in turn causes leading edge separation, which leads to a thick dissipative wake and a consequent increase in drag.</p>
+</section>
+<section id="design-evolution" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="design-evolution"><span class="header-section-number">3.2</span> 3.2 Design Evolution</h3>
+<p>The rear wing design was thus evolved with a few corrections needed in mind:</p>
+<ul>
+<li>The pylon should use a streamlined cross section, specifically a symmetric profile</li>
+<li>The wavy trailing edge, especially on the third element, increases the vorticity released in the wake, and thus drag</li>
+<li>the first element leading edge should be aligned with the local partially downwards flow</li>
+</ul>
+<p>At the same time a few corrections were added as they were expected to introduce performance gains:</p>
+<ul>
+<li>The first element should have a longer chord, to maximize the angle of attack, and thus the suction, of the second and third element while remaining inside the regulatory bounding box <a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a></li>
+<li>The third element was made slimmer and more cambered</li>
+<li>A Gurney flap was added for maximum downforce extraction by adding extreme camber at the trailing edge</li>
+</ul>
+<p>The evolved geometry can be seen in the next image:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/ID_05/Geometry_TopLeft.png" class="img-fluid figure-img"></p>
+<figcaption>The first evolution of the rear wing design</figcaption>
+</figure>
+</div>
+<p>This design iteration provided a drag coefficient of <span class="math inline">\(C_D=0.510\)</span>, an 18.3% increase , and a lift coefficient of <span class="math inline">\(C_L=-2.722\)</span>, a 14.9% increase. Clearly the research of performance, i.e.&nbsp;downforce, was going in the right direction, but efficiency could be increased.</p>
+<p>The revised pylon immediately proved effective, as the V-shaped vortical structure was heavily reduced and almost removed:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/ID_05/Lambda2_CpTot_BotRear.png" class="img-fluid figure-img"></p>
+<figcaption>A Lambda2 visualization from the bottom right view</figcaption>
+</figure>
+</div>
+<p>The increase in downforce brings of course an unavoidable increase in the intensity of the endplate vortices, so part of the drag added is found there. Nonetheless the newfound suction also causes a more extreme endplate leading edge separation due to lateral cross flow, as can be seen in the next pair of images:</p>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/bnaXpwF-t-E" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/ID_05/zNormalCpTotLIC_35_zp00.50.png" class="img-fluid figure-img"></p>
+<figcaption>A z-normal 2D slice Cp_tot visualization, at the z=0.49 m station</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/ID_05/WSS_Streamlines_BotRight.png" class="img-fluid figure-img"></p>
+<figcaption>A wall shear stress visualization with limiting streamlines from the bottom right view</figcaption>
+</figure>
+</div>
+<p>The leading edge variation proved to be effective, as the first element separation was almost completely suppressed:</p>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/8S0RSSDGykI" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/ID_05/yNormalCpTotLIC_12_yp00.12.png" class="img-fluid figure-img"></p>
+<figcaption>A y-normal 2D slice Cp_tot visualization, at the y=0.12 m station</figcaption>
+</figure>
+</div>
+<p>Nonetheless by looking at the pressure distribution on the three sections it was possible to notice a pronounced pressure peak, with <span class="math inline">\(min(C_p)&lt;5\)</span>, which causes a strong adverse pressure gradient, which in turn increases the boundary layer thickness:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/ID_05/cpPlot_y_00.20.png" class="img-fluid figure-img"></p>
+<figcaption>A Cp-x plot, at the y=0.2 m station</figcaption>
+</figure>
+</div>
+<p>For this reason the first element leading edge could be further optimized by making it more downwashing. This correction was added to the next important design iteration, which introduced a newly designed endplated, generated though a lofted surface, with the goal of making it smooth and reduce separation. All trailing edges were now thin and streamlined, thus pressure drag was expected to be much lower. The geometry is shown in the next figure:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/ID_08/Geometry_TopLeft.png" class="img-fluid figure-img"></p>
+<figcaption>The next evolution of the rear wing design</figcaption>
+</figure>
+</div>
+<p>This design seemed to correctly address the issues of the previous geometry: the drag was reduced by 3.3%, to <span class="math inline">\(C_D=0.493\)</span>, while the lift coefficient increased by 2% to <span class="math inline">\(C_L=-2.777\)</span>. Some post-processing allowed to focus on the most promising development paths and problematic areas.</p>
+<p>Firstly, as can be observed in the next image the smoothed endplate removed the vortex generated at the change in chord and dihedral previously highlighted, a good example of drag reduction:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/ID_08/Lambda2_CpTot_BotRight.png" class="img-fluid figure-img"></p>
+<figcaption>A Lambda2 visualization from the bottom right view</figcaption>
+</figure>
+</div>
+<p>Some endplate leading edge separation remained present even after this evolution, although much weaker than that in the previous design, an issue to be addressed again with better alignment of the cross sections of the lofted geometry:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/ID_08/WSS_Streamlines_BotRight.png" class="img-fluid figure-img"></p>
+<figcaption>A wall shear stress visualization with limiting streamlines from the bottom right view</figcaption>
+</figure>
+</div>
+<p>The following development focused on downforce generation, with the target of maximizing suction. Looking back at the regulation box for the profiles, i.e.&nbsp;the RV-RW-PROFILES reference volume, it was noticed that the vertical became smaller and smaller in the spanwise direction moving towards the tip. This forces the profiles to have a dihedral angle, but it also means that the angle of attack of the second and third element tend to reduce moving outwards. To counter this effect the chord of the tips of the second and third flaps was made smaller, while making it longer for the first element so that a larger angle of attack could fit within the reference volume. A second upgrade was the introduction of a rounded top side leading edge for the endplate, in order to reduce drag. Finally, a pretty aggressive cutout downstream of the third element was added in order to investigate its effectiveness, compared to the pre-2022 rear wing regulation. Ideally such a cutout should help mitigate the tip vortex intensity, thus increasing efficiency. This new geometry can be seen in the images below:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/ID_10/Geometry_TopLeft.png" class="img-fluid figure-img"></p>
+<figcaption>The next evolution of the rear wing design</figcaption>
+</figure>
+</div>
+<div class="{.layout-ncol=&quot;2&quot;}">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/ID_08/Geometry_Top.png" class="img-fluid figure-img"></p>
+<figcaption>A comparison of the geometric evolution. Old profiles design on the left</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/ID_10/Geometry_Top.png" class="img-fluid figure-img"></p>
+<figcaption>New profiles design on the right. Notice the chord reduction for the second and third element at the tip</figcaption>
+</figure>
+</div>
+</div>
+<p>The following image details the change in the last two profiles. By visual inspection it is also clear that the slot gap between the first and second element is not optimized, and the second element leading edge design probably leaves some room for better flow alignment.</p>
+<div class="{.layout-ncol=&quot;2&quot;}">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/ID_08/yNormalFlapTE_y00.50.png" class="img-fluid figure-img"></p>
+<figcaption>A comparison of the geometric evolution, from a slice of the mesh near the wingtip (old design)</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/ID_10/yNormalFlapTE_y00.50.png" class="img-fluid figure-img"></p>
+<figcaption>New design. Notice the reduced chord and increased angle of attack on the second and third element</figcaption>
+</figure>
+</div>
+</div>
+<p>This renovated rear wing produced a significant jump forward in downforce, with the lift coefficient magnitude increasing by 4.9% to <span class="math inline">\(C_L=-2.912\)</span>; at the same time drag saw an uptick by 3.9%, getting to <span class="math inline">\(C_D=0.512\)</span>.</p>
+<p>A nice finding was that endplate separation was almost completely eliminated by changing the cross section, as can be seen in the <span class="math inline">\(z\)</span>-normal video, or in the following images:</p>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/PiH5JZXc4SQ" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/ID_10/zNormalCpTotLIC_37_zp00.52.png" class="img-fluid figure-img"></p>
+<figcaption>A z-normal 2D slice Cp_tot visualization, at the z=0.49 m station</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/ID_10/WSS_Streamlines_BotRight.png" class="img-fluid figure-img"></p>
+<figcaption>A wall shear stress visualization with limiting streamlines from the bottom right view</figcaption>
+</figure>
+</div>
+<p>The above image shows that some trailing edge separation is present on the second and third profile. While acceptable on the third element, flow detaching from the second one is better avoided, a goal for next design iterations.</p>
+<p>The suboptimal first slot gap design can be quantified by inspecting the following <span class="math inline">\(C_p-x\)</span> plot, where it is evident that the first element is generating lift at the trailing edge. Notice nonetheless a reduction in the suction peak at all leading edges:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/ID_10/cpPlot_y_00.30.png" class="img-fluid figure-img"></p>
+<figcaption>A Cp-x plot, at the y=0.3 m station</figcaption>
+</figure>
+</div>
+<p>Finally inspection of the <span class="math inline">\(x\)</span>-normal animation showed some junction separation, suggesting that the wing tips designed could still be improved.</p>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/u8wByIJwy7U" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/ID_10/xNormalCpTotLIC_85_xp00.65.png" class="img-fluid figure-img"></p>
+<figcaption>An x-normal 2D slice Cp_tot visualization, at the x = 0.68 m station</figcaption>
+</figure>
+</div>
+<p>The next geometry focused on maintaining a high downforce, with some efficiency gain: it focused on slot gap effectiveness to reduce separation, and better leading edge alignement. The leading edge and trailing edge spanwise evolution was evolved using a more accurate lofting strategy<a href="#fn13" class="footnote-ref" id="fnref13" role="doc-noteref"><sup>13</sup></a>. The endplate cutout was also reduced, as can be seen below:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/ID_16/Geometry_TopLeft.png" class="img-fluid figure-img"></p>
+<figcaption>The next evolution of the rear wing design</figcaption>
+</figure>
+</div>
+<p>The effects of this evolution were immediatley apparent: downforce slightly changed to <span class="math inline">\(C_L=-2.914\)</span> (a negligible increase of 0.01%), while drag was reduced to <span class="math inline">\(C_D=0.491\)</span>, down 4.1%, a significant amount.</p>
+<p>Separation on the second and third element was greatly reduced in intensity, and the endplate maintained attached flow throughout:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/ID_16/WSS_Streamlines_BotRear.png" class="img-fluid figure-img"></p>
+<figcaption>A wall shear stress visualization with limiting streamlines from the bottom view</figcaption>
+</figure>
+</div>
+<p>Slot gap effectiveness was increased as expected, with the pressure profile showing a much healthier state:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/ID_16/cpPlot_y_00.30.png" class="img-fluid figure-img"></p>
+<figcaption>A Cp-x plot, at the y=0.3 m station</figcaption>
+</figure>
+</div>
+<p>Looking at the <span class="math inline">\(x\)</span>-normal slices the large amount of junction losses and third element separation is evidently removed, causing a slimmer wake, evidence of effective drag reduction:</p>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/eR6ss9yU4tE" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/ID_16/xNormalCpTotLIC_85_xp00.65.png" class="img-fluid figure-img"></p>
+<figcaption>An x-normal 2D slice Cp_tot visualization, at the x = 0.68 m station</figcaption>
+</figure>
+</div>
+<p>The wing seemed to have no hugely problematic area, so it was decided that one final iteration would be developed before moving on. The aim of this final design was maximum downforce generation, thus an increase in the angle of attack of the second and third element was introduced, both at the root and at the tip.</p>
+<div class="{.layout-ncol=&quot;2&quot;}">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/ID_17/yNormalProfiles_y00.05.png" class="img-fluid figure-img"></p>
+<figcaption>The final version of the wing profiles (root section)</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/ID_17/yNormalProfiles_y00.50.png" class="img-fluid figure-img"></p>
+<figcaption>The final version of the wing profiles (tip section)</figcaption>
+</figure>
+</div>
+</div>
+<p>The coefficients responded as expected, downforce spiking to the maximum value found in the entire design space of <span class="math inline">\(C_L=-2.950\)</span>, a 1.2% increase. Drag, as expected, saw an increment of 1.6%, getting to <span class="math inline">\(C_D=0.499\)</span>, which was considered adequate for the present research. While it is possible to go even more aggressive with the angle of of attack at the trailing edge managing separation would certainly get trickier, so more aggressive designs were left as a future topic.</p>
+<p>It was interesting to notice that during the more recent developments, while reducing the separation at the endplate leading edge, the vortex midway through the endplate was back:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/ID_17/Lambda2_CpTot_BotRight.png" class="img-fluid figure-img"></p>
+<figcaption>A Lambda2 visualization from the bottom right view</figcaption>
+</figure>
+</div>
+<p>This is actually a desirable effect<a href="#fn14" class="footnote-ref" id="fnref14" role="doc-noteref"><sup>14</sup></a> as it is caused by the expansion generated by the endplate. This expansion works together with the profiles to increase downforce, as visible in the next images:</p>
+<div class="{.layout-ncol=&quot;2&quot;}">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/ID_17/xNormalCp_70_xp00.50.png" class="img-fluid figure-img"></p>
+<figcaption>Visualization of the pressure coefficient Cp (x-normal slice at x=0.5 m)</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/ID_17/zNormalCp_40_zp00.55.png" class="img-fluid figure-img"></p>
+<figcaption>Visualization of the pressure coefficient Cp (z-normal slice at z=0.55 m)</figcaption>
+</figure>
+</div>
+</div>
+<p>A nice feature of this final design is the usage of slimmer profiles, which thus are able to produce considerable downforce with a lower drag generated<a href="#fn15" class="footnote-ref" id="fnref15" role="doc-noteref"><sup>15</sup></a>. Junction separation was kept at a minimum, and the profiles seem to provide mostly attached flow down to the trailing edge:</p>
+<p></p><div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/xXAd8A9fTbc" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div> <div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/mHuAHiiPkw0" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/ID_17/WSS_Streamlines_BotRight.png" class="img-fluid figure-img"></p>
+<figcaption>A wall shear stress visualization with limiting streamlines from the bottom right view</figcaption>
+</figure>
+</div>
+<div class="{.layout-ncol=&quot;2&quot;}">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/ID_17/xNormalCpTotLIC_85_xp00.65.png" class="img-fluid figure-img"></p>
+<figcaption>Total pressure coefficient (x-normal slice at x=0.65 m)</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/ID_17/yNormalCpTotLIC_22_yp00.22.png" class="img-fluid figure-img"></p>
+<figcaption>Total pressure coefficient (y-normal slice at y=0.22 m)</figcaption>
+</figure>
+</div>
+</div>
+<p>The results of the design process are finally summarized in the following table, where <span class="math inline">\(\Delta\)</span> values are computed with respect to the initial geometry:</p>
+<p><strong>Table 5: Aerodynamic coefficients for the analyzed rear wing configurations, with percentage deltas relative to the initial design</strong></p>
 <div class="table-responsive">
 <table class="caption-top table">
 <colgroup>
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
 </colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: left;">Case</th>
+<th style="text-align: left;">Description</th>
 <th style="text-align: left;"><span class="math inline">\(C_D\)</span></th>
-<th style="text-align: left;"><span class="math inline">\(C_{D,mean}\)</span></th>
-<th style="text-align: left;"><span class="math inline">\(C_{D,p}\)</span></th>
-<th style="text-align: left;"><span class="math inline">\(C_{D,visc}\)</span></th>
-<th style="text-align: left;"><span class="math inline">\(C_{L,mean}\)</span></th>
-<th style="text-align: left;"><span class="math inline">\(C_{L,visc}\)</span></th>
+<th style="text-align: left;"><span class="math inline">\(C_L\)</span></th>
 <th style="text-align: left;"><span class="math inline">\(L/D\)</span></th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;"><strong>ID_01</strong></td>
-<td style="text-align: left;">0.4517</td>
-<td style="text-align: left;">0.4495</td>
-<td style="text-align: left;">0.4266</td>
-<td style="text-align: left;">0.0252</td>
-<td style="text-align: left;">-2.3309</td>
-<td style="text-align: left;">0.0020</td>
-<td style="text-align: left;">-5.19</td>
+<td style="text-align: left;">Initial geometry</td>
+<td style="text-align: left;">0.431</td>
+<td style="text-align: left;">-2.370</td>
+<td style="text-align: left;">-5.50</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><strong>ID_02</strong></td>
-<td style="text-align: left;">0.4441</td>
-<td style="text-align: left;">0.4450</td>
-<td style="text-align: left;">0.4156</td>
-<td style="text-align: left;">0.0285</td>
-<td style="text-align: left;">-2.4286</td>
-<td style="text-align: left;">0.0021</td>
-<td style="text-align: left;">-5.46</td>
+<td style="text-align: left;">Streamlined pylon, revised LE</td>
+<td style="text-align: left;">0.510 (+18.3%)</td>
+<td style="text-align: left;">-2.722 (+14.8%)</td>
+<td style="text-align: left;">-5.33 (-3.1%)</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><strong>ID_03</strong></td>
-<td style="text-align: left;">0.4319</td>
-<td style="text-align: left;">0.4305</td>
-<td style="text-align: left;">0.4039</td>
-<td style="text-align: left;">0.0280</td>
-<td style="text-align: left;">-2.3700</td>
-<td style="text-align: left;">0.0018</td>
-<td style="text-align: left;">-5.51</td>
+<td style="text-align: left;">Lofted endplate, thin TEs</td>
+<td style="text-align: left;">0.493 (+14.4%)</td>
+<td style="text-align: left;">-2.777 (+17.2%)</td>
+<td style="text-align: left;">-5.63 (+2.4%)</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><strong>ID_04</strong></td>
-<td style="text-align: left;">0.4588</td>
-<td style="text-align: left;">0.4585</td>
-<td style="text-align: left;">0.4271</td>
-<td style="text-align: left;">0.0317</td>
-<td style="text-align: left;">-2.4051</td>
-<td style="text-align: left;">0.0020</td>
-<td style="text-align: left;">-5.25</td>
+<td style="text-align: left;">Revised profiles, endplate cutout</td>
+<td style="text-align: left;">0.512 (+18.8%)</td>
+<td style="text-align: left;">-2.912 (+22.9%)</td>
+<td style="text-align: left;">-5.69 (+3.5%)</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><strong>ID_05</strong></td>
-<td style="text-align: left;">0.5216</td>
-<td style="text-align: left;">0.5099</td>
-<td style="text-align: left;">0.4902</td>
-<td style="text-align: left;">0.0313</td>
-<td style="text-align: left;">-2.7219</td>
-<td style="text-align: left;">0.0013</td>
-<td style="text-align: left;">-5.34</td>
+<td style="text-align: left;">Slot gap and LE refinement</td>
+<td style="text-align: left;">0.491 (+13.9%)</td>
+<td style="text-align: left;">-2.914 (+22.9%)</td>
+<td style="text-align: left;">-5.93 (+7.8%)</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><strong>ID_06</strong></td>
-<td style="text-align: left;">0.5000</td>
-<td style="text-align: left;">0.5063</td>
-<td style="text-align: left;">0.4701</td>
-<td style="text-align: left;">0.0299</td>
-<td style="text-align: left;">-2.7210</td>
+<td style="text-align: left;">Increased AoA, final design</td>
+<td style="text-align: left;">0.499 (+15.8%)</td>
+<td style="text-align: left;">-2.950 (+24.5%)</td>
+<td style="text-align: left;">-5.91 (+7.5%)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The only comparison found online for the same 2026 regulation is the <a href="https://www.linkedin.com/pulse/simulating-f1-2026-rear-wing-article-2-power-aerodynamics-ted-l-w4skc/">LinkedIn article</a> by Ted L., where he reports a maximum downforce of 1414.5 N. Using the reference values to transform the lift coefficient into a force the optimal design turns out to produce about 1806.9 N, approximately 27.7% more downforce, indicating that at least some key design choices were taken in the correct direction.</p>
+</section>
+<section id="straight-line-mode-slm-configurations" class="level3" data-number="3.3">
+<h3 data-number="3.3" class="anchored" data-anchor-id="straight-line-mode-slm-configurations"><span class="header-section-number">3.3</span> 3.3 Straight Line Mode (SLM) Configurations</h3>
+<p>Once an appropriate high-downforce configuration was found four additional cases were simulated to evaluate the Straight Line Mode (SLM): a feature of the 2026 regulations that allows the rear wing to reduce flap incidence for lower drag during high-speed straights. These four designs were developed to evaluate different pivot point strategies, also looking at the choices made by F1 teams for the 2026 season.</p>
+<section id="a-brief-comment-caveat" class="level4" data-number="3.3.1">
+<h4 data-number="3.3.1" class="anchored" data-anchor-id="a-brief-comment-caveat"><span class="header-section-number">3.3.1</span> 3.3.1 A brief comment &amp; caveat</h4>
+<p>The simulation of the wing presented in the previous sections did not involve the SLM fairing, which is the aerodynamic fairing that shields the mechanisms and actuators needed for straight line mode activation. This of course causes the results to be numerically off if compared to the actual numbers found on real 2026 F1 cars. Nonetheless the simulations were aimed at profiles and dihedral optimization, and thus the simulations were carried out without detailing the fairing. This discussion will become important in the following section, as the choice of fairing is heavily dependent on the SLM strategy chosen. As a result numbers regarding straight line mode should be read critically.</p>
+</section>
+<section id="alpine-style-slm" class="level4" data-number="3.3.2">
+<h4 data-number="3.3.2" class="anchored" data-anchor-id="alpine-style-slm"><span class="header-section-number">3.3.2</span> 3.3.2 Alpine style SLM</h4>
+<p>This first strategy, implemented by the Alpine F1 Team consists of the flap, made of the second and third element, rotating downwards of <span class="math inline">\(\approx30^\circ\)</span> about a point at the leading edge of the second element:</p>
+<div class="{.layout-ncol=&quot;2&quot;}">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/ID_18/Geometry_TopLeft.png" class="img-fluid figure-img"></p>
+<figcaption>The simulated geometry of Alpine style SLM</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/alpine-rear-drs.jpg" class="img-fluid figure-img"></p>
+<figcaption>Alpine’s own implementation</figcaption>
+</figure>
+</div>
+</div>
+<p>Due to the presence of the slot gap this strategy is limited, in the rotation angle, by the fact that the rotated second element should not intersect the mainplane, which would result in a disruptive failure:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/ID_18/yNormalProfiles_y00.45.png" class="img-fluid figure-img"></p>
+<figcaption>A slice of the mesh close to the wingtip, showing the reduced slot gap between first and second element</figcaption>
+</figure>
+</div>
+<p>The effect of SLM is immediately apparent when looking at <span class="math inline">\(y\)</span>-normal slices. The second element leading edge generates a strong separation on the pressure side, but having such high camber profiles at low incidence reduces greatly the amount of upwash generated by the wing, thus reducing downforce and most importantly drag.</p>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/a8rrdMRqYEA" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+<p>This first strategy for the pivot point of SLM results in <span class="math inline">\(C_D=0.109\)</span>, a 78.2% drag reduction and <span class="math inline">\(C_L=-0.709\)</span>, a 76.0% reduction.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/ID_18/yNormalCpTotLIC_28_yp00.28.png" class="img-fluid figure-img"></p>
+<figcaption>A y-normal 2D slice Cp_tot visualization, at the y=0.28 m station</figcaption>
+</figure>
+</div>
+</section>
+<section id="regular-style-slm" class="level4" data-number="3.3.3">
+<h4 data-number="3.3.3" class="anchored" data-anchor-id="regular-style-slm"><span class="header-section-number">3.3.3</span> 3.3.3 Regular style SLM</h4>
+<p>The second strategy is called <em>Regular</em> as it appears on most 2026 cars, and it rotates the second and third element of <span class="math inline">\(\approx32^\circ\)</span> about the third element trailing edge, bringing the second element leading edge gap. This SLM implementation generates a very large gap between the mainplane and the opened flap, as can be seen below:</p>
+<div class="{.layout-ncol=&quot;2&quot;}">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/ID_19/Geometry_TopLeft.png" class="img-fluid figure-img"></p>
+<figcaption>The simulated geometry of regular style SLM</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/redbull-slm.png" class="img-fluid figure-img"></p>
+<figcaption>Red Bull’s own implementation</figcaption>
+</figure>
+</div>
+</div>
+<p>This version of the rear wing generated a drag coefficient of <span class="math inline">\(C_D=0.118\)</span>, down 76.3% w.r.t. corner mode, and a lift coefficient of <span class="math inline">\(C_L=-0.884\)</span>, a 70.7% reduction. The numbers seem to suggest that this strategy is less effective then the Alpine style SLM, but inspection of <span class="math inline">\(y\)</span>-normal slices reveals that the simulated implementation is producing a significant amount of upwash:</p>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/uzA0E4UJsYI" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/ID_19/yNormalCpTotLIC_28_yp00.28.png" class="img-fluid figure-img"></p>
+<figcaption>A y-normal 2D slice Cp_tot visualization, at the y=0.28 m station</figcaption>
+</figure>
+</div>
+<p>The heavily cambered flap is pushing the flow upwards, and the second element leading edge separation is not as pronounced as in the previous SLM strategy. All these results suggest that the flaps are producing too much downforce, and thus induced drag, due to the incidence, which is too high. Further lowering the flaps angle of attack should as a consequence prove beneficial.</p>
+</section>
+<section id="macarena-style-slm" class="level4" data-number="3.3.4">
+<h4 data-number="3.3.4" class="anchored" data-anchor-id="macarena-style-slm"><span class="header-section-number">3.3.4</span> 3.3.4 Macarena style SLM</h4>
+<p>The third strategy is the most eye-catching innovative aerodynamic concept appeared on the 2026 F1 grid so far. Ferrari presented this in the last day of Bahrain testing, and it involves the second and third element rotating around a point located at about the midpoint of the third element. Instead of rotating of <span class="math inline">\(\approx30^\circ\)</span> the flaps continue their rotation for a total of <span class="math inline">\(\approx210^\circ\)</span>, taking advantage of the 2026 regulations specifying an actuation time for the flap rotation of 0.4 s, enough to rotate by more then the standard amounts. In this way the nominal trailing edge of the wing, i.e.&nbsp;the Gurney flap, becomes a leading edge. This strategy generates an even larger gap between the mainplane and the flaps. Another feature of this design in the absence of the conventional SLM fairing. The actuators are in this case located inside the endplates, and the central fairing pillar is not needed. This novel strategy can be seen in the below images:</p>
+<div class="{.layout-ncol=&quot;2&quot;}">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/ID_20/Geometry_TopLeft.png" class="img-fluid figure-img"></p>
+<figcaption>The simulated geometry of Macarena style SLM</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/ferrari-macarena.jpg" class="img-fluid figure-img"></p>
+<figcaption>Ferrari’s own implementation</figcaption>
+</figure>
+</div>
+</div>
+<p>This wing is characterized by a drag coefficient of <span class="math inline">\(C_D=0.089\)</span>, an 82.1% decrease, and a lift coefficient of <span class="math inline">\(C_L=-0.067\)</span>, down 97.7% with respect to corner mode. The results evidently support the effectiveness of this design, as almost all downforce is eliminated and drag is cut down massively. The reason for this behaviour can be seen through the <span class="math inline">\(y\)</span>-normal animation, where the almost complete absence of upwash is noteworthy. The rotated flaps induces downwash on the flow out of the mainplane, thus bringing drag reduction to a minimum. Having no downwash from the mainplane should also help reducing the diffuser expansion more effectively than other strategies, thus cutting down on downforce and drag in another key component. The leading edge separation bubble at the Gurney also seems much smaller due to the relative size of third and second element. As a final observation, perhaps the rotation is a bit too large, and reducing it by a couple of degrees can make the upwash even less significant.</p>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/uN6atGhySmM" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/ID_20/yNormalCpTotLIC_28_yp00.28.png" class="img-fluid figure-img"></p>
+<figcaption>A y-normal 2D slice Cp_tot visualization, at the y=0.28 m station</figcaption>
+</figure>
+</div>
+<p>A few notes must made regarding specifically the Macarena style CFD simulation:</p>
+<ul>
+<li>The utilized CAD geometry did not have a proper bulge in the endplate to simulate the SLM actuators</li>
+<li>Ferrari had introduced another interesting device in the same Bahrain testing: an exhaust pipe winglet. This geometry is generating upwash of exhaust gases, and certainly interacting with the downwash caused by the upside down flaps. For this reason the complex interaction of this SLM strategy cannot be predicted with certainty, and performance benefits can be easily under or over estimated</li>
+</ul>
+<p>Nonetheless this CFD analysis seems to indicate that the avenue of an upside-down flap for SLM is promising and is worthy of consideration, also explaining Ferrari interest in testing it multiple times to get the mechanism to properly work for races usage.</p>
+</section>
+<section id="optimized-regular-style-slm" class="level4" data-number="3.3.5">
+<h4 data-number="3.3.5" class="anchored" data-anchor-id="optimized-regular-style-slm"><span class="header-section-number">3.3.5</span> 3.3.5 Optimized regular style SLM</h4>
+<p>The fourth and final strategy is a revised regular style SLM. Since Macarena SLM produced very promising results it was deemed interesting to compare it to the most common SLM implementation, when the latter is optimized for better drag reduction. More specifically the optimization involved a rotation of <span class="math inline">\(\approx37^\circ\)</span>, more than the previous version. This makes the whole wing more similar to the SLM brought by McLaren on this year’s car, as can be seen:</p>
+<div class="{.layout-ncol=&quot;2&quot;}">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/ID_21/Geometry_TopLeft.png" class="img-fluid figure-img"></p>
+<figcaption>The simulated geometry of the optimized regular style SLM</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/mclaren-slm.png" class="img-fluid figure-img"></p>
+<figcaption>McLaren’s own implementation</figcaption>
+</figure>
+</div>
+</div>
+<p>As can be seen by moving in the spanwise direction the separation bubble is much larger, and as a consequence upwash is almost nonexistent. The downside is slightly thicker wake when compared to the Macarena strategy. This is reflected in the results, with a drag coefficient of <span class="math inline">\(C_D=0.092\)</span>, still higher than Macarena, and a lift coefficient of <span class="math inline">\(C_L=-0.348\)</span>, confirming that the mainplane is still working similarly to the nominal corner mode.</p>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/1h0N1jeonCI" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/ID_21/yNormalCpTotLIC_28_yp00.28.png" class="img-fluid figure-img"></p>
+<figcaption>A y-normal 2D slice Cp_tot visualization, at the y=0.28 m station</figcaption>
+</figure>
+</div>
+<p>A final comment comparing Macarena and optimized regular style SLM can be made by analyzing the following pictures:</p>
+<div class="{.layout-ncol=&quot;2&quot;}">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/ID_20/yNormalCp_20_yp00.20.png" class="img-fluid figure-img"></p>
+<figcaption>Pressure distribution comparison. Left: Macarena SLM</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/ID_21/yNormalCp_20_yp00.20.png" class="img-fluid figure-img"></p>
+<figcaption>Right: Optimized regular SLM</figcaption>
+</figure>
+</div>
+</div>
+<p>The regular style wing, having the flap positioned much closer to the first element in the horizontal direction (due to the kinematics of the rotation), generates more high pressure on the pressure side of the wing. Also the suction side of the mainplane seems to work more effectively, thus increasing downforce and drag. The rearward shift in the flap position using Macarena SLM can thus be interpreted as a further advantage of this setup.</p>
+</section>
+<section id="slm-results-conclusions" class="level4" data-number="3.3.6">
+<h4 data-number="3.3.6" class="anchored" data-anchor-id="slm-results-conclusions"><span class="header-section-number">3.3.6</span> 3.3.6 SLM Results &amp; Conclusions</h4>
+<p>The following table summarizes the aerodynamic coefficients for the SLM configurations. Notice that all rows regarding <span class="math inline">\(C_L\)</span> are red, as a downforce reduction is in theory a downside. Nonetheless in SLM the most important quantity is drag and drag reduction, as the 2026 generation of cars is characterized by lower energy delivered by the power unit on a per lap basis<a href="#fn16" class="footnote-ref" id="fnref16" role="doc-noteref"><sup>16</sup></a> As a consequence, an efficient straight-line mode is critical: failing to reduce drag adequately at high speed will result in a straight-line speed deficit, exposing the car to overtakes on the main straights.</p>
+<p><strong>Table 6: Aerodynamic coefficients for different SLM configurations, percentage deltas are relative to the final rear wing design in corner mode</strong></p>
+<div class="table-responsive">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Case</th>
+<th style="text-align: left;"><span class="math inline">\(C_{D}^{mean}\)</span></th>
+<th style="text-align: left;"><span class="math inline">\(C_{L}^{mean}\)</span></th>
+<th style="text-align: left;"><span class="math inline">\(L/D\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Alpine style</td>
+<td style="text-align: left;">0.1086 (-78.2%)</td>
+<td style="text-align: left;">-0.7087 (-76.0%)</td>
+<td style="text-align: left;">-6.53 (+10.4%)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Regular style</td>
+<td style="text-align: left;">0.1184 (-76.3%)</td>
+<td style="text-align: left;">-0.8841 (-70.0%)</td>
+<td style="text-align: left;">-7.47 (+26.3%)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Macarena style</td>
+<td style="text-align: left;">0.0892 (-82.1%)</td>
+<td style="text-align: left;">-0.0665 (-97.7%)</td>
+<td style="text-align: left;">-0.75 (-87.4%)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Optimized regular style</td>
+<td style="text-align: left;">0.0918 (-81.6%)</td>
+<td style="text-align: left;">-0.3482 (-88.2%)</td>
+<td style="text-align: left;">-3.79 (-35.8%)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>While many details can still be investigated and simulated with higher accuracy the results of this research support some trends found looking at the 2026 F1 cars:</p>
+<ul>
+<li>the regular style SLM, more similar to the old DRS mechanism is perhaps the easiest to conceive and to design in order to obtain large amounts of drag reduction</li>
+<li>Alpine style SLM seems to necessitate a very collaborative mainplane design, considering the disadvantage of having the rotation angle limited</li>
+<li>the Macarana style SLM probably offers the most potential to be exploited, though careful interaction with other elements of the car is required and is complex from a mechanical point of view</li>
+</ul>
+</section>
+</section>
+<section id="a-final-discussion-on-grid-convergence" class="level3" data-number="3.4">
+<h3 data-number="3.4" class="anchored" data-anchor-id="a-final-discussion-on-grid-convergence"><span class="header-section-number">3.4</span> 3.4 A Final Discussion on Grid Convergence</h3>
+<p>As the previous discussion made clear, obtaining proper grid convergence on a personal laptop was impossible, and simulation time was extremely long even for this simplified simulation running for a small amount of pseudo-time iterations, taking more than 10 hours per case. Considering also the time required to adjust the geometry and smooth out possible issues arising in the meshing procedure the time required ballooned pretty quickly. While not initially considered when developing and simulating the geometry, during later stages of the work the investigated solution was AWS, a cloud computing platform offered by Amazon, which offers tight CLI integration and many choices of compute instances to run extremely large simulations rapidly. By going though cloud computing it was possible to simulate the same geometry on a much finer mesh, with the goal of verifying grid convergence.</p>
+<section id="aws-setup" class="level4" data-number="3.4.1">
+<h4 data-number="3.4.1" class="anchored" data-anchor-id="aws-setup"><span class="header-section-number">3.4.1</span> 3.4.1 AWS Setup</h4>
+<p>The advantage of using AWS is that the options for compute instances allowed the simulation pipeline to be kept almost identical to the one used on the local PC. After creating an AWS account and installing AWS CLI it was possible to establish an SSH connection to an EC2 compute node chosen accurately for its performance and compatibility. AWS also offers S3 as a storage option, which allowed rapid upload and download of simulation data to and from the personal computer. After an SSH connection was active it was only a matter of installing all required software (i.e.&nbsp;<code>OpenFOAM</code>, <code>Paraview</code> and its dependencies, <code>ffmpeg</code> and <code>marp</code>) and running the bash scripts.</p>
+<p>The selection of the <code>m7i.48xlarge</code> instance was dictated by the high memory bandwidth and computational density required for large-scale CFD solvers like OpenFOAM. Featuring 192 vCPUs and 768 GiB of RAM, this instance leverages the 4th Generation Intel Xeon Scalable (Sapphire Rapids) architecture, which introduces DDR5 memory. The transition to DDR5 is critical for fluid dynamics simulations, as these workloads are frequently memory-bound; the increased bandwidth ensures that the large number of cores remains productive without being throttled by data retrieval latency.</p>
+</section>
+<section id="running-on-aws" class="level4" data-number="3.4.2">
+<h4 data-number="3.4.2" class="anchored" data-anchor-id="running-on-aws"><span class="header-section-number">3.4.2</span> 3.4.2 Running on AWS</h4>
+<p>AWS was actually used to simulate the last 8 design iterations of corner mode, and all 4 options for SLM. Keeping the same mesh setup, in order to have results comparable to the ones obtained with the personal laptop, every simulation (pre-processing, running and post-processing) required less then 30 minutes. The huge instance is certainly not optimized for a mesh with less then 10 million cells, but the timed saved using cloud computing was still immense, more than 95%.</p>
+</section>
+<section id="grid-convergence-index-analysis" class="level4" data-number="3.4.3">
+<h4 data-number="3.4.3" class="anchored" data-anchor-id="grid-convergence-index-analysis"><span class="header-section-number">3.4.3</span> 3.4.3 Grid Convergence Index Analysis</h4>
+<p>Once a suitable AWS setup was found, it was possible to increase the mesh refinement and simulate to do a more proper grid convergence verification. It was decided that the final corner mode geometry would be used for this analysis, in order to verify the results for a design that was deemed sufficiently refined. The mesh specifications can be found in the table below:</p>
+<p><strong>Table 7: Mesh configuration summary for convergence study (AWS)</strong></p>
+<div class="table-responsive">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Parameter</th>
+<th style="text-align: left;">Coarse</th>
+<th style="text-align: left;">Medium</th>
+<th style="text-align: left;">Fine</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Number of cells</td>
+<td style="text-align: left;">1,541,066</td>
+<td style="text-align: left;">10,280,664</td>
+<td style="text-align: left;">33,678,514</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cell size (1st refinement box)</td>
+<td style="text-align: left;">0.08</td>
+<td style="text-align: left;">0.01</td>
+<td style="text-align: left;">0.006</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cell size (2nd refinement box)</td>
+<td style="text-align: left;">0.15</td>
+<td style="text-align: left;">0.05</td>
+<td style="text-align: left;">0.015</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cell size (wing surface)</td>
+<td style="text-align: left;">0.035</td>
+<td style="text-align: left;">0.0035</td>
+<td style="text-align: left;">0.003</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cell size (sharp edge refinement)</td>
 <td style="text-align: left;">0.0017</td>
-<td style="text-align: left;">-5.37</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><strong>ID_07</strong></td>
-<td style="text-align: left;">0.4841</td>
-<td style="text-align: left;">0.4845</td>
-<td style="text-align: left;">0.4541</td>
-<td style="text-align: left;">0.0300</td>
-<td style="text-align: left;">-2.7415</td>
-<td style="text-align: left;">0.0016</td>
-<td style="text-align: left;">-5.66</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><strong>ID_08</strong></td>
-<td style="text-align: left;">0.4821</td>
-<td style="text-align: left;">0.4930</td>
-<td style="text-align: left;">0.4518</td>
-<td style="text-align: left;">0.0303</td>
-<td style="text-align: left;">-2.7767</td>
-<td style="text-align: left;">0.0015</td>
-<td style="text-align: left;">-5.63</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><strong>ID_09</strong></td>
-<td style="text-align: left;">0.5025</td>
-<td style="text-align: left;">0.5043</td>
-<td style="text-align: left;">0.4683</td>
-<td style="text-align: left;">0.0342</td>
-<td style="text-align: left;">-2.8823</td>
-<td style="text-align: left;">0.0018</td>
-<td style="text-align: left;">-5.72</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><strong>ID_10</strong></td>
-<td style="text-align: left;">0.5096</td>
-<td style="text-align: left;">0.5118</td>
-<td style="text-align: left;">0.4746</td>
-<td style="text-align: left;">0.0349</td>
-<td style="text-align: left;">-2.9115</td>
-<td style="text-align: left;">0.0019</td>
-<td style="text-align: left;">-5.69</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><strong>ID_11</strong></td>
-<td style="text-align: left;">0.5208</td>
-<td style="text-align: left;">0.5197</td>
-<td style="text-align: left;">0.4856</td>
-<td style="text-align: left;">0.0352</td>
-<td style="text-align: left;">-2.9597</td>
-<td style="text-align: left;">0.0021</td>
-<td style="text-align: left;">-5.70</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><strong>ID_12</strong></td>
-<td style="text-align: left;">0.4948</td>
-<td style="text-align: left;">0.4887</td>
-<td style="text-align: left;">0.4610</td>
-<td style="text-align: left;">0.0339</td>
-<td style="text-align: left;">-2.7871</td>
 <td style="text-align: left;">0.0013</td>
-<td style="text-align: left;">-5.70</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><strong>ID_13</strong></td>
-<td style="text-align: left;">0.4831</td>
-<td style="text-align: left;">0.4846</td>
-<td style="text-align: left;">0.4492</td>
-<td style="text-align: left;">0.0339</td>
-<td style="text-align: left;">-2.8857</td>
-<td style="text-align: left;">0.0019</td>
-<td style="text-align: left;">-5.95</td>
+<td style="text-align: left;">0.0011</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><strong>ID_14</strong></td>
-<td style="text-align: left;">0.4803</td>
-<td style="text-align: left;">0.4790</td>
-<td style="text-align: left;">0.4483</td>
-<td style="text-align: left;">0.0320</td>
-<td style="text-align: left;">-2.8399</td>
-<td style="text-align: left;">0.0021</td>
-<td style="text-align: left;">-5.93</td>
+<td style="text-align: left;">Prismatic layers number</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">4</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><strong>ID_15</strong></td>
-<td style="text-align: left;">0.4823</td>
-<td style="text-align: left;">0.4805</td>
-<td style="text-align: left;">0.4499</td>
-<td style="text-align: left;">0.0324</td>
-<td style="text-align: left;">-2.8442</td>
-<td style="text-align: left;">0.0019</td>
-<td style="text-align: left;">-5.92</td>
+<td style="text-align: left;">1st prismatic layer max. thickness</td>
+<td style="text-align: left;">0.008</td>
+<td style="text-align: left;">0.008</td>
+<td style="text-align: left;">0.008</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The fine mesh is considerably larger, which is promising for a proper GCI study. The results found with these new meshes are:</p>
+<p><strong>Table 8: Aerodynamic coefficients for mesh convergence study (AWS)</strong></p>
+<div class="table-responsive">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Mesh Level</th>
+<th style="text-align: left;"><strong><span class="math inline">\(C_{D,mean}\)</span></strong></th>
+<th style="text-align: left;"><strong><span class="math inline">\(C_{L,mean}\)</span></strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Coarse</td>
+<td style="text-align: left;">0.5440</td>
+<td style="text-align: left;">-2.9876</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><strong>ID_16</strong></td>
-<td style="text-align: left;">0.4907</td>
-<td style="text-align: left;">0.4907</td>
-<td style="text-align: left;">0.4567</td>
-<td style="text-align: left;">0.0340</td>
-<td style="text-align: left;">-2.9143</td>
-<td style="text-align: left;">0.0019</td>
-<td style="text-align: left;">-5.94</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><strong>ID_17</strong></td>
-<td style="text-align: left;">0.4980</td>
+<td style="text-align: left;">Medium</td>
 <td style="text-align: left;">0.4992</td>
-<td style="text-align: left;">0.4627</td>
-<td style="text-align: left;">0.0353</td>
 <td style="text-align: left;">-2.9500</td>
-<td style="text-align: left;">0.0021</td>
-<td style="text-align: left;">-5.91</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Fine</td>
+<td style="text-align: left;">0.4941</td>
+<td style="text-align: left;">-2.9382</td>
 </tr>
 </tbody>
 </table>
 </div>
-</section>
-<section id="performance-analysis" class="level3" data-number="3.2">
-<h3 data-number="3.2" class="anchored" data-anchor-id="performance-analysis"><span class="header-section-number">3.2</span> 3.2 Performance Analysis</h3>
-<p>The results demonstrate a clear optimization trajectory:</p>
-<ol type="1">
-<li><strong>Phase 1 (ID_01 to ID_04)</strong>: Initial exploration phase with <span class="math inline">\(C_L\)</span> ranging from -2.33 to -2.41 and <span class="math inline">\(C_D\)</span> from 0.43 to 0.46. The best L/D ratio achieved was -5.51 (ID_03).</li>
-<li><strong>Phase 2 (ID_05 to ID_08)</strong>: Higher downforce configurations with <span class="math inline">\(C_L\)</span> between -2.72 and -2.78. Drag increased accordingly (0.48-0.52), but L/D improved to -5.66 (ID_07).</li>
-<li><strong>Phase 3 (ID_09 to ID_11)</strong>: Peak downforce configurations reaching <span class="math inline">\(C_L\)</span> = -2.96 (ID_11). Maximum L/D ratio of -5.72 achieved with ID_09.</li>
-<li><strong>Phase 4 (ID_12 to ID_17)</strong>: Refinement phase with consistent L/D ratios around -5.9. ID_13 achieved the best overall efficiency at -5.95.</li>
-</ol>
-</section>
-<section id="drag-composition-analysis" class="level3" data-number="3.3">
-<h3 data-number="3.3" class="anchored" data-anchor-id="drag-composition-analysis"><span class="header-section-number">3.3</span> 3.3 Drag Composition Analysis</h3>
-<p><img src="assets/drag_breakdown.png" class="img-fluid" alt="Drag Breakdown Chart"> <em>Figure 1: Drag breakdown: Pressure vs.&nbsp;Viscous components.</em> Key findings:</p>
-<ul>
-<li><strong>Pressure drag dominates</strong>: <span class="math inline">\(C_{D,p}\)</span> accounts for 93-94% of total drag</li>
-<li><strong>Viscous contribution is minimal</strong>: <span class="math inline">\(C_{D,visc}\)</span> ranges from 0.025 to 0.035 ($$6-7% of total)</li>
-<li><strong>Linear relationship</strong>: Both components increase with downforce level</li>
-</ul>
-<p>This indicates that wake separation control is the primary driver for drag reduction, rather than boundary layer management.</p>
-</section>
-<section id="lift-to-drag-ratio-evolution" class="level3" data-number="3.4">
-<h3 data-number="3.4" class="anchored" data-anchor-id="lift-to-drag-ratio-evolution"><span class="header-section-number">3.4</span> 3.4 Lift-to-Drag Ratio Evolution</h3>
-<p><img src="assets/ld_ratio.png" class="img-fluid" alt="L/D Ratio Chart"> <em>Figure 2: Lift-to-drag ratio evolution across all configurations.</em></p>
-<p>The L/D ratio shows a clear optimization trend, improving from -5.19 (ID_01) to -5.95 (ID_13) before stabilizing around -5.9.</p>
-</section>
-<section id="convergence-analysis" class="level3" data-number="3.5">
-<h3 data-number="3.5" class="anchored" data-anchor-id="convergence-analysis"><span class="header-section-number">3.5</span> 3.5 Convergence Analysis</h3>
-<p><strong>Table 6: Convergence history: Initial and final residuals</strong></p>
-<div class="table-responsive">
-<table class="caption-top table">
-<colgroup>
-<col style="width: 11%">
-<col style="width: 11%">
-<col style="width: 11%">
-<col style="width: 11%">
-<col style="width: 11%">
-<col style="width: 11%">
-<col style="width: 11%">
-<col style="width: 11%">
-<col style="width: 11%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">Case</th>
-<th style="text-align: left;">Initial <span class="math inline">\(U_x\)</span></th>
-<th style="text-align: left;">Initial <span class="math inline">\(U_y\)</span></th>
-<th style="text-align: left;">Initial <span class="math inline">\(U_z\)</span></th>
-<th style="text-align: left;">Initial <span class="math inline">\(p\)</span></th>
-<th style="text-align: left;">Final <span class="math inline">\(U_x\)</span></th>
-<th style="text-align: left;">Final <span class="math inline">\(U_y\)</span></th>
-<th style="text-align: left;">Final <span class="math inline">\(U_z\)</span></th>
-<th style="text-align: left;">Final <span class="math inline">\(p\)</span></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">ID_01</td>
-<td style="text-align: left;">1.67e-1</td>
-<td style="text-align: left;">1.65e-1</td>
-<td style="text-align: left;">1.63e-1</td>
-<td style="text-align: left;">5.24e-2</td>
-<td style="text-align: left;">8.68e-3</td>
-<td style="text-align: left;">1.18e-2</td>
-<td style="text-align: left;">1.15e-2</td>
-<td style="text-align: left;">3.80e-4</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">ID_02</td>
-<td style="text-align: left;">3.44e-4</td>
-<td style="text-align: left;">1.35e-3</td>
-<td style="text-align: left;">4.03e-4</td>
-<td style="text-align: left;">1.21e-4</td>
-<td style="text-align: left;">3.33e-5</td>
-<td style="text-align: left;">1.12e-4</td>
-<td style="text-align: left;">3.98e-5</td>
-<td style="text-align: left;">9.00e-7</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">ID_03</td>
-<td style="text-align: left;">5.06e-4</td>
-<td style="text-align: left;">1.33e-3</td>
-<td style="text-align: left;">4.80e-4</td>
-<td style="text-align: left;">2.06e-4</td>
-<td style="text-align: left;">4.72e-5</td>
-<td style="text-align: left;">1.29e-4</td>
-<td style="text-align: left;">4.50e-5</td>
-<td style="text-align: left;">1.80e-6</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">ID_04</td>
-<td style="text-align: left;">5.09e-5</td>
-<td style="text-align: left;">3.03e-4</td>
-<td style="text-align: left;">1.31e-4</td>
-<td style="text-align: left;">2.44e-5</td>
-<td style="text-align: left;">4.16e-6</td>
-<td style="text-align: left;">2.36e-5</td>
-<td style="text-align: left;">1.15e-5</td>
-<td style="text-align: left;">1.30e-7</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">ID_05</td>
-<td style="text-align: left;">1.05e-3</td>
-<td style="text-align: left;">2.24e-3</td>
-<td style="text-align: left;">9.11e-4</td>
-<td style="text-align: left;">3.15e-4</td>
-<td style="text-align: left;">9.56e-5</td>
-<td style="text-align: left;">2.04e-4</td>
-<td style="text-align: left;">8.61e-5</td>
-<td style="text-align: left;">1.75e-6</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">ID_06</td>
-<td style="text-align: left;">6.45e-4</td>
-<td style="text-align: left;">1.83e-3</td>
-<td style="text-align: left;">6.91e-4</td>
-<td style="text-align: left;">3.02e-4</td>
-<td style="text-align: left;">5.41e-5</td>
-<td style="text-align: left;">1.56e-4</td>
-<td style="text-align: left;">6.05e-5</td>
-<td style="text-align: left;">2.77e-6</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">ID_07</td>
-<td style="text-align: left;">7.80e-4</td>
-<td style="text-align: left;">1.78e-3</td>
-<td style="text-align: left;">6.41e-4</td>
-<td style="text-align: left;">3.27e-4</td>
-<td style="text-align: left;">7.73e-5</td>
-<td style="text-align: left;">1.49e-4</td>
-<td style="text-align: left;">5.78e-5</td>
-<td style="text-align: left;">3.12e-6</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">ID_08</td>
-<td style="text-align: left;">7.45e-4</td>
-<td style="text-align: left;">1.55e-3</td>
-<td style="text-align: left;">6.14e-4</td>
-<td style="text-align: left;">3.08e-4</td>
-<td style="text-align: left;">7.24e-5</td>
-<td style="text-align: left;">1.41e-4</td>
-<td style="text-align: left;">6.14e-5</td>
-<td style="text-align: left;">2.47e-6</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">ID_09</td>
-<td style="text-align: left;">5.99e-4</td>
-<td style="text-align: left;">7.71e-4</td>
-<td style="text-align: left;">2.93e-4</td>
-<td style="text-align: left;">1.55e-4</td>
-<td style="text-align: left;">5.77e-5</td>
-<td style="text-align: left;">6.55e-5</td>
-<td style="text-align: left;">2.70e-5</td>
-<td style="text-align: left;">1.40e-6</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">ID_10</td>
-<td style="text-align: left;">7.35e-4</td>
-<td style="text-align: left;">8.21e-4</td>
-<td style="text-align: left;">3.62e-4</td>
-<td style="text-align: left;">1.84e-4</td>
-<td style="text-align: left;">6.28e-5</td>
-<td style="text-align: left;">7.00e-5</td>
-<td style="text-align: left;">3.30e-5</td>
-<td style="text-align: left;">1.52e-6</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">ID_11</td>
-<td style="text-align: left;">6.67e-4</td>
-<td style="text-align: left;">6.82e-4</td>
-<td style="text-align: left;">2.92e-4</td>
-<td style="text-align: left;">1.60e-4</td>
-<td style="text-align: left;">6.44e-5</td>
-<td style="text-align: left;">6.44e-5</td>
-<td style="text-align: left;">2.48e-5</td>
-<td style="text-align: left;">1.25e-6</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">ID_12</td>
-<td style="text-align: left;">1.07e-3</td>
-<td style="text-align: left;">1.56e-3</td>
-<td style="text-align: left;">5.92e-4</td>
-<td style="text-align: left;">2.32e-4</td>
-<td style="text-align: left;">9.54e-5</td>
-<td style="text-align: left;">1.38e-4</td>
-<td style="text-align: left;">5.73e-5</td>
-<td style="text-align: left;">1.17e-6</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">ID_13</td>
-<td style="text-align: left;">2.68e-4</td>
-<td style="text-align: left;">3.18e-4</td>
-<td style="text-align: left;">1.16e-4</td>
-<td style="text-align: left;">7.17e-5</td>
-<td style="text-align: left;">2.65e-5</td>
-<td style="text-align: left;">3.02e-5</td>
-<td style="text-align: left;">1.03e-5</td>
-<td style="text-align: left;">5.14e-7</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">ID_14</td>
-<td style="text-align: left;">1.77e-4</td>
-<td style="text-align: left;">2.03e-4</td>
-<td style="text-align: left;">7.57e-5</td>
-<td style="text-align: left;">4.42e-5</td>
-<td style="text-align: left;">1.70e-5</td>
-<td style="text-align: left;">1.92e-5</td>
-<td style="text-align: left;">6.48e-6</td>
-<td style="text-align: left;">2.52e-7</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">ID_15</td>
-<td style="text-align: left;">2.34e-4</td>
-<td style="text-align: left;">3.37e-4</td>
-<td style="text-align: left;">1.11e-4</td>
-<td style="text-align: left;">5.71e-5</td>
-<td style="text-align: left;">2.19e-5</td>
-<td style="text-align: left;">3.25e-5</td>
-<td style="text-align: left;">1.10e-5</td>
-<td style="text-align: left;">3.20e-7</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">ID_16</td>
-<td style="text-align: left;">1.49e-4</td>
-<td style="text-align: left;">1.74e-4</td>
-<td style="text-align: left;">6.41e-5</td>
-<td style="text-align: left;">3.97e-5</td>
-<td style="text-align: left;">1.30e-5</td>
-<td style="text-align: left;">1.52e-5</td>
-<td style="text-align: left;">6.20e-6</td>
-<td style="text-align: left;">1.73e-7</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">ID_17</td>
-<td style="text-align: left;">2.67e-4</td>
-<td style="text-align: left;">2.70e-4</td>
-<td style="text-align: left;">1.09e-4</td>
-<td style="text-align: left;">5.68e-5</td>
-<td style="text-align: left;">2.65e-5</td>
-<td style="text-align: left;">2.68e-5</td>
-<td style="text-align: left;">1.03e-5</td>
-<td style="text-align: left;">4.75e-7</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>All cases achieved excellent convergence with:</p>
-<ul>
-<li>Velocity residuals reduced by 99.9%</li>
-<li>Pressure residuals reduced by 99.99%</li>
-<li>Best overall convergence: ID_04 (final <span class="math inline">\(p = 1.3 \times 10^{-7}\)</span>)</li>
-</ul>
-<p>ID_01 shows relatively higher residuals, suggesting potential for further refinement in future iterations.</p>
-</section>
-<section id="straight-line-mode-slm-configurations" class="level3" data-number="3.6">
-<h3 data-number="3.6" class="anchored" data-anchor-id="straight-line-mode-slm-configurations"><span class="header-section-number">3.6</span> 3.6 Straight Line Mode (SLM) Configurations</h3>
-<p>In addition to the high-downforce configurations (ID_01 to ID_17), four additional cases (ID_18 to ID_21) were simulated to evaluate the Straight Line Mode (SLM) - a feature of the 2026 regulations that allows the rear wing to reduce flap incidence for lower drag during high-speed straights.</p>
-<p><strong>Table 7: Aerodynamic coefficients for SLM configurations (ID_18 to ID_21)</strong></p>
+<p>With these new finer meshes both <span class="math inline">\(C_L\)</span> and <span class="math inline">\(C_D\)</span> exhibit monotonic convergence, with convergence ratios of <span class="math inline">\(CR=0.313\)</span> and <span class="math inline">\(CR=0.153\)</span> respectively, confirming good mesh separation between coarse, medium and fine. The estimated order of convergence is <span class="math inline">\(p=1.41\)</span> for <span class="math inline">\(C_L\)</span> and <span class="math inline">\(p=2.50\)</span> for <span class="math inline">\(C_D\)</span>, the latter being close to the theoretical second-order accuracy of the numerical scheme used. The asymptotic range indicators are <span class="math inline">\(AR=0.946\)</span> for <span class="math inline">\(C_L\)</span> and <span class="math inline">\(AR=1.048\)</span> for <span class="math inline">\(C_D\)</span>, both close to unity, suggesting that the solution is extremely close to the asymptotic regime. The GCI values for the finest mesh pair are below <span class="math inline">\(1.1\%\)</span> for both quantities, well within the accepted threshold for integral aerodynamic coefficients. The results are summarised in the next table.</p>
+<p><strong>Table 9: Grid Convergence Index results for the final rear wing geometry</strong></p>
 <div class="table-responsive">
 <table class="caption-top table">
 <colgroup>
@@ -1271,87 +1437,57 @@ window.Quarto = {
 </colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: left;">Case</th>
-<th style="text-align: left;"><span class="math inline">\(C_D\)</span></th>
-<th style="text-align: left;"><span class="math inline">\(C_{D,mean}\)</span></th>
-<th style="text-align: left;"><span class="math inline">\(C_{L,mean}\)</span></th>
-<th style="text-align: left;"><span class="math inline">\(L/D\)</span></th>
-<th style="text-align: left;"><span class="math inline">\(C_{M,mean}\)</span></th>
-<th style="text-align: left;"><span class="math inline">\(C_{D,visc}\)</span></th>
+<th style="text-align: left;">Indicator</th>
+<th style="text-align: left;"><span class="math inline">\(CR\)</span></th>
+<th style="text-align: left;"><span class="math inline">\(p\)</span></th>
+<th style="text-align: left;"><span class="math inline">\(\phi_{expected}\)</span></th>
+<th style="text-align: left;"><span class="math inline">\(GCI_{32}\)</span> %</th>
+<th style="text-align: left;"><span class="math inline">\(GCI_{21}\)</span> %</th>
+<th style="text-align: left;"><span class="math inline">\(AR\)</span></th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;"><strong>ID_18</strong></td>
-<td style="text-align: left;">0.1105</td>
-<td style="text-align: left;">0.1086</td>
-<td style="text-align: left;">-0.7087</td>
-<td style="text-align: left;">-6.53</td>
-<td style="text-align: left;">-0.1123</td>
-<td style="text-align: left;">0.0237</td>
+<td style="text-align: left;"><span class="math inline">\(C_L\)</span></td>
+<td style="text-align: left;">0.313</td>
+<td style="text-align: left;">1.41</td>
+<td style="text-align: left;">-2.9224</td>
+<td style="text-align: left;">1.110</td>
+<td style="text-align: left;">0.672</td>
+<td style="text-align: left;">0.946</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><strong>ID_19</strong></td>
-<td style="text-align: left;">0.1187</td>
-<td style="text-align: left;">0.1184</td>
-<td style="text-align: left;">-0.8841</td>
-<td style="text-align: left;">-7.47</td>
-<td style="text-align: left;">-0.1164</td>
-<td style="text-align: left;">0.0272</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><strong>ID_20</strong></td>
-<td style="text-align: left;">0.0890</td>
-<td style="text-align: left;">0.0892</td>
-<td style="text-align: left;">-0.0665</td>
-<td style="text-align: left;">-0.75</td>
-<td style="text-align: left;">-0.0005</td>
-<td style="text-align: left;">0.0220</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><strong>ID_21</strong></td>
-<td style="text-align: left;">0.0917</td>
-<td style="text-align: left;">0.0918</td>
-<td style="text-align: left;">-0.3482</td>
-<td style="text-align: left;">-3.79</td>
-<td style="text-align: left;">-0.0450</td>
-<td style="text-align: left;">0.0234</td>
+<td style="text-align: left;"><span class="math inline">\(C_D\)</span></td>
+<td style="text-align: left;">0.153</td>
+<td style="text-align: left;">2.50</td>
+<td style="text-align: left;">0.4868</td>
+<td style="text-align: left;">2.981</td>
+<td style="text-align: left;">1.057</td>
+<td style="text-align: left;">1.048</td>
 </tr>
 </tbody>
 </table>
 </div>
-<p>Key observations from the SLM configurations:</p>
-<ol type="1">
-<li><strong>Drag reduction</strong>: The SLM configurations achieve significantly lower drag coefficients (<span class="math inline">\(C_D\)</span> = 0.09-0.12) compared to the high-downforce race mode (<span class="math inline">\(C_D \approx\)</span> 0.43-0.52), representing a 75-80% reduction in drag.</li>
-<li><strong>Downforce tradeoff</strong>: As expected, downforce is reduced proportionally (<span class="math inline">\(C_L\)</span> = -0.07 to -0.88), which is acceptable for straight-line sections where aerodynamic efficiency (lower <span class="math inline">\(C_D\)</span>) is prioritized over peak downforce.</li>
-<li><strong>Best straight-line efficiency</strong>: ID_20 achieves the lowest drag coefficient (<span class="math inline">\(C_D\)</span> = 0.089), making it the optimal configuration for maximum straight-line speed. However, it produces minimal downforce (<span class="math inline">\(C_L\)</span> = -0.067), which may affect stability.</li>
-<li><strong>ID_19 - Best SLM balance</strong>: ID_19 exhibits the best L/D ratio in SLM mode at -7.47, offering a good compromise between reduced drag and maintaining some downforce for stability.</li>
-<li><strong>Viscous drag contribution</strong>: The viscous drag fraction in SLM mode is higher ($<span class="math inline">\(20-23\%) compared to high-downforce mode (\)</span>$6-7%), indicating that in low-lift conditions, viscous forces become relatively more significant.</li>
-</ol>
-<p>The SLM results demonstrate the effectiveness of the 2026 active aerodynamics regulations in enabling significant drag reduction for straight-line performance while maintaining flexibility in the downforce balance.</p>
+<p>The GCI study results are this time successful, proving that the final mesh has almost achieved complete grid independence. Since the results for integral coefficient obtained with the medium mesh, which is the one used for the entirety of the results discussed before, are very close the the ones obtained with the fine mesh, it is possible to assume that the design trends found with the medium mesh would still hold for a finer mesh, and thus be applied to reality. More specifically the medium mesh was found to have a 0.4% <span class="math inline">\(C_L\)</span> overestimation, and a 1.0% drag overestimation, well within acceptable bounds.</p>
+</section>
+</section>
+</section>
+<section id="conclusions" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="conclusions"><span class="header-section-number">4</span> 4. Conclusions</h2>
+<p>This CFD optimization campaign for the 2026 F1 rear wing has successfully demonstrated both the capabilities and the limitations of RANS-based incompressible simulation as a design tool for highly loaded multi-element wings. Starting from an initial geometry with several recognized aerodynamic deficiencies, a systematic development process produced a final corner mode configuration achieving a lift coefficient of <span class="math inline">\(C_L = -2.950\)</span> and a drag coefficient of <span class="math inline">\(C_D = 0.499\)</span>, representing improvements of 24.5% and 15.8% respectively over the baseline design.</p>
+<p>Several key aerodynamic lessons were established through this process. Streamlined pylons with appropriate airfoil cross-sections proved critical in eliminating wake-generating separation structures at no meaningful cost to downforce. Leading edge alignment with the local flow direction, particularly for the first element, was shown to suppress suction-side separation and reduce the pressure drag penalty associated with thick wakes. Slot gap optimization between the first and second elements proved to have a considerable influence on efficiency while leaving downforce essentially unchanged. Endplate design was found to be deeply coupled to profile performance: when correctly shaped, the endplate generates an internal expansion that actively contributes to suction beneath the wing rather than passively containing the flow.</p>
+<p>The Straight Line Mode investigation revealed a clear hierarchy among the evaluated strategies. The Macarena-style SLM, featuring a <span class="math inline">\(\approx210^\circ\)</span> rotation that inverts the flap orientation, produced by far the most effective drag reduction at 82.1%, while simultaneously reducing downforce by 97.7%, consistent with its observed behaviour on the 2026 Ferrari. The optimized regular-style SLM offered a competitive 81.6% drag reduction with a more moderate downforce loss. The Alpine-style strategy, constrained by the limited rotation angle permitted by the slot gap geometry, proved less flexible and produced the least drag reduction of the four options.</p>
+<p>The grid convergence analysis, made possible by AWS EC2 cloud infrastructure, confirmed that the medium mesh used throughout the design campaign introduces errors of approximately 0.4% in <span class="math inline">\(C_L\)</span> and 1.0% in <span class="math inline">\(C_D\)</span> relative to the asymptotically converged solution, both well within acceptable bounds for comparative aerodynamic studies. The GCI values below 1.1% for the finest mesh pair validate the numerical framework and suggest that the design trends identified are reliable, even if the absolute values carry the known uncertainties of wall-function RANS modelling.</p>
+<p>Finally future work should focus on the following areas: * low-<span class="math inline">\(Re\)</span> simulation using a refined near-wall mesh targeting <span class="math inline">\(y^+ \approx 1\)</span> would allow direct comparison with the wall-function approach and quantify the associated modelling error on predicted separation * The inclusion of the SLM fairing and bracket geometry would improve the realism of the straight-line mode results and allow a more meaningful aerodynamic evaluation of the Macarena strategy in particular * An aeromap study, spanning a range of pitch, roll and yaw attitudes, would be a necessary step towards understanding real on-track performance, where suspension compliance and ride height variation modify the effective angles of attack * Finally, extending the simulation to a half-car or full-car geometry would capture the interaction between the rear wing, the diffuser, and the rear suspension, which constitutes a major source of additional downforce in modern F1 car design</p>
 <hr>
 </section>
-</section>
-<section id="key-findings" class="level2" data-number="4">
-<h2 data-number="4" class="anchored" data-anchor-id="key-findings"><span class="header-section-number">4</span> 4. Key Findings</h2>
-<ol type="1">
-<li><strong>Best efficiency</strong>: ID_13 achieves the highest L/D ratio of <strong>-5.95</strong></li>
-<li><strong>Maximum downforce</strong>: ID_11 produces the highest downforce with <span class="math inline">\(C_L\)</span> = <strong>-2.96</strong></li>
-<li><strong>Minimum drag</strong>: ID_03 has the lowest drag coefficient at <strong>0.432</strong></li>
-<li><strong>Drag composition</strong>: Pressure drag accounts for $$94% of total drag</li>
-<li><strong>Convergence quality</strong>: All cases achieved residuals below <span class="math inline">\(10^{-4}\)</span></li>
-</ol>
-</section>
-<section id="conclusions" class="level2" data-number="5">
-<h2 data-number="5" class="anchored" data-anchor-id="conclusions"><span class="header-section-number">5</span> 5. Conclusions</h2>
-<p>The CFD optimization campaign for the 2026 F1 rear wing has successfully identified configurations that balance high downforce with efficient drag characteristics. The key achievements are:</p>
-<ul>
-<li>L/D ratios improved from -5.19 to -5.95 across the test matrix</li>
-<li>Maximum downforce of <span class="math inline">\(C_L\)</span> = -2.96 achieved while maintaining acceptable drag</li>
-<li>Pressure drag dominates the total drag, indicating separation control is critical</li>
-<li>All simulations achieved robust convergence with well-resolved flow fields</li>
-</ul>
-<p>Future work should focus on: * Validating selected configurations with wind tunnel testing * Investigating transient effects and ride height sensitivity * Exploring active flow control devices for further performance gains</p>
+<section id="acknowledgements" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="acknowledgements"><span class="header-section-number">5</span> Acknowledgements</h2>
+<p>16 out of the 24 simulations were performed using OpenFOAM on AWS EC2 infrastructure. Geometry generation was conducted using the OnShape CAD toolkit.</p>
+<div style="display: flex; justify-content: center; gap: 15px; margin-top: 40px; margin-bottom: 40px; flex-wrap: wrap;">
+<p><a href="assets/Modern_F1_2026_Rear_Wing_Report.pdf" class="btn btn-primary btn-lg" download=""> <i class="bi bi-file-earmark-pdf"></i> Download Full PDF Report </a></p>
+<p><a href="mailto:michele.andreozzi@protonmail.com?subject=Inquiry%20regarding%20F1%20CFD%20Portfolio" class="btn btn-outline-primary btn-lg"> <i class="bi bi-envelope"></i> Contact Me </a></p>
+</div>
 <hr>
 </section>
 <section id="appendix-code-automation-example" class="level2" data-number="6">
@@ -1490,11 +1626,6 @@ window.Quarto = {
 <span id="cb1-131"><a href="#cb1-131" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert report into a simple pdf</span></span>
 <span id="cb1-132"><a href="#cb1-132" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> postProcessing/foamReport/500</span>
 <span id="cb1-133"><a href="#cb1-133" aria-hidden="true" tabindex="-1"></a><span class="ex">marp</span> foamReport.md <span class="at">--allow-local-files</span> <span class="at">--pdf</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div style="display: flex; justify-content: center; gap: 15px; margin-top: 40px; margin-bottom: 40px; flex-wrap: wrap;">
-<p><a href="assets/Modern_F1_2026_Rear_Wing_Report.pdf" class="btn btn-primary btn-lg" download=""> <i class="bi bi-file-earmark-pdf"></i> Download Full PDF Report </a></p>
-<p><a href="mailto:michele.andreozzi@protonmail.com?subject=Inquiry%20regarding%20F1%20CFD%20Portfolio" class="btn btn-outline-primary btn-lg"> <i class="bi bi-envelope"></i> Contact Me </a></p>
-</div>
-<p><strong>Acknowledgements:</strong> Simulations were performed using OpenFOAM on AWS EC2 infrastructure. Geometry generation was conducted using the in-house CAD toolkit.</p>
 
 
 </section>
@@ -1507,6 +1638,18 @@ window.Quarto = {
 <li id="fn2"><p>It was actually surprising how much quicker the meshing process was compared to snappyHexMesh.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn3"><p>A similar behaviour can be found in the same image close to the trailing edge of the first element on the suction side.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn4"><p>The python script converting the Paraview-extracted data into readable plots was intended to automatically detect the wing elements, split the data and assign a label and color to each. While the splitting works fine as shown, the labels and colors seems to sometime switch the order of the profiles. This was considered a minor issue and never solver in the end (at the time of writing at the very least).<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>With a human sanity check of the integral quantities plots still being executed after each simulation.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>This is clearly a fallible methodology, not suggested for any industrial or professional CFD study, nonetheless it was found to be the only viable solution.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p>As described, convergence plots are also generated by the scripts, allowing a further verification of iteration convergence.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8"><p>Wall shear stress is an indicator of surface friction, and low wall shear stress areas indicate weak flow and potential separation, or even detached flow.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn9"><p><span class="math inline">\(C_p\)</span> is the most common indicator of static pressure, used to evaluate local loading. <span class="math inline">\(C_p^{tot}\)</span> is instead a measure of the energy in the air (it indicates well where non-isoentropic processes, such as viscosity, have taken place, reducing the sum of static and dynamic pressure). <span class="math inline">\(C_p^{tot}\)</span> is of paramount importance to understand where to extract performance, and where to divert dirty air.<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn10"><p>LIC visualization is very common in aerodynamic development as it allows the immediate determination of the flow direction. In this way by looking at, e.g., <span class="math inline">\(C_p^{tot}\)</span> with LIC one can understand how much potential to be extracted a certain region has, and where this <em>local energy</em> is headed to.<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn11"><p>As the comment regarding the mesh should point out, the grid at this point is probably not fine enough to resolve the flow features exactly, nonetheless it should hopefully help at improving basic issues in the geometry.<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn12"><p>It is actually interesting to notice that thin airfoil theory, an analytic model developed back in the 1920s by Munk and Glauert, proved that the maximum effect of camber on lift is found at the trailing edge.<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn13"><p>More specifically the 3D splines were redesigned as the intersection of a couple of planar spline views, allowing better local control.<a href="#fnref13" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn14"><p>Although probably optimization could reduce the amount of induced drag caused by vorticity released in the wake.<a href="#fnref14" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn15"><p>A side effect of thin profiles is that they need to be well aligned with the flow, as the sharp leading edge can easily cause separation. This in turn means that aerodynamics must be studied at a series of attitudes, for different yaw, pitch and roll angles. These angles are a function of stiffnesses in the suspension setup, thus CFD alone cannot provide the full picture of the aerodynamic performance. A well developed aeromap is a collaboration between car dynamics and aerodynamics.<a href="#fnref15" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn16"><p>This is due to the reliance on larger electric batteries, which need more intensive recharging.<a href="#fnref16" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
