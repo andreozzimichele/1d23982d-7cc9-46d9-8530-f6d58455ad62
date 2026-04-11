@@ -14,11 +14,18 @@
     "text": "1.1 Featured Projects\n\n\n1.1.1 🏎️ 2026 Rear Wing\nDevelopment of a 2026 F1 Rear Wing using OpenFOAM, including SLM pivot point optimization. View Project &gt;\n\n\n1.1.2 PoliMi Master Thesis\nDevelopment of automatic differentiation for hydrofoil optimization. View Project &gt;\n\n\n1.1.3 Entropy & Statistical Mechanics\nEntropy is said to introduce the arrow of time as an emerging property of reality, can a simulation of statistical mechanics help uncover more of this topic? View Project &gt;"
   },
   {
+    "objectID": "index.html#future-projects",
+    "href": "index.html#future-projects",
+    "title": "Michele Andreozzi",
+    "section": "1.2 Future projects",
+    "text": "1.2 Future projects\nIdeas for future CFD incestigations include: - full C++ development of a transition+turbulence model in OpenFOAM - aerostructural study, through FSI simulation"
+  },
+  {
     "objectID": "index.html#about-me",
     "href": "index.html#about-me",
     "title": "Michele Andreozzi",
-    "section": "1.2 About Me",
-    "text": "1.2 About Me\nI am a Aeronautical Engineer specializing in high-performance scietific computing, CFD and aerodynamics. This portfolio showcases my work in simulating the next generation of Formula 1 regulations using OpenFOAM and AWS high-performance computing clusters, and some academic projects I had the privilege to work on during my tme at Politecnico di Milano.\n\n  Get In Touch"
+    "section": "1.3 About Me",
+    "text": "1.3 About Me\nI am a Aeronautical Engineer specializing in high-performance scietific computing, CFD and aerodynamics. This portfolio showcases my work in simulating the next generation of Formula 1 regulations using OpenFOAM and AWS high-performance computing clusters, and some academic projects I had the privilege to work on during my tme at Politecnico di Milano.\n\n  Get In Touch"
   },
   {
     "objectID": "entropy.html",
