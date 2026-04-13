@@ -18,7 +18,7 @@
     "href": "index.html#future-projects",
     "title": "Michele Andreozzi",
     "section": "Future projects",
-    "text": "Future projects\nIdeas for future CFD incestigations include: - full C++ development of a transition+turbulence model in OpenFOAM - aerostructural study, through FSI simulation"
+    "text": "Future projects\nIdeas for future CFD incestigations include:\n\nfull C++ development & validation of a transition + turbulence model, from literature, in OpenFOAM\naerostructural wing development, through FSI simulations"
   },
   {
     "objectID": "index.html#about-me",

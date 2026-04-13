@@ -39,8 +39,9 @@ Entropy is said to introduce the arrow of time as an emerging property of realit
 
 ## Future projects
 Ideas for future CFD incestigations include:
-- full C++ development of a transition+turbulence model in OpenFOAM
-- aerostructural study, through FSI simulation
+
+* full C++ development & validation of a transition + turbulence model, from literature, in OpenFOAM
+* aerostructural wing development, through FSI simulations
 
 ## About Me
 I am a Aeronautical Engineer specializing in high-performance scietific computing, CFD and aerodynamics. This portfolio showcases my work in simulating the next generation of Formula 1 regulations using OpenFOAM and AWS high-performance computing clusters, and some academic projects I had the privilege to work on during my tme at Politecnico di Milano.
