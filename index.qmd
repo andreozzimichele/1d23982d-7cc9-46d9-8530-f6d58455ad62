@@ -15,11 +15,13 @@ page-layout: full
 
 ::: {.card .text-center}
 ### 🏎️ 2026 Rear Wing
+![2026 Rear Wing CFD](assets/hero_rear_wing.png)
 Development of a 2026 F1 Rear Wing using OpenFOAM, including SLM pivot point optimization.
-[View Project >](rear-wing.qmd){.btn .btn-outline-primary .btn-sm}
+[View Project >](rear_wing.qmd){.btn .btn-outline-primary .btn-sm}
 :::
 
 ::: {.card .text-center}
+![Hydrofoil Optimization](assets/hero_thesis.png)
 ### PoliMi Master Thesis
 Development of automatic differentiation for hydrofoil optimization.
 [View Project >](thesis.qmd){.btn .btn-outline-primary .btn-sm}
@@ -27,6 +29,7 @@ Development of automatic differentiation for hydrofoil optimization.
 
 ::: {.card .text-center}
 ### Entropy & Statistical Mechanics
+![Collisions Simulation](assets/hero_entropy.png)
 Entropy is said to introduce the arrow of time as an emerging property of reality, can a simulation of statistical mechanics help uncover more of this topic?
 [View Project >](entropy.qmd){.btn .btn-outline-primary .btn-sm}
 :::

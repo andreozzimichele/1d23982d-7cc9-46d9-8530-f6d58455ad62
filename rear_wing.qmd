@@ -10,7 +10,7 @@ date: "2026-03-25"
 This report presents the aerodynamic development of a 2026 Formula 1 rear wing using Computational Fluid Dynamics simulations. Fourteen different geometries were investigated using OpenFOAM, evaluating lift coefficient, drag coefficient, lift-to-drag ratio, and field values analysis, such as pressure coefficient and wall bounded streamlines. The study intends to both evaluate the usage of CFD as a reliable method for aerodynamic performance prediction and to also prove a broad understanding of the current F1 ruleset regarding the rear wing.
 :::
 
-## 1. Introduction
+## Introduction
 
 The 2026 Formula 1 regulations introduce significant changes to rear wing design: traditional endplates are brought back, but a very tight RV-RW-PROFILES reference volume is introduced, and the evolution from DRS to SLM for straight line drag reduction forces aerodynamic engineers to explore new development paths.
 
@@ -20,7 +20,7 @@ This study is developed in 3 major stages:
 * A series of geometry evolutions aimed at achieving high downforce and reducing undesirable effects such as separations.
 * An investigation into different Straight Line Mode options for hinge positioning and movement of the flaps.
 
-### 1.1 A Much Needed Disclaimer
+### A Much Needed Disclaimer
 While hopefully not needed, in the sense that everybody reading this should know it already, I'd rather be safe than sorry and clearly state the not so obvious: aerodynamics is governed by the Navier-Stokes equations, which are known for their mathematical complexity. The equations are nonlinear, and in their incompressible version they describe a situation that shows many similarities with a purely [elliptic](https://cfd.university/learn/10-key-concepts-everyone-must-understand-in-cfd/what-are-hyperbolic-parabolic-and-elliptic-equations-in-cfd) problem, i.e. one where all points in the domain influence each other, both upstream and downstream. Moreover F1 cars are extremely complex pieces of technology, where the amount of detail is extraordinary with respect to all aspects of engineering. These two statements should make it clear that:
 
 * Correctly modelling an F1 car through CFD is no trivial task. Every assumption should be double (or even triple) checked, as each introduces small deviations from reality that might catastrophically lead to a result that significantly diverges from the one found on track. While indubitably colorful, CFD should always be treated with immense care and some well informed suspicion
@@ -30,9 +30,9 @@ The conclusion in simple: the results in this report are clearly not meant to un
 
 ---
 
-## 2. Methodology
+## Methodology
 
-### 2.1 Hardware
+### Hardware
 
 All simulations were conducted using precompiled OpenFOAM ESI (version v2506) on personal hardware, which provided limited specs:
 
@@ -45,7 +45,7 @@ On a machine running Debian 13 as the OS, to strip down the system of all unnece
 
 For all of the above reasons it was decided that the simulations would be run as an incompressible steady state symmetric cases about the $y=0$ plane (as mentioned above the hardware limitations where really stringent, so the known limitations of a symmetric simulation were significantly outnumbered by the gained accuracy through a mesh twice as fine).
 
-### 2.2 Geometry
+### Geometry
 
 The rear wing geometry consists of a multi-element configuration stored in STL format (`rearWing.stl`). The geometry was built completely from scratch using the CAD SaaS Onshape, starting from the FIA 2026 F1 Technical Regulations - Section C - Issue 15. The regulations firstly define the reference volumes wherein the rear wing must be completely contained in corner mode. It was decided to model the profiles (RV-RV-PROFILES) the endplate (RV-RWEP-BODY) and pylons (RV-RW-PYLON). A noticeable absence, later discussed, is that of the SLM Fairing and Bracket (RW-SLM-FAIRING and RW-BRACKET), which could have lead to further aerodynamic considerations, but was not modelled.
 
@@ -73,12 +73,12 @@ The profiles, on the other hand are generated as surfaces, and thus provide a mo
 
 In conclusion, the initial geometry was deliberately designed with many details that left ample margins of improvement and explorations. A real F1 design cycle would certainly begin from a much more effective starting point, coming from both expertise and intuition.
 
-### 2.3 A Note on Automation
+### A Note on Automation
 
 Smart CFD utilization requires the user to intervene only in areas of pre-processing, running and post-processing where critical evaluations must be made. A very hands-on approach may naively force the user to lauch each command sequentially analyzing the output at each step of the process. While not wrong many energies and resources would be wasted in repetitive tasks, which may incidentally cause lack of attention to details, leading to poor results. As a consequence script automation is a requirement for any CFD user. The simulations presented in this report were all run through bash automation, launching an `Allrun` script that sequentially invoked OpenFOAM commands or python scripts that interacted with Paraview to extract quantities of interest and images. This method has a secondary advantage: any tweak to the configuration can be instantaneously applied across many commmands and even many simulations, leading to a much less error prone pipeline.
 An example of the `Allrun` script is shown in the [Appendix](#appendix-code-automation-example), to highlight the capabilities (and shortcomings) of the developed process.
 
-### 2.4 Meshing
+### Meshing
 
 After many failed attempts at meshing using the native OpenFOAM snappyHexMesh software, particularly with regards to the prism layer generation (often generating far less layers than the required amount in the `snappyHexMeshDict`) a different route was attempted: the cfMesh software provides similar cartesian mesh quality to snappyHexMesh, with less configuration options and a much faster turnaround time[^2]. This allowed a much quicker and more efficient development of a `meshDict` file that constructed a good quality mesh, with user specified refinement edges, surfaces, regions and more than sufficient prism layer extrusion.
 
@@ -120,11 +120,11 @@ Even though the choice of wall function implementation should provide some help 
 
 By automatically extracting these $y^+$ images at 10 different spanwise stations on the profiles, and at 5 stations on the endplates, every simulation could be checked regarding the compliance with appropriate first cell heights.
 
-### 2.5 Physics & Numerics
+### Physics & Numerics
 
 The simulations were performed using OpenFOAM's simpleFoam solver, a steady-state incompressible solver, alongside RANS modelling for turbulence. The complete solver configuration is detailed below.
 
-#### 2.5.1 Solver Settings
+#### Solver Settings
 
 The following table summarizes the key numerical settings used in the simulation:
 
@@ -169,7 +169,7 @@ The discretization schemes used to move from the Navier-Stokes to equations to a
 
 As it can be noticed, the schemes used aim for second order convergence (`linear`), a standard requirement in modern industrial CFD, only dropping to first order (`upwind`), for the discretization of the divergence terms in the turbulence two equation model; cell-limited and bounded second order schemes are used to avoid unphysical oscillations.
 
-#### 2.5.2 Boundary Conditions
+#### Boundary Conditions
 
 The computational domain consisting of 7 boundary patches applies the following BC:
 
@@ -213,7 +213,7 @@ As expected convergence of the three coefficients does not seem to happen exactl
 
 Finally, as a result of this first study on convergence a window size of 200 iterations was chosen to compute average values the converged steady state integral coefficients to be evaluated when comparing different rear wing geometries.
 
-### 2.6 Grid Convergence Study
+### Grid Convergence Study
 Once a solid simulation framework was established a mesh convergence study was performed using cfMesh to guarantee grid-independent solutions. Three mesh densities were evaluated on the initial geometry: a coarse one, a medium one and a fine one. The following table summarizes the mesh configurations and key settings:
 
 **Table 3: Mesh configuration summary for convergence study**
@@ -308,11 +308,11 @@ Having met the hardware limit for the finest mesh possible it was not possible t
 
 This limitation will be addressed and fully resolved in a later section by offloading the final geometry to an AWS cloud computing instance for a proper grid convergence verification.
 
-### 2.7 Post-Processing
+### Post-Processing
 
 As previously mentioned the post-processing workflow is fully automated through the `Allrun` script, which orchestrates all visualization and data extraction tasks using ParaView and custom Python scripts. The complete workflow consists of the following stages:
 
-#### 2.7.1 Force Coefficients Computation
+#### Force Coefficients Computation
 
 Force coefficients were computed using the OpenFOAM `forceCoeffs` function object configured inside `system/forceCoeffs`:
 
@@ -376,13 +376,13 @@ A final PDF report highlighting some details regarding convergence history, simu
 
 ---
 
-## 3. Results and Discussion
+## Results and Discussion
 
 The development of an evolution to the starting geometry required going through 14 different iteration. Not all of these will be discussed in detail, as many subsequent geometry changes were aimed at solving similar aerodynamic issues.
 
 First of all the starting geometry results, coming from the fine (7.7 million cells) mesh, are to be discussed, in order to introduce the main area of improvement[^11].
 
-### 3.1 Initial results
+### Initial results
 
 The initial geometry with non optimized 2D profiles, bluff endplates and bluff pylons returned a drag coefficient of $C_D=0.431$ and a lift coefficient of $C_L=-2.370$, both averaged over the final 250 iterations.
 
@@ -413,7 +413,7 @@ The bottom view of the wall shear stress surface contour plot also shows an inte
 
 From the image the situation appears very clear: the low pressure of the suction side (and similarly the high pressure of the pressure side) bend the flow downward, causing an effective negative of attack of the first element leading edge. This in turn causes leading edge separation, which leads to a thick dissipative wake and a consequent increase in drag.
 
-### 3.2 Design Evolution
+### Design Evolution
 The rear wing design was thus evolved with a few corrections needed in mind:
 
 * The pylon should use a streamlined cross section, specifically a symmetric profile
@@ -584,14 +584,15 @@ The results of the design process are finally summarized in the following table,
 
 The only comparison found online for the same 2026 regulation is the [LinkedIn article](https://www.linkedin.com/pulse/simulating-f1-2026-rear-wing-article-2-power-aerodynamics-ted-l-w4skc/) by Ted L., where he reports a maximum downforce of 1414.5 N. Using the reference values to transform the lift coefficient into a force the optimal design turns out to produce about 1806.9 N, approximately 27.7% more downforce, indicating that at least some key design choices were taken in the correct direction.
 
-### 3.3 Straight Line Mode (SLM) Configurations
+### Straight Line Mode (SLM) Configurations
 
 Once an appropriate high-downforce configuration was found four additional cases were simulated to evaluate the Straight Line Mode (SLM): a feature of the 2026 regulations that allows the rear wing to reduce flap incidence for lower drag during high-speed straights. These four designs were developed to evaluate different pivot point strategies, also looking at the choices made by F1 teams for the 2026 season.
 
-#### 3.3.1 A brief comment & caveat
+#### A brief comment & caveat
+
 The simulation of the wing presented in the previous sections did not involve the SLM fairing, which is the aerodynamic fairing that shields the mechanisms and actuators needed for straight line mode activation. This of course causes the results to be numerically off if compared to the actual numbers found on real 2026 F1 cars. Nonetheless the simulations were aimed at profiles and dihedral optimization, and thus the simulations were carried out without detailing the fairing. This discussion will become important in the following section, as the choice of fairing is heavily dependent on the SLM strategy chosen. As a result numbers regarding straight line mode should be read critically.
 
-#### 3.3.2 Alpine style SLM
+#### Alpine style SLM
 
 This first strategy, implemented by the Alpine F1 Team consists of the flap, made of the second and third element, rotating downwards of $\approx30^\circ$ about a point at the leading edge of the second element:
 
@@ -613,7 +614,7 @@ This first strategy for the pivot point of SLM results in $C_D=0.109$, a 78.2% d
 
 ![A y-normal 2D slice Cp_tot visualization, at the y=0.28 m station](assets/ID_18/yNormalCpTotLIC_28_yp00.28.png)
 
-#### 3.3.3 Regular style SLM
+#### Regular style SLM
 
 The second strategy is called *Regular* as it appears on most 2026 cars, and it rotates the second and third element of $\approx32^\circ$ about the third element trailing edge, bringing the second element leading edge gap. This SLM implementation generates a very large gap between the mainplane and the opened flap, as can be seen below:
 
@@ -631,7 +632,7 @@ This version of the rear wing generated a drag coefficient of $C_D=0.118$, down 
 
 The heavily cambered flap is pushing the flow upwards, and the second element leading edge separation is not as pronounced as in the previous SLM strategy. All these results suggest that the flaps are producing too much downforce, and thus induced drag, due to the incidence, which is too high. Further lowering the flaps angle of attack should as a consequence prove beneficial.
 
-#### 3.3.4 Macarena style SLM
+#### Macarena style SLM
 
 The third strategy is the most eye-catching innovative aerodynamic concept appeared on the 2026 F1 grid so far. Ferrari presented this in the last day of Bahrain testing, and it involves the second and third element rotating around a point located at about the midpoint of the third element. Instead of rotating of $\approx30^\circ$ the flaps continue their rotation for a total of $\approx210^\circ$, taking advantage of the 2026 regulations specifying an actuation time for the flap rotation of 0.4 s, enough to rotate by more then the standard amounts. In this way the nominal trailing edge of the wing, i.e. the Gurney flap, becomes a leading edge. This strategy generates an even larger gap between the mainplane and the flaps. Another feature of this design in the absence of the conventional SLM fairing. The actuators are in this case located inside the endplates, and the central fairing pillar is not needed. This novel strategy can be seen in the below images:
 
@@ -654,7 +655,7 @@ A few notes must made regarding specifically the Macarena style CFD simulation:
 
 Nonetheless this CFD analysis seems to indicate that the avenue of an upside-down flap for SLM is promising and is worthy of consideration, also explaining Ferrari interest in testing it multiple times to get the mechanism to properly work for races usage.
 
-#### 3.3.5 Optimized regular style SLM
+#### Optimized regular style SLM
 
 The fourth and final strategy is a revised regular style SLM. Since Macarena SLM produced very promising results it was deemed interesting to compare it to the most common SLM implementation, when the latter is optimized for better drag reduction. More specifically the optimization involved a rotation of $\approx37^\circ$, more than the previous version.
 This makes the whole wing more similar to the SLM brought by McLaren on this year's car, as can be seen:
@@ -681,7 +682,7 @@ A final comment comparing Macarena and optimized regular style SLM can be made b
 
 The regular style wing, having the flap positioned much closer to the first element in the horizontal direction (due to the kinematics of the rotation), generates more high pressure on the pressure side of the wing. Also the suction side of the mainplane seems to work more effectively, thus increasing downforce and drag. The rearward shift in the flap position using Macarena SLM can thus be interpreted as a further advantage of this setup.
 
-#### 3.3.6 SLM Results & Conclusions
+#### SLM Results & Conclusions
 
 The following table summarizes the aerodynamic coefficients for the SLM configurations. Notice that all rows regarding $C_L$ are red, as a downforce reduction is in theory a downside. Nonetheless in SLM the most important quantity is drag and drag reduction, as the 2026 generation of cars is characterized by lower energy delivered by the power unit on a per lap basis[^16] As a consequence, an efficient straight-line mode is critical: failing to reduce drag adequately at high speed will result in a straight-line speed deficit, exposing the car to overtakes on the main straights.
 
@@ -704,18 +705,18 @@ While many details can still be investigated and simulated with higher accuracy 
 * Alpine style SLM seems to necessitate a very collaborative mainplane design, considering the disadvantage of having the rotation angle limited
 * the Macarana style SLM probably offers the most potential to be exploited, though careful interaction with other elements of the car is required and is complex from a mechanical point of view
 
-### 3.4 A Final Discussion on Grid Convergence
+### A Final Discussion on Grid Convergence
 As the previous discussion made clear, obtaining proper grid convergence on a personal laptop was impossible, and simulation time was extremely long even for this simplified simulation running for a small amount of pseudo-time iterations, taking more than 10 hours per case. Considering also the time required to adjust the geometry and smooth out possible issues arising in the meshing procedure the time required ballooned pretty quickly. While not initially considered when developing and simulating the geometry, during later stages of the work the investigated solution was AWS, a cloud computing platform offered by Amazon, which offers tight CLI integration and many choices of compute instances to run extremely large simulations rapidly. By going though cloud computing it was possible to simulate the same geometry on a much finer mesh, with the goal of verifying grid convergence.
 
-#### 3.4.1 AWS Setup
+#### AWS Setup
 The advantage of using AWS is that the options for compute instances allowed the simulation pipeline to be kept almost identical to the one used on the local PC. After creating an AWS account and installing AWS CLI it was possible to establish an SSH connection to an EC2 compute node chosen accurately for its performance and compatibility. AWS also offers S3 as a storage option, which allowed rapid upload and download of simulation data to and from the personal computer. After an SSH connection was active it was only a matter of installing all required software (i.e. `OpenFOAM`, `Paraview` and its dependencies, `ffmpeg` and `marp`) and running the bash scripts.
 
 The selection of the `m7i.48xlarge` instance was dictated by the high memory bandwidth and computational density required for large-scale CFD solvers like OpenFOAM. Featuring 192 vCPUs and 768 GiB of RAM, this instance leverages the 4th Generation Intel Xeon Scalable (Sapphire Rapids) architecture, which introduces DDR5 memory. The transition to DDR5 is critical for fluid dynamics simulations, as these workloads are frequently memory-bound; the increased bandwidth ensures that the large number of cores remains productive without being throttled by data retrieval latency.
 
-#### 3.4.2 Running on AWS
+#### Running on AWS
 AWS was actually used to simulate the last 8 design iterations of corner mode, and all 4 options for SLM. Keeping the same mesh setup, in order to have results comparable to the ones obtained with the personal laptop, every simulation (pre-processing, running and post-processing) required less then 30 minutes. The huge instance is certainly not optimized for a mesh with less then 10 million cells, but the timed saved using cloud computing was still immense, more than 95%.
 
-#### 3.4.3 Grid Convergence Index Analysis
+#### Grid Convergence Index Analysis
 Once a suitable AWS setup was found, it was possible to increase the mesh refinement and simulate to do a more proper grid convergence verification. It was decided that the final corner mode geometry would be used for this analysis, in order to verify the results for a design that was deemed sufficiently refined. The mesh specifications can be found in the table below:
 
 **Table 7: Mesh configuration summary for convergence study (AWS)**
@@ -763,7 +764,7 @@ With these new finer meshes both $C_L$ and $C_D$ exhibit monotonic convergence, 
 
 The GCI study results are this time successful, proving that the final mesh has almost achieved complete grid independence. Since the results for integral coefficient obtained with the medium mesh, which is the one used for the entirety of the results discussed before, are very close the the ones obtained with the fine mesh, it is possible to assume that the design trends found with the medium mesh would still hold for a finer mesh, and thus be applied to reality. More specifically the medium mesh was found to have a 0.4% $C_L$ overestimation, and a 1.0% drag overestimation, well within acceptable bounds.
 
-## 4. Conclusions
+## Conclusions
 
 This CFD optimization campaign for the 2026 F1 rear wing has successfully demonstrated both the capabilities and the limitations of RANS-based incompressible simulation as a design tool for highly loaded multi-element wings. Starting from an initial geometry with several recognized aerodynamic deficiencies, a systematic development process produced a final corner mode configuration achieving a lift coefficient of $C_L = -2.950$ and a drag coefficient of $C_D = 0.499$, representing improvements of 24.5% and 15.8% respectively over the baseline design.
 
