@@ -21,8 +21,8 @@ Development of a 2026 F1 Rear Wing using OpenFOAM, including SLM pivot point opt
 :::
 
 ::: {.card .text-center}
-![Hydrofoil Optimization](assets/hero_thesis.png)
 ### PoliMi Master Thesis
+![Hydrofoil Optimization](assets/hero_thesis.png)
 Development of automatic differentiation for hydrofoil optimization.
 [View Project >](thesis.qmd){.btn .btn-outline-primary .btn-sm}
 :::
