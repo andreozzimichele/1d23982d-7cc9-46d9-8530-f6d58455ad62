@@ -88,21 +88,21 @@
     "href": "index.html#featured-projects",
     "title": "Michele Andreozzi",
     "section": "Featured Projects",
-    "text": "Featured Projects\n\n\n2026 F1 Rear Wing\n Development of a 2026 F1 Rear Wing using OpenFOAM, including SLM pivot point optimization. View Project &gt;\n\n\nPoliMi Master Thesis\n Development of automatic differentiation for hydrofoil optimization. View Project &gt;\n\n\nGround Effect Floor CFD Analysis\n The effect of various parameters on floor and diffuser effectiveness is studied in OpenFOAM. Strakes are then added to investiagate their role in modern racing vehicles. View Project &gt;\n\n\nEntropy & Statistical Mechanics\n Entropy is said to introduce the arrow of time as an emerging property of reality, can a simulation of statistical mechanics help uncover more of this topic? View Project &gt;\n\n\nControl Systems\n Development of a PID controller for a small quad-rotor UAV, providing stability and robust performance in attitude and position. View Project &gt;\n\n\nResume\nMy resume so far View Project &gt;"
+    "text": "Featured Projects\n\n\n2026 F1 Rear Wing\n Development of a 2026 F1 Rear Wing using OpenFOAM, including SLM pivot point optimization. View Project &gt;\n\n\nPoliMi Master Thesis\n Development of automatic differentiation for hydrofoil optimization. View Project &gt;\n\n\nGround Effect Floor CFD Analysis\n Various parameters on floor and diffuser effectiveness are studied in OpenFOAM. Strakes are then added to investiagate their role in modern racing vehicles. View Project &gt;\n\n\nEntropy & Statistical Mechanics\n Entropy is said to introduce the arrow of time as an emerging property of reality, can a simulation of statistical mechanics help uncover more of this topic? View Project &gt;\n\n\nControl Systems\n Development of a PID controller for a small quad-rotor UAV, providing stability and robust performance in attitude and position. View Project &gt;\n\n\nResume\nMy resume so far View Project &gt;"
   },
   {
     "objectID": "index.html#future-projects",
     "href": "index.html#future-projects",
     "title": "Michele Andreozzi",
     "section": "Future projects",
-    "text": "Future projects\nIdeas for future CFD incestigations include:\n\nfull C++ development & validation of a transition + turbulence model, from literature, in OpenFOAM\naerostructural wing development, through FSI simulations"
+    "text": "Future projects\nIdeas for future CFD investigations include:\n\nfull C++ development & validation of a transition + turbulence model, from literature, in OpenFOAM\naerostructural wing development, through FSI simulations"
   },
   {
     "objectID": "index.html#about-me",
     "href": "index.html#about-me",
     "title": "Michele Andreozzi",
     "section": "About Me",
-    "text": "About Me\nI am a Aeronautical Engineer specializing in high-performance scietific computing, CFD and aerodynamics. This portfolio showcases my work in simulating the next generation of Formula 1 regulations using OpenFOAM and AWS high-performance computing clusters, and some academic projects I had the privilege to work on during my tme at Politecnico di Milano.\n\n  Get In Touch"
+    "text": "About Me\nI am a Aeronautical Engineer specializing in high-performance scientific computing, CFD and aerodynamics. This portfolio showcases my work in simulating the next generation of Formula 1 regulations using OpenFOAM and AWS high-performance computing clusters, and some academic projects I had the privilege to work on during my time at Politecnico di Milano.\n\n  Get In Touch"
   },
   {
     "objectID": "resume.html",

@@ -52,9 +52,9 @@ img {
 
 /* Style images inside cards */
 .card img {
-  border-radius: 8px 8px 0 0; /* Rounds only the top corners */
-  margin: -25px -25px 20px -25px; /* Pulls image to edges of the card */
-  width: calc(100% + 50px); /* Forces image to full width of card */
-  max-height: 800px; /* Keeps cards uniform in height */
-  object-fit: cover; /* Crops image nicely if aspect ratios differ */
+  border-radius: 8px; /* Rounds all corners of the image */
+  margin: 15px 0 20px 0; /* Adds 15px of space ABOVE the image, 20px BELOW */
+  width: 100%; /* Keeps it contained inside the card */
+  max-height: 700px; 
+  object-fit: cover; 
 }

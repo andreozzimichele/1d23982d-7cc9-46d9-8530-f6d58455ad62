@@ -31,7 +31,7 @@ Development of automatic differentiation for hydrofoil optimization.
 ::: {.card .text-center}
 ### Ground Effect Floor CFD Analysis
 ![Collisions Simulation](assets/hero_floor.png)
-The effect of various parameters on floor and diffuser effectiveness is studied in OpenFOAM. Strakes are then added to investiagate their role in modern racing vehicles.
+Various parameters on floor and diffuser effectiveness are studied in OpenFOAM. Strakes are then added to investiagate their role in modern racing vehicles.
 [View Project >](floor.qmd){.btn .btn-outline-primary .btn-sm}
 :::
 
@@ -58,13 +58,13 @@ My resume so far
 :::
 
 ## Future projects
-Ideas for future CFD incestigations include:
+Ideas for future CFD investigations include:
 
 * full C++ development & validation of a transition + turbulence model, from literature, in OpenFOAM
 * aerostructural wing development, through FSI simulations
 
 ## About Me
-I am a Aeronautical Engineer specializing in high-performance scietific computing, CFD and aerodynamics. This portfolio showcases my work in simulating the next generation of Formula 1 regulations using OpenFOAM and AWS high-performance computing clusters, and some academic projects I had the privilege to work on during my tme at Politecnico di Milano.
+I am a Aeronautical Engineer specializing in high-performance scientific computing, CFD and aerodynamics. This portfolio showcases my work in simulating the next generation of Formula 1 regulations using OpenFOAM and AWS high-performance computing clusters, and some academic projects I had the privilege to work on during my time at Politecnico di Milano.
 
 <div style="text-align: center; margin-top: 30px;">
   <a href="mailto:michele.andreozzi@protonmail.com" class="btn btn-primary btn-lg">
