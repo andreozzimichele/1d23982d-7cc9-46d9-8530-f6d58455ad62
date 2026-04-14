@@ -1,0 +1,11 @@
+---
+title: "Control System Project"
+---
+
+::: {.callout-tip icon=false}
+## Robust Stability and Performance of a small quad-rotor UAV
+If the PDF does not display correctly below, you can [download it directly here](assets/ACS_presentation.pdf).
+:::
+
+<iframe src="assets/ACS_presentation.pdf" width="100%" height="800px">
+</iframe>

@@ -10,5 +10,11 @@
   },
   "thesis.qmd": {
     "thesis.html": "d60ca479"
+  },
+  "control_system.qmd": {
+    "control_system.html": "2ee7a2fd"
+  },
+  "resume.qmd": {
+    "resume.html": "a855553e"
   }
 }

@@ -35,6 +35,19 @@ Entropy is said to introduce the arrow of time as an emerging property of realit
 [View Project >](entropy.qmd){.btn .btn-outline-primary .btn-sm}
 :::
 
+::: {.card .text-center}
+### Control Systems
+![Stability and Performance](assets/hero_control_system.png)
+Development of a PID controller for a small quad-rotor UAV, providing stability and robust performance in attitude and position.
+[View Project >](control_system.qmd){.btn .btn-outline-primary .btn-sm}
+:::
+
+::: {.card .text-center}
+### Resume
+My resume so far
+[View Project >](resume.qmd){.btn .btn-outline-primary .btn-sm}
+:::
+
 :::
 
 ## Future projects
