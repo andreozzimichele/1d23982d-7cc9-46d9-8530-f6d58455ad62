@@ -29,6 +29,13 @@ Development of automatic differentiation for hydrofoil optimization.
 :::
 
 ::: {.card .text-center}
+### Ground Effect Floor CFD Analysis
+![Collisions Simulation](assets/hero_floor.png)
+The effect of various parameters on floor and diffuser effectiveness is studied in OpenFOAM. Strakes are then added to investiagate their role in modern racing vehicles.
+[View Project >](floor.qmd){.btn .btn-outline-primary .btn-sm}
+:::
+
+::: {.card .text-center}
 ### Entropy & Statistical Mechanics
 ![Collisions Simulation](assets/hero_entropy.png)
 Entropy is said to introduce the arrow of time as an emerging property of reality, can a simulation of statistical mechanics help uncover more of this topic?
@@ -37,7 +44,7 @@ Entropy is said to introduce the arrow of time as an emerging property of realit
 
 ::: {.card .text-center}
 ### Control Systems
-![Stability and Performance](assets/hero_control_system.png)
+![Stability and Performance](assets/hero_control_system.jpg)
 Development of a PID controller for a small quad-rotor UAV, providing stability and robust performance in attitude and position.
 [View Project >](control_system.qmd){.btn .btn-outline-primary .btn-sm}
 :::

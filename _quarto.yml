@@ -15,8 +15,14 @@ website:
         text: 2026 Rear Wing Study
       - href: thesis.qmd
         text: MSc Thesis
+      - href: floor.qmd
+        text: Diffuser CFD
       - href: entropy.qmd
         text: Entropy & Statistical Mechanics
+      - href: control_system.qmd
+        text: Centrol System Design
+      - href: resume.qmd
+        text: Resume
         
 format:
   html:

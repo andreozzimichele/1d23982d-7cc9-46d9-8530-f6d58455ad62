@@ -1,0 +1,11 @@
+---
+title: "Ground Effect Floor CFD Parametric Analysis"
+---
+
+::: {.callout-tip icon=false}
+## Full Project Report
+If the PDF does not display correctly below, you can [download it directly here](assets/CFD_floor.pdf).
+:::
+
+<iframe src="assets/CFD_floor.pdf" width="100%" height="800px">
+</iframe>
