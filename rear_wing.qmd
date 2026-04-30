@@ -775,6 +775,7 @@ The Straight Line Mode investigation revealed a clear hierarchy among the evalua
 The grid convergence analysis, made possible by AWS EC2 cloud infrastructure, confirmed that the medium mesh used throughout the design campaign introduces errors of approximately 0.4% in $C_L$ and 1.0% in $C_D$ relative to the asymptotically converged solution, both well within acceptable bounds for comparative aerodynamic studies. The GCI values below 1.1% for the finest mesh pair validate the numerical framework and suggest that the design trends identified are reliable, even if the absolute values carry the known uncertainties of wall-function RANS modelling.
 
 Finally future work should focus on the following areas:
+
 * low-$Re$ simulation using a refined near-wall mesh targeting $y^+ \approx 1$ would allow direct comparison with the wall-function approach and quantify the associated modelling error on predicted separation
 * The inclusion of the SLM fairing and bracket geometry would improve the realism of the straight-line mode results and allow a more meaningful aerodynamic evaluation of the Macarena strategy in particular
 * An aeromap study, spanning a range of pitch, roll and yaw attitudes, would be a necessary step towards understanding real on-track performance, where suspension compliance and ride height variation modify the effective angles of attack
